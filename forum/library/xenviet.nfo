@@ -1,0 +1,45 @@
+
+
+
+____  ___          ____   ____.__        __    _________                 
+\   \/  /____   ___\   \ /   /|__| _____/  |_  \_   ___ \  ____   _____  
+ \     // __ \ /    \   Y   / |  |/ __ \   __\ /    \  \/ /  _ \ /     \ 
+ /     \  ___/|   |  \     /  |  \  ___/|  |   \     \___(  <_> )  Y Y  \
+/___/\  \___  >___|  /\___/   |__|\___  >__| /\ \______  /\____/|__|_|  /
+      \_/   \/     \/                 \/     \/        \/             \/ 
+
+
+
+                		---2015---
+      
+[Script Info]-----------------------------------------------------------
+
+Script name   : XenForo v1.4.5
+Supplied by   : XenViet.Com                                       
+Sullified by  : XenViet.Com                                
+Tested by     : XenViet.Com 
+Protection    : Removed
+Homepage      : http://www.xenforo.com 
+Release date  : 17-Feb-2014                               
+Release type  : PHP/MySQL                                    
+Price         : $0
+NFO Date      : 18-Feb-2014
+
+[Description]-----------------------------------------------------------
+XenForo is  a commercial  Internet  forum software  written in the PHP 
+programming  language  using the  Zend Framework (A Rapid  Application 
+Development  Framework).  The software is  developed by  a team led by 
+former vBulletin  lead  developers  Kier  Darby  and  Mike  Sullivan .              
+
+[Server Requirements]---------------------------------------------------
+
++ PHP	: 5.4+
++ MySQL : 5.x+
+
+[Install Notes]---------------------------------------------------------
+1. Extract the archive to a folder on your computer
+2. See the INSTALL-UPGRADE.txt file for installation instruction
+
+[Contact Us]------------------------------------------------------------
+Website	: http://xenviet.com
+E-mail  : support@xenviet.com
