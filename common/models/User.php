@@ -36,8 +36,6 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $type
- * @property integer $village_id
- * @property integer $lead_donor_id
  * @property string $access_login_token
  * @property string $fb_email
  * @property string $fb_id
@@ -185,7 +183,7 @@ class User extends ActiveRecord implements IdentityInterface
 
             [['other_profile'], 'string'],
             [['birthday'], 'safe'],
-            [['individual', 'role', 'status', 'created_at', 'updated_at', 'gender', 'type', 'village_id', 'lead_donor_id'], 'integer'],
+            [['individual', 'role', 'status', 'created_at', 'updated_at', 'gender', 'type'], 'integer'],
             [['avatar', 'cover_photo', 'address', 'password_hash', 'password_reset_token', 'access_login_token', 'fb_email', 'fb_id'], 'string', 'max' => 255],
             [['fullname'], 'string', 'max' => 512],
             [['user_code'], 'string', 'max' => 20],
@@ -696,30 +694,6 @@ class User extends ActiveRecord implements IdentityInterface
         $auth = new AuthAssignment();
         if ($type == User::TYPE_ADMIN) {
             $auth->item_name = 'Admin';
-            $auth->user_id = $id_user;
-            if($auth->save()){
-            }else{
-                return Yii::$app->session->setFlash('error', 'Tạo quyền cho tài khoản không thành công!');
-            };
-        }
-        if ($type == User::TYPE_MANAGER) {
-            $auth->item_name = 'Manager';
-            $auth->user_id = $id_user;
-            if($auth->save()){
-            }else{
-                return Yii::$app->session->setFlash('error', 'Tạo quyền cho tài khoản không thành công!');
-            };
-        }
-        if ($type == User::TYPE_LEAD_DONOR) {
-            $auth->item_name = 'LeadDonor';
-            $auth->user_id = $id_user;
-            if($auth->save()){
-            }else{
-                return Yii::$app->session->setFlash('error', 'Tạo quyền cho tài khoản không thành công!');
-            };
-        }
-        if ($type == User::TYPE_VILLAGE) {
-            $auth->item_name = 'Village';
             $auth->user_id = $id_user;
             if($auth->save()){
             }else{

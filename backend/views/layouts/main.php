@@ -275,11 +275,11 @@ $menuItems = [
 //                    'label' => 'Quản lý người dùng',
 //                    'url' => ['user/index'],
 //                ],
-//            [
-//                'encode' => false,
-//                'label' => 'Quản lý quyền',
-//                'url' => ['rbac-backend/permission'],
-//            ],
+            [
+                'encode' => false,
+                'label' => 'Quản lý quyền',
+                'url' => ['rbac-backend/permission'],
+            ],
             [
                 'encode' => false,
                 'label' => 'Quản lý nhóm quyền',
