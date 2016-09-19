@@ -42,33 +42,6 @@ $formId = $form->id;
         <?= $form->field($model, 'address')->textInput(['placeholder' => 'Địa chỉ', 'maxlength' => 100]) ?>
         <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Nhập mật khẩu có độ dài  tối thiểu 6 kí tự']) ?>
         <?= $form->field($model, 'confirm_password')->passwordInput(['placeholder' => 'Nhập lại mật khẩu']) ?>
-        <?php if ($model->type == User::TYPE_LEAD_DONOR) { ?>
-            <?=
-            $form->field($model, 'lead_donor_id')->widget(Select2::classname(), [
-                'data' => ArrayHelper::map(LeadDonor::find()->all(), 'id', 'name'),
-                'options' => ['placeholder' => 'Chọn doanh nghiệp'],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-            ])->label('Doanh nghiệp đỡ đầu (*)');
-            ?>
-        <?php
-        }
-        if ($model->type == User::TYPE_VILLAGE) {
-            ?>
-
-            <?=
-            $form->field($model, 'village_id')->widget(Select2::classname(), [
-                'data' => ArrayHelper::map(Village::findAll(['status' => Village::STATUS_ACTIVE]), 'id', 'name'),
-                'options' => ['placeholder' => 'Chọn Xã'],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-            ])->label('Tên xã (*)');
-            ?>
-        <?php } ?>
-
-    <?php } else { ?>
         <?= $form->field($model, 'username')->textInput(['readonly' => true]) ?>
         <?= $form->field($model, 'fullname')->textInput(['placeholder' => 'Họ và tên', 'maxlength' => 100]) ?>
         <?= $form->field($model, 'email')->textInput(['placeholder' => 'Email', 'maxlength' => 100]) ?>
@@ -79,33 +52,6 @@ $formId = $form->id;
             <?= $form->field($model, 'status')->dropDownList(User::listStatus()) ?>
         <?php } ?>
 
-        <?php if ($model->type == User::TYPE_LEAD_DONOR) { ?>
-            <?=
-            $form->field($model, 'lead_donor_id')->widget(Select2::classname(), [
-                'data' => ArrayHelper::map(LeadDonor::find()->all(), 'id', 'name'),
-                'options' => ['placeholder' => 'Chọn doanh nghiệp'],
-                'id' => 'lead_donor_id',
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-            ])->label('Doanh nghiệp đỡ đầu (*)');
-            ?>
-        <?php
-        }
-        if ($model->type == User::TYPE_VILLAGE) {
-            ?>
-
-            <?=
-            $form->field($model, 'village_id')->widget(Select2::classname(), [
-                'data' => ArrayHelper::map(Village::findAll(['status' => Village::STATUS_ACTIVE]), 'id', 'name'),
-                'options' => ['placeholder' => 'Chọn Xã'],
-                'id' => 'lead_donor_id',
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-            ])->label('Tên xã (*)');
-            ?>
-        <?php } ?>
     <?php } ?>
 </div>
 

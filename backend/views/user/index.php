@@ -32,9 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p>
                     <?php
                         if(Yii::$app->user->identity->type == User::TYPE_ADMIN) {
-                            if($type != User::TYPE_USER) {
                                 echo Html::a('Tạo mới người dùng', ['create', 'type' => $type], ['class' => 'btn btn-success']);
-                            }
                         }
                     ?>
                 </p>

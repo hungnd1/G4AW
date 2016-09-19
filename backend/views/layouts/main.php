@@ -239,28 +239,8 @@ $menuItems = [
             ],
             [
                 'encode' => false,
-                'label' => User::getTypeNameByID(User::TYPE_MANAGER),
-                'url' => ['user/index', "type" => User::TYPE_MANAGER],
-            ],
-            [
-                'encode' => false,
-                'label' => User::getTypeNameByID(User::TYPE_LEAD_DONOR),
-                'url' => ['user/index', "type" => User::TYPE_LEAD_DONOR],
-            ],
-            [
-                'encode' => false,
-                'label' => User::getTypeNameByID(User::TYPE_VILLAGE),
-                'url' => ['user/index', "type" => User::TYPE_VILLAGE],
-            ],
-            [
-                'encode' => false,
                 'label' => User::getTypeNameByID(User::TYPE_MINISTRY_EDITOR),
                 'url' => ['user/index', "type" => User::TYPE_MINISTRY_EDITOR],
-            ],
-            [
-                'encode' => false,
-                'label' => User::getTypeNameByID(User::TYPE_USER),
-                'url' => ['user/index', "type" => User::TYPE_USER],
             ],
         ]
     ],

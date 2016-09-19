@@ -3,9 +3,7 @@
 namespace common\models;
 
 use common\helpers\CommonUtils;
-use common\helpers\CUtils;
 use Yii;
-use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
@@ -60,10 +58,6 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const TYPE_ADMIN = 1;
     const TYPE_MINISTRY_EDITOR = 2;    // tai khoan quan ly cac bai viet chung
-    const TYPE_LEAD_DONOR = 3;      // tai khoan cua doanh nghiep do dau
-    const TYPE_VILLAGE = 4;         // tai khoan cua xa
-    const TYPE_USER = 5;            // tai khoan cua nguoi dung
-    const TYPE_MANAGER = 6;         // tai khoan cua manager
 
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 1;
@@ -94,7 +88,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public static function getOld($birthday)
     {
-        if($birthday != null) {
+        if ($birthday != null) {
             $y = date('Y', strtotime($birthday));
             $ynow = date('Y');
 //        echo "<pre>";
@@ -102,8 +96,7 @@ class User extends ActiveRecord implements IdentityInterface
 //        die();
             $old = $ynow - $y;
             return $old;
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -149,11 +142,6 @@ class User extends ActiveRecord implements IdentityInterface
         if ($insert) {
             $code = str_pad($this->id, 4, "0", STR_PAD_LEFT);
             $prefix = '';
-            if ($this->type == self::TYPE_LEAD_DONOR) {
-                $prefix = 'DN';
-            } else if ($this->type == self::TYPE_USER) {
-                $prefix = 'OR';
-            }
 //            } else if ($this->type == self::TYPE_DONOR) {
 //                $prefix = 'DN';
 //            }
@@ -177,7 +165,7 @@ class User extends ActiveRecord implements IdentityInterface
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required', 'message' => 'Địa chỉ email không được để trống'],
-            ['email', 'email','message'=>'Địa chỉ email không hợp lệ!'],
+            ['email', 'email', 'message' => 'Địa chỉ email không hợp lệ!'],
             ['email', 'string', 'max' => 255],
 //            ['email', 'unique', 'on' => 'create', 'message' => 'Địa chỉ Email đã tồn tại.'],
 
@@ -188,29 +176,14 @@ class User extends ActiveRecord implements IdentityInterface
             [['fullname'], 'string', 'max' => 512],
             [['user_code'], 'string', 'max' => 20],
 //            [['phone_number'], 'integer', 'message'=>'Vui lòng nhập kiểu số'],
-            [['auth_key','phone_number'], 'string', 'max' => 32],
-            [['avatar'], 'file', 'extensions' => ['png', 'jpg','jpeg', 'gif'], 'maxSize' => 1024 * 1024 * 10, 'tooBig' => 'Dung lượng ảnh vượt quá 10mb'],
+            [['auth_key', 'phone_number'], 'string', 'max' => 32],
+            [['avatar'], 'file', 'extensions' => ['png', 'jpg', 'jpeg', 'gif'], 'maxSize' => 1024 * 1024 * 10, 'tooBig' => 'Dung lượng ảnh vượt quá 10mb'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['birthday', 'default', 'value' => null],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED, self::STATUS_INACTIVE]],
 
 //            ['village_id', 'required','message'=>'Vui lòng chọn xã'],
 //            ['lead_donor_id', 'required','message'=>'Vui lòng chọn doanh nghiệp đỡ đầu'],
-            [['village_id'], 'required', 'when' => function ($model) {
-                return $model->type == self::TYPE_VILLAGE;
-            },
-                'whenClient' => "function (attribute, value) {
-                    return $('#type').val() == '" . self::TYPE_VILLAGE . "';
-                }"
-            ],
-
-            [['lead_donor_id'], 'required', 'when' => function ($model) {
-                return $model->type == self::TYPE_LEAD_DONOR;
-            },
-                'whenClient' => "function (attribute, value) {
-                    return $('#type').val() == '" . self::TYPE_LEAD_DONOR . "';
-                }"
-            ],
 
             // validate for create
             ['password', 'string', 'min' => '6', 'tooShort' => 'Mật khẩu phải tối thiểu 6 ký tự'],
@@ -239,11 +212,11 @@ class User extends ActiveRecord implements IdentityInterface
 
 
             [['file_excel', 'setting_new_password', 'old_password', 'fb_email', 'fb_id'], 'safe'],
-            [['setting_new_password'], 'required', 'message'=>'Mật khẩu mới không được để trống.','on' => 'user-setting'],
-            [['setting_new_password'], 'string','min'=>6, 'message'=>'Mật khẩu mới không được để trống.','on' => 'user-setting'],
-            [['old_password'], 'required', 'message'=>'Mật khẩu cũ không được để trống.','on' => 'user-setting'],
-            ['old_password', 'validator_password','on' => 'user-setting'],
-            [['confirm_password'], 'required', 'message' => 'Xác nhận mật khẩu mới không được để trống.','on' => 'user-setting'],
+            [['setting_new_password'], 'required', 'message' => 'Mật khẩu mới không được để trống.', 'on' => 'user-setting'],
+            [['setting_new_password'], 'string', 'min' => 6, 'message' => 'Mật khẩu mới không được để trống.', 'on' => 'user-setting'],
+            [['old_password'], 'required', 'message' => 'Mật khẩu cũ không được để trống.', 'on' => 'user-setting'],
+            ['old_password', 'validator_password', 'on' => 'user-setting'],
+            [['confirm_password'], 'required', 'message' => 'Xác nhận mật khẩu mới không được để trống.', 'on' => 'user-setting'],
             [
                 ['confirm_password'],
                 'compare',
@@ -289,8 +262,6 @@ class User extends ActiveRecord implements IdentityInterface
             'setting_new_password' => Yii::t('app', 'Mật khẩu mới'),
             'old_password' => Yii::t('app', 'Mật khẩu cũ'),
             'confirm_password' => Yii::t('app', 'Xác nhận mật khẩu'),
-            'lead_donor_id' => Yii::t('app', 'Tên doanh nghiệp đỡ đầu'),
-            'village_id' => Yii::t('app', 'Tên xã'),
             'new_password' => Yii::t('app', 'Mật khẩu mới'),
             'gender' => Yii::t('app', 'Giới tính'),
             'birthday' => Yii::t('app', 'Ngày sinh'),
@@ -453,7 +424,7 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findByAdminUsername($username)
     {
         return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE,
-            'type' => [self::TYPE_ADMIN, self::TYPE_VILLAGE, self::TYPE_MANAGER, self::TYPE_MINISTRY_EDITOR, self::TYPE_LEAD_DONOR]]);
+            'type' => [self::TYPE_ADMIN, self::TYPE_MINISTRY_EDITOR]]);
     }
 
     /**
@@ -635,10 +606,6 @@ class User extends ActiveRecord implements IdentityInterface
         $lst = [
             self::TYPE_ADMIN => 'Admin',
             self::TYPE_MINISTRY_EDITOR => 'Ban biên tập tin tức',
-            self::TYPE_LEAD_DONOR => 'DN đỡ đầu',
-            self::TYPE_VILLAGE => 'Xã',
-            self::TYPE_USER => 'Người dùng',
-            self::TYPE_MANAGER => 'Bộ KHĐT',
         ];
         return $lst;
     }
@@ -695,16 +662,16 @@ class User extends ActiveRecord implements IdentityInterface
         if ($type == User::TYPE_ADMIN) {
             $auth->item_name = 'Admin';
             $auth->user_id = $id_user;
-            if($auth->save()){
-            }else{
+            if ($auth->save()) {
+            } else {
                 return Yii::$app->session->setFlash('error', 'Tạo quyền cho tài khoản không thành công!');
             };
         }
         if ($type == User::TYPE_MINISTRY_EDITOR) {
             $auth->item_name = 'Editor';
             $auth->user_id = $id_user;
-            if($auth->save()){
-            }else{
+            if ($auth->save()) {
+            } else {
                 return Yii::$app->session->setFlash('error', 'Tạo quyền cho tài khoản không thành công!');
             };
         }
@@ -740,9 +707,7 @@ class User extends ActiveRecord implements IdentityInterface
         $user->email = $email;
         $user->type = $type;
         $user->password_reset_token = $password;
-        if ($type == User::TYPE_USER) {
-            $user->status = User::STATUS_ACTIVE;
-        }
+        $user->status = User::STATUS_ACTIVE;
 //        else {
 //            $user->status = User::STATUS_WAITING;
 //        }
@@ -777,21 +742,6 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->fullname ? $this->fullname : $this->username;
     }
 
-    public function setUserCode()
-    {
-        if ($this->type == self::TYPE_LEAD_DONOR) {
-            $this->user_code = "DN" . CommonUtils::addNumberZero($this->id, 3);
-        }
-
-        if ($this->type == self::TYPE_USER) {
-            $this->user_code = "OR" . CommonUtils::addNumberZero($this->id, 6);
-        }
-
-//        if ($this->type == self::TYPE_DONEE) {
-//            $this->user_code = "RQ" . CommonUtils::addNumberZero($this->id, 6);
-//        }
-
-    }
 
     public static function loginViaFacebook($data)
     {
@@ -806,7 +756,7 @@ class User extends ActiveRecord implements IdentityInterface
             $user->email = $email;
             $user->fb_id = $fbId;
             $user->fb_email = $email;
-            $user->type = self::TYPE_USER;
+            $user->type = self::TYPE_MINISTRY_EDITOR;
             $user->phone_number = $fbId;
             $password = time();
             $user->password_reset_token = $password;
@@ -872,9 +822,4 @@ class User extends ActiveRecord implements IdentityInterface
         return $userFollow->save();
     }
 
-    public static function listOrganization()
-    {
-        return static::find()->andWhere(['type' => self::TYPE_LEAD_DONOR])
-            ->andWhere(['status' => self::STATUS_ACTIVE])->all();
-    }
 }
