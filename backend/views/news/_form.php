@@ -1,10 +1,8 @@
 <?php
 
-use common\models\Campaign;
+use common\models\Area;
 use common\models\Category;
-use common\models\LeadDonor;
 use common\models\News;
-use common\models\Village;
 use kartik\file\FileInput;
 use kartik\form\ActiveForm;
 use kartik\widgets\Select2;
@@ -50,39 +48,8 @@ Yii::$app->session->set('KCFINDER', $kcfOptions);
 
     <?= $form->field($model, 'type')->hiddenInput(['id' => 'type'])->label(false) ?>
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'title_en')->textInput(['maxlength' => true]) ?>
 
-    <?php
-    if ($model->type == News::TYPE_CAMPAIGN) {
-        echo $form->field($model, 'campaign_id')->dropDownList(
-            ArrayHelper::map(Campaign::getCampaignByUser(), 'id', 'name'),
-            ['id' => 'campaign_id', ['prompt' => 'Chọn chiến dịch ...']])->label('Chiến dịch (*)');
-    }
-    ?>
-
-    <?php
-    if ($model->type == News::TYPE_IDEA || $model->type == News::TYPE_TRADE) {
-        echo $form->field($model, 'village_array')->widget(Select2::classname(), [
-            'data' => ArrayHelper::map(Village::getVillageByUser(), 'id', 'name'),
-            'options' => [
-                'placeholder' => 'Chọn xã ...',
-                'multiple' => true
-            ],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ])->label('Xã (*)');
-        if ($model->type == News::TYPE_TRADE) {
-            echo $form->field($model, 'price')->textInput(['maxlength' => true])->label('Giá (*)');
-        }
-    }
-    ?>
-    <?php
-    if ($model->type == News::TYPE_DONOR) {
-        echo $form->field($model, 'lead_donor_id')->dropDownList(
-            ArrayHelper::map(LeadDonor::getLeadDonorByUser(), 'id', 'name'),
-            [['prompt' => 'Chọn doanh nghiệp đỡ đầu ...']])->label('Doanh nghiệp đỡ đầu (*)');
-    }
-    ?>
 
     <?= $form->field($model, 'status')->dropDownList(\common\models\News::listStatus()) ?>
 
@@ -114,11 +81,21 @@ Yii::$app->session->set('KCFINDER', $kcfOptions);
     <?php } ?>
 
     <?= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'short_description_en')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'area_id')->dropDownList(ArrayHelper::map(\common\models\Area::find()
+        ->andWhere(['status' => Area::STATUS_ACTIVE])->all(), 'id', 'name'),['prompt'=>'Chọn vùng']) ?>
 
     <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::find()
-        ->andWhere(['status' => Category::STATUS_ACTIVE])->all(), 'id', 'display_name')) ?>
+        ->andWhere(['status' => Category::STATUS_ACTIVE])->andWhere(['type'=>$type])->all(), 'id', 'display_name')) ?>
 
     <?= $form->field($model, 'content')->widget(\common\widgets\CKEditor::className(), [
+        'options' => [
+            'rows' => 6,
+        ],
+        'preset' => 'basic'
+    ]) ?>
+    <?= $form->field($model, 'content_en')->widget(\common\widgets\CKEditor::className(), [
         'options' => [
             'rows' => 6,
         ],

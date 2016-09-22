@@ -21,8 +21,8 @@ use yii\behaviors\TimestampBehavior;
  * @property string $images
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $display_name_en
  *
- * @property CampaignCategoryAsm[] $campaignCategoryAsms
  * @property Category $parent
  * @property Category[] $categories
  */
@@ -31,6 +31,11 @@ class Category extends \yii\db\ActiveRecord
     const STATUS_ACTIVE = 10;
     const STATUS_INACTIVE = 0;
     const STATUS_DELETED = 2;
+
+    const TYPE_KNOW = 1;
+    const TYPE_MARKET = 2;
+    const TYPE_HEALTH = 3;
+    const TYPE_NEW = 5;
 
     /**
      * @inheritdoc
@@ -53,12 +58,12 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['display_name'], 'required'],
+            [['display_name','display_name_en'], 'required'],
 //            [['display_name'], 'unique', 'message' => 'Tên danh mục đã tồn tại. Vui lòng chọn tên khác!'],
             [['id', 'type', 'status', 'order_number', 'parent_id', 'level',
                 'child_count', 'created_at', 'updated_at'], 'integer'],
             [['description'], 'string'],
-            [['display_name', 'path'], 'string', 'max' => 200],
+            [['display_name','display_name_en', 'path'], 'string', 'max' => 500],
             [['images'], 'string', 'max' => 500]
         ];
     }
@@ -70,7 +75,8 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'display_name' => Yii::t('app', 'Tên danh mục'),
+            'display_name' => Yii::t('app', 'Tên tiếng việt'),
+            'display_name_en' => Yii::t('app', 'Tên tiếng anh'),
             'type' => Yii::t('app', 'Type'),
             'description' => Yii::t('app', 'Mô tả'),
             'status' => Yii::t('app', 'Trạng thái'),
@@ -80,17 +86,25 @@ class Category extends \yii\db\ActiveRecord
             'level' => Yii::t('app', 'Level'),
             'child_count' => Yii::t('app', 'Child Count'),
             'images' => Yii::t('app', 'Images'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'created_at' => Yii::t('app', 'Ngày tạo'),
+            'updated_at' => Yii::t('app', 'Ngày cập nhật'),
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCampaignCategoryAsms()
+
+    public static function listType($type)
     {
-        return $this->hasMany(CampaignCategoryAsm::className(), ['category_id' => 'id']);
+
+        if($type == self::TYPE_NEW){
+            return 'Tin tức';
+        }else if($type == self::TYPE_MARKET){
+            return 'Chợ nhà nông';
+        }else if($type == self::TYPE_HEALTH){
+            return 'Sức khỏe đời sống';
+        }else if($type == self::TYPE_KNOW){
+            return 'Nhà nông nên biết';
+        }
+
     }
 
     /**

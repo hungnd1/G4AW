@@ -42,21 +42,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             'style' => 'width: 20%',
                             'value' => $model->getTypeName(),
                         ],
-                        [
-                            'attribute' => 'campaign_id',
-                            'value' => $model->campaign ? $model->campaign->name : '',
-                            'visible' => $model->type == \common\models\News::TYPE_CAMPAIGN ? true : false
-                        ],
 
                         [
-                            'label' => 'Tên xã',
-                            'value' => $model->getListVillage(),
-                            'visible' => $model->type == News::TYPE_IDEA || $model->type == News::TYPE_TRADE ? true : false
-                        ],
-                        [
-                            'label' => 'Giá',
-                            'value' => $model->price,
-                            'visible' => $model->type == News::TYPE_TRADE ? true : false
+                            'label' => 'Danh mục',
+                            'value' => $model->getCategory()
                         ],
                         [
                             'attribute' => 'status',

@@ -18,9 +18,9 @@ class NewsSearch extends News
     public function rules()
     {
         return [
-            [['id', 'campaign_id', 'type', 'view_count', 'like_count', 'comment_count',
+            [['id', 'type', 'view_count', 'like_count', 'comment_count',
                 'favorite_count', 'honor', 'status', 'created_user_id', 'created_at', 'updated_at',
-                'user_id', 'lead_donor_id'], 'integer'],
+                'user_id'], 'integer'],
             [['title', 'title_ascii', 'content', 'thumbnail', 'tags', 'short_description', 'description', 'video_url', 'source_name', 'source_url'], 'safe'],
         ];
     }
@@ -62,7 +62,6 @@ class NewsSearch extends News
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'campaign_id' => $this->campaign_id,
             'type' => $this->type,
             'view_count' => $this->view_count,
             'like_count' => $this->like_count,
@@ -74,7 +73,6 @@ class NewsSearch extends News
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'user_id' => $this->user_id,
-            'lead_donor_id' => $this->lead_donor_id,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])

@@ -14,15 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $visible_campaign = false;
 $visible_village = false;
-if ($type) {
-    if ($type == News::TYPE_CAMPAIGN) {
-        $visible_campaign = true;
-    }
 
-    if ($type == News::TYPE_TRADE || $type == News::TYPE_IDEA) {
-        $visible_village = true;
-    }
-}
 ?>
 
 <div class="row">
@@ -54,22 +46,13 @@ if ($type) {
                         ],
                         [
                             'class' => '\kartik\grid\DataColumn',
-                            'header' => 'Tên chiến dịch',
+                            'header' => 'Danh mục',
                             'value' => function ($model, $key, $index, $widget) {
                                 /** @var $model \common\models\News */
-                                return $model->campaign ? $model->campaign->name : '';
-                            },
-                            'visible' => $visible_campaign
+                                return $model->getCategory() ? $model->getCategory() : '';
+                            }
                         ],
-                        [
-                            'class' => '\kartik\grid\DataColumn',
-                            'header' => 'Tên xã',
-                            'value' => function ($model, $key, $index, $widget) {
-                                /** @var $model \common\models\News */
-                                return $model->getListVillage();
-                            },
-                            'visible' => $visible_village
-                        ],
+
                         [
                             'class' => '\kartik\grid\DataColumn',
 //                            'attribute' => 'type',

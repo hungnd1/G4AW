@@ -15,7 +15,7 @@ use yii\helpers\Url;
                 <div class="cr-page-link">
                     <a href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
                     <span>/</span>
-                    <a href="<?= Url::toRoute(['news/index']) ?>">Tin tức</a>
+                    <a href="<?= Url::toRoute(['news/index']) ?>"><?= $title ?></a>
                 </div>
                 <div class="m-content">
                     <div class="list-news-block">
@@ -35,7 +35,9 @@ use yii\helpers\Url;
                                     </div>
                                 </div>
                             <?php }
-                        } ?>
+                        }else{?>
+                        <span style="color: red">Không có dữ liệu</span>
+                        <?php } ?>
                         <?php
                          $pagination = new \yii\data\Pagination(['totalCount' => $pages->totalCount,'pageSize' =>10]);
                           echo \yii\widgets\LinkPager::widget([
@@ -49,8 +51,8 @@ use yii\helpers\Url;
                 <div class="block-related block-cm-2">
                     <h3>Có thể bạn quan tâm</h3>
                     <div class="list-related">
-                    <?php if(isset($listCampaign) && !empty($listCampaign)){
-                    foreach($listCampaign as $item ) {?>
+                    <?php if(isset($listNewRelated) && !empty($listNewRelated)){
+                    foreach($listNewRelated as $item ) {?>
                         <?= \frontend\widgets\NewsWidget::widget(['content'=>$item]) ?>
                     <?php } }?>
                     </div>

@@ -13,10 +13,11 @@ use yii\helpers\Html;
         <div class="container">
 
             <div class="copy-right">
-                <h5>CHƯƠNG TRÌNH PHÁT TRIỂN BỀN VỮNG CÁC XÃ BIÊN GIỚI</h5>
-                Địa chỉ: 6B Hoàng Diệu, Ba Đình, Hà Nội<br> ĐT: 08043485; Phòng Hành chính - Văn phòng Bộ 04.38455298<br>
-                Fax: Phòng Hành chính - Văn phòng Bộ 04.38234453<br> Email: banbientap@mpi.gov.vn<br><br>
-                Bản quyền thuộc về Bộ Kế hoạch và Đầu tư
+                <h5>CHƯƠNG TRÌNH KH&CN TRỌNG ĐIỂM CẤP NHÀ NƯỚC. KC.01/11-15</h5>
+                Mọi tin, bài, thắc mắc xin gửi về thư điện tử: <br> Email: thongtinnongthon@vnpt.vn<br><br>
+                Hoặc theo địa chỉ Website: Ban Quản trị nội dung  Học viện Công nghệ Bưu chính Viễn thông<br>
+                Địa chỉ: 122 Hoàng Quốc Việt, Cầu Giấy, Hà Nội<br> ĐT: (04) 04.37544837<br>
+
             </div>
             <div class="social">
                 <a href="" class="s-fb"><i class="fa fa-facebook"></i></a>

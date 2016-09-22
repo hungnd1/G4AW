@@ -44,16 +44,13 @@ class NewsController extends Controller
      * Lists all News models.
      * @return mixed
      */
-    public function actionIndex($type = News::TYPE_COMMON)
+    public function actionIndex($type = News::TYPE_NEW)
     {
         $searchModel = new NewsSearch();
         $params = Yii::$app->request->queryParams;
 
         /** @var User $user */
         $user = Yii::$app->user->identity;
-        if ($user->lead_donor_id) {
-            $params['NewsSearch']['lead_donor_id'] = $user->lead_donor_id;
-        }
 
         $params['NewsSearch']['type'] = $type;
 
@@ -83,7 +80,7 @@ class NewsController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($type = News::TYPE_COMMON)
+    public function actionCreate($type = News::TYPE_NEW)
     {
         /** @var User $user */
         $user = Yii::$app->user->identity;
@@ -107,27 +104,12 @@ class NewsController extends Controller
 
                 $model->user_id = $user->id;
                 $model->created_user_id = $user->id;
-                if ($user->lead_donor_id) {
-                    $model->lead_donor_id = $user->lead_donor_id;
-                }
+
                 if($model->status == News::STATUS_ACTIVE){
                     $model->published_at = time();
                 }
 
                 if ($model->save()) {
-                    if ($model->type == News::TYPE_TRADE || $model->type == News::TYPE_IDEA) {
-                        if (isset($model->village_array)) {
-                            foreach ($model->village_array as $village_id) {
-                                $asm = new NewsVillageAsm();
-                                $asm->village_id = $village_id;
-                                $asm->news_id = $model->id;
-                                if (!$asm->save()) {
-                                    Yii::error($asm->getErrors());
-                                }
-                            }
-                        }
-                    }
-
                     NewsCategoryAsm::newNewsCategoryAsm($model->id, $model->category_id);
 
                     $db_transaction->commit();
@@ -166,8 +148,7 @@ class NewsController extends Controller
             $model->category_id = $asm->category_id;
         }
 
-        $model->village_array = $model->getListVillageSelect2();
-        $model->setScenario('update');
+//        $model->setScenario('update');
 
         if ($model->load(Yii::$app->request->post())) {
             $db_transaction = Yii::$app->db->beginTransaction();
@@ -185,19 +166,6 @@ class NewsController extends Controller
                 }
 
                 if ($model->save()) {
-                    if ($model->type == News::TYPE_TRADE || $model->type == News::TYPE_IDEA) {
-                        if (isset($model->village_array)) {
-                            Yii::$app->db->createCommand()->delete('news_village_asm', ['news_id' => $model->id])->execute();
-                            foreach ($model->village_array as $village_id) {
-                                $asm = new NewsVillageAsm();
-                                $asm->village_id = $village_id;
-                                $asm->news_id = $model->id;
-                                if (!$asm->save()) {
-                                    Yii::error($asm->getErrors());
-                                }
-                            }
-                        }
-                    }
                     NewsCategoryAsm::newNewsCategoryAsm($model->id, $model->category_id);
                     $db_transaction->commit();
                     Yii::$app->getSession()->setFlash('success', 'Cập nhật bài viết thành công');

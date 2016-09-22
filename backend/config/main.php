@@ -31,10 +31,8 @@ return [
         '@uploads' => 'uploads',
         '@images' => 'images',
         '@village_image' => 'village_image',
-        '@lead_donor_image' => 'lead_donor_image',
-        '@lead_donor_video' => 'lead_donor_video',
         '@file_upload' => 'file_upload',
-        '@bank_image' => 'bank_image',
+        '@area_image' => 'area_image',
     ],
     'components' => [
         'user' => [

@@ -28,19 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <div class="portlet-body">
-                <?php if ($model->type == User::TYPE_LEAD_DONOR) { ?>
-                    <div class="group">
-                        <?php if ($model->status == User::STATUS_INACTIVE) { ?>
-                            <?= Html::a('Kích hoạt tài khoản', ['update-status', 'type' => User::STATUS_ACTIVE, 'id' => $model->id],
-                                ['class' => 'btn btn-success']) ?>
-                        <?php } ?>
-                        <?php if ($model->status == User::STATUS_ACTIVE) { ?>
-                        <?= Html::a('Khóa tài khoản', ['update-status', 'type' => User::STATUS_INACTIVE, 'id' => $model->id],
-                            ['class' => 'btn btn-danger']) ?>
-                        <?php } ?>
-                    </div>
-                    <br/>
-                <?php } ?>
                 <div class="tabbable-custom ">
                     <ul class="nav nav-tabs ">
                         <li class="<?= ($active == 1) ? 'active' : '' ?>">

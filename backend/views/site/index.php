@@ -6,7 +6,7 @@ $this->title = 'Trang chủ';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>VNDONOR</h1>
+        <h1>G4AW</h1>
 
         <p class="lead">TRANG QUẢN TRỊ</p>
 

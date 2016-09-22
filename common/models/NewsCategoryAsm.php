@@ -13,6 +13,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $category_id
  * @property integer $created_at
  * @property integer $updated_at
+ * @property Category $category
  */
 class NewsCategoryAsm extends \yii\db\ActiveRecord
 {

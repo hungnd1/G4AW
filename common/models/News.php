@@ -11,7 +11,6 @@ use yii\helpers\Url;
  * This is the model class for table "{{%news}}".
  *
  * @property integer $id
- * @property integer $campaign_id
  * @property string $title
  * @property string $title_ascii
  * @property string $content
@@ -26,6 +25,10 @@ use yii\helpers\Url;
  * @property integer $comment_count
  * @property integer $favorite_count
  * @property integer $honor
+ * @property string $title_en
+ * @property string $content_en
+ * @property integer $area_id
+ * @property string $short_description_en
  * @property string $source_name
  * @property string $source_url
  * @property integer $status
@@ -34,14 +37,10 @@ use yii\helpers\Url;
  * @property integer $updated_at
  * @property integer $published_at
  * @property integer $user_id
- * @property integer $all_village
- * @property integer $lead_donor_id
- * @property string $price
  * @property integer $category_id
  *
- * @property Campaign $campaign
- * @property LeadDonor $leadDonor
  * @property User $user
+ * @property Category $category
  * @property NewsCategoryAsm $newsCategoryAsms
  */
 class News extends \yii\db\ActiveRecord
@@ -53,12 +52,10 @@ class News extends \yii\db\ActiveRecord
 
     const LIST_EXTENSION = '.jpg,.png';
 
-    const TYPE_IDEA = 1;
-    const TYPE_TRADE = 2;
-    const TYPE_DONOR = 3;
-    const TYPE_VILLAGE = 4;
-    const TYPE_COMMON = 5;
-    const TYPE_CAMPAIGN = 6;
+    const TYPE_KNOW = 1;
+    const TYPE_MARKET = 2;
+    const TYPE_HEALTH = 3;
+    const TYPE_NEW = 5;
 
     public $village_array;
     public $category_id;
@@ -84,52 +81,16 @@ class News extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['campaign_id', 'type', 'view_count', 'like_count', 'comment_count', 'favorite_count', 'honor',
-                'status', 'created_user_id', 'created_at', 'updated_at', 'user_id',
-                'all_village', 'lead_donor_id', 'category_id', 'published_at'], 'integer'],
-            [['title', 'user_id'], 'required'],
+            [[ 'type', 'view_count', 'like_count', 'comment_count', 'favorite_count', 'honor',
+                'status', 'created_user_id', 'created_at', 'updated_at', 'user_id','area_id', 'category_id', 'published_at'], 'integer'],
+            [['title','title_en', 'user_id'], 'required'],
             [['thumbnail'], 'required', 'on' => 'create'],
-            [['content', 'description'], 'string'],
+            [['content','content_en', 'description'], 'string'],
             [['title', 'title_ascii', 'thumbnail'], 'string', 'max' => 512],
-            [['tags', 'source_name', 'source_url', 'price'], 'string', 'max' => 200],
-            [['short_description', 'video_url'], 'string', 'max' => 500],
+            [['tags', 'source_name', 'source_url'], 'string', 'max' => 200],
+            [['short_description','short_description_en', 'video_url'], 'string', 'max' => 500],
             [['thumbnail'], 'image', 'extensions' => 'png,jpg,jpeg,gif',
                 'maxSize' => 1024 * 1024 * 10, 'tooBig' => 'Ảnh upload vượt quá dung lượng cho phép!'
-            ],
-
-            [['village_array', 'price'], 'required', 'when' => function ($model) {
-                return $model->type == self::TYPE_TRADE;
-            },
-                'whenClient' => "function (attribute, value) {
-                    return $('#type').val() == '" . self::TYPE_TRADE . "';
-                }",
-                'on' => ['create', 'update']
-            ],
-
-            [['village_array'], 'required', 'when' => function ($model) {
-                return $model->type == self::TYPE_IDEA;
-            },
-                'whenClient' => "function (attribute, value) {
-                    return $('#type').val() == " . self::TYPE_IDEA . ";
-                }",
-                'on' => ['create', 'update']
-            ],
-
-            [['campaign_id'], 'required', 'when' => function ($model) {
-                return $model->type == self::TYPE_CAMPAIGN;
-            },
-                'whenClient' => "function (attribute, value) {
-                    return $('#type').val() == " . self::TYPE_CAMPAIGN . ";
-                }",
-                'on' => ['create', 'update']
-            ],
-
-            [['lead_donor_id'], 'required', 'when' => function ($model) {
-                return $model->type == self::TYPE_DONOR;
-            },
-                'whenClient' => "function (attribute, value) {
-                    return $('#type').val() == " . self::TYPE_DONOR . ";
-                }", 'on' => ['create', 'update']
             ],
         ];
     }
@@ -141,14 +102,17 @@ class News extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'campaign_id' => Yii::t('app', 'Chiến dịch'),
             'title' => Yii::t('app', 'Tiêu đề'),
+            'title_en' => Yii::t('app', 'Tiêu đề tiếng anh'),
             'title_ascii' => Yii::t('app', 'Title Ascii'),
             'content' => Yii::t('app', 'Nội dung'),
+            'content_en' => Yii::t('app', 'Nội dung tiếng anh'),
             'thumbnail' => Yii::t('app', 'Ảnh đại diện'),
             'type' => Yii::t('app', 'Loại bài viết'),
+            'area_id' => Yii::t('app', 'Vùng'),
             'tags' => Yii::t('app', 'Tags'),
             'short_description' => Yii::t('app', 'Mô tả ngắn'),
+            'short_description_en' => Yii::t('app', 'Mô tả ngắn tiếng anh'),
             'description' => Yii::t('app', 'Mô tả'),
             'video_url' => Yii::t('app', 'Video Url'),
             'view_count' => Yii::t('app', 'View Count'),
@@ -163,9 +127,6 @@ class News extends \yii\db\ActiveRecord
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'user_id' => Yii::t('app', 'User ID'),
-            'price' => Yii::t('app', 'Giá'),
-            'village_array' => Yii::t('app', 'Xã'),
-            'lead_donor_id' => Yii::t('app', 'Danh nghiệp đỡ đầu'),
             'category_id' => Yii::t('app', 'Danh mục'),
         ];
     }
@@ -182,18 +143,8 @@ class News extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCampaign()
-    {
-        return $this->hasOne(Campaign::className(), ['id' => 'campaign_id']);
-    }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getLeadDonor()
-    {
-        return $this->hasOne(LeadDonor::className(), ['id' => 'lead_donor_id']);
-    }
+
 
     /**
      * @return \yii\db\ActiveQuery
@@ -240,11 +191,10 @@ class News extends \yii\db\ActiveRecord
     public static function listType()
     {
         $lst = [
-            self::TYPE_COMMON => 'Tin tức chung',
-            self::TYPE_IDEA => 'Tin tức ý tưởng',
-            self::TYPE_DONOR => 'Tin tức DN đỡ đầu',
-            self::TYPE_TRADE => 'Tin tức giao thương',
-            self::TYPE_CAMPAIGN => 'Tin tức chiến dịch',
+            self::TYPE_NEW => 'Tin tức',
+            self::TYPE_HEALTH => 'Sức khỏe đời sống',
+            self::TYPE_MARKET => 'Chợ nhà nông',
+            self::TYPE_KNOW => 'Nhà nông nên biết',
         ];
         return $lst;
     }
@@ -293,35 +243,15 @@ class News extends \yii\db\ActiveRecord
         return $content;
     }
 
-    public static function listNews($campaign_id = 0)
+
+    public function getCategory()
     {
-        $query = static::find()->andWhere(['status' => News::STATUS_ACTIVE]);
-
-        if ($campaign_id > 0) {
-            $query->andWhere(['campaign_id' => $campaign_id]);
-        }
-
-        $provider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'defaultPageSize' => 20,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'created_at' => SORT_DESC,
-                ]
-            ],
-        ]);
-        return $provider;
-    }
-
-    public function getListVillage()
-    {
-        /** @var NewsVillageAsm[] $asm */
-        $asm = NewsVillageAsm::find()->andWhere(['news_id' => $this->id])->all();
+        /** @var NewsCategoryAsm[] $asm */
+        $asm = NewsCategoryAsm::find()->andWhere(['news_id' => $this->id])->all();
         $rs = '';
         foreach ($asm as $item) {
-            $rs .= $item->village->name . ',';
+            $category = Category::findOne(['id'=>$item->category_id]);
+            $rs .= $category->display_name . ',';
         }
         $rs = $rs ? substr($rs, 0, strlen($rs) - 1) : $rs;
         return $rs;

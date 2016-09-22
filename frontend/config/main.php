@@ -15,15 +15,11 @@ return [
     'aliases' => [
         '@cat_image' => 'cat_image',
         '@uploads' => 'uploads',
+        '@area_image' => 'area_image',
         '@images' => 'images',
-        '@village_image' => 'village_image',
-        '@lead_donor_image'=>'lead_donor_image',
         '@file_upload'=>'file_upload',
         '@news_image'=>'news_image',
         '@avatar'=>'avatar',
-        '@bank_image'=>'bank_image',
-        '@donation_uploads'=>'donation_uploads',
-        '@lead_donor_video'=>'lead_donor_video'
     ],
     'components' => [
         'user' => [

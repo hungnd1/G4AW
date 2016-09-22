@@ -36,7 +36,6 @@ AppAsset::register($this);
     <?php
 
     NavBar::begin([
-        'brandLabel' => '<img src="' . Url::to("@web/img/logo-big.png") . '" alt="logo" class="logo-default"/>',
         'brandUrl' => Yii::$app->homeUrl,
         'brandOptions' => [
             'class' => 'page-logo'
@@ -110,71 +109,13 @@ NavBar::begin([
 ]);
 
 $menuItems = [
-    [
-        'label' => 'QL Chiến dịch',
-        'url' => 'javascript:;',
-        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
-        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
-        'items' => [
-            [
-                'encode' => false,
-                'label' => 'Danh sách chiến dịch',
-                'url' => ['campaign/index'],
-            ],
-            [
-                'encode' => false,
-                'label' => 'Phát triển cộng đồng',
-                'url' => ['campaign/create'],
-            ],
-            [
-                'encode' => false,
-                'label' => 'Những tấm lòng nhân ái',
-                'url' => ['donation-request/index'],
-            ],
-            [
-                'encode' => false,
-                'label' => 'Danh mục ủng hộ',
-                'url' => ['donation-item/index'],
-            ],
-        ]
-    ],
-    [
-        'label' => 'QL xã',
-        'url' => ['village/index']
-    ],
-    [
-        'label' => 'QL doanh nghiệp đỡ đầu',
-        'url' => ['lead-donor/index']
-    ],
-//        [
-//            'label' => 'Quản lý xã',
-//            'url' => 'javascript:;',
-//            'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
-//            'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
-//            'items' => [
-//                [
-//                    'encode' => false,
-//                    'label' => 'Quản lý xã',
-//                    'url' => ['village/index'],
-//                ],
-//                [
-//                    'encode' => false,
-//                    'label' => 'Xã của tôi',
-//                    'url' => ['village/view_my_village',"id" => Yii::$app->user->identity->village_id],
-//                ],
-//                [
-//                    'encode' => false,
-//                    'label' => 'Quản lý doanh nghiệp đỡ đầu',
-//                    'url' => ['lead-donor/index'],
-//                ],
-//                [
-//                    'encode' => false,
-//                    'label' => 'Doanh nghiệp của tôi',
-//                    'url' => ['lead-donor/view_my_lead_donor',"id" => Yii::$app->user->identity->lead_donor_id],
-//                ],
-//            ]
-//        ],
 
+    [
+        'label' => 'QL Vùng',
+        'url' => ['area/index'],
+        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
+        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true']
+    ],
     [
         'label' => 'QL Tin tức',
         'url' => 'javascript:;',
@@ -184,41 +125,66 @@ $menuItems = [
             [
                 'encode' => false,
                 'label' => 'Danh mục tin tức',
-                'url' => ['category/index'],
+                'url' => ['category/index','type' => \common\models\News::TYPE_NEW],
             ],
             [
                 'encode' => false,
-                'label' => 'Tin tức chung',
-                'url' => ['news/index', 'type' => \common\models\News::TYPE_COMMON],
+                'label' => 'Quản lý tin tức',
+                'url' => ['news/index', 'type' => \common\models\News::TYPE_NEW],
+            ],
+        ]
+    ],
+    [
+        'label' => 'Nhà nông cần biết',
+        'url' => 'javascript:;',
+        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
+        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
+        'items' => [
+            [
+                'encode' => false,
+                'label' => 'Danh mục nhà nông',
+                'url' => ['category/index','type' => \common\models\News::TYPE_KNOW],
             ],
             [
                 'encode' => false,
-                'label' => 'Tin tức chiến dịch',
-                'url' => ['news/index', 'type' => \common\models\News::TYPE_CAMPAIGN],
+                'label' => 'Tin tức nhà nông',
+                'url' => ['news/index', 'type' => \common\models\News::TYPE_KNOW],
+            ],
+        ]
+    ],
+    [
+        'label' => 'Chợ nhà nông',
+        'url' => 'javascript:;',
+        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
+        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
+        'items' => [
+            [
+                'encode' => false,
+                'label' => 'Danh mục chợ nhà nông',
+                'url' => ['category/index','type' => \common\models\News::TYPE_MARKET],
             ],
             [
                 'encode' => false,
-                'label' => 'Tin tức về DN đỡ đầu',
-                'url' => ['news/index', 'type' => \common\models\News::TYPE_DONOR],
+                'label' => 'Tin tức chợ nhà nông',
+                'url' => ['news/index', 'type' => \common\models\News::TYPE_MARKET],
+            ],
+        ]
+    ],
+    [
+        'label' => 'Sức khỏe đời sống',
+        'url' => 'javascript:;',
+        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
+        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
+        'items' => [
+            [
+                'encode' => false,
+                'label' => 'Danh mục sức khỏe đời sống',
+                'url' => ['category/index','type' => \common\models\News::TYPE_HEALTH],
             ],
             [
                 'encode' => false,
-                'label' => 'Tin tức về xã',
-                'url' => 'javascript:;',
-                'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
-                'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
-                'items' => [
-                    [
-                        'encode' => false,
-                        'label' => 'Ý tưởng',
-                        'url' => ['news/index', 'type' => \common\models\News::TYPE_IDEA],
-                    ],
-                    [
-                        'encode' => false,
-                        'label' => 'Giao thương',
-                        'url' => ['news/index', 'type' => \common\models\News::TYPE_TRADE],
-                    ],
-                ]
+                'label' => 'Tin tức sức khỏe đời sống',
+                'url' => ['news/index', 'type' => \common\models\News::TYPE_HEALTH],
             ],
         ]
     ],
@@ -327,7 +293,7 @@ NavBar::end();
 <!-- BEGIN FOOTER -->
 <div class="page-footer">
     <div class="container-fluid">
-        <p><b>&copy;Copyright <?php echo date('Y'); ?> </b>. vnDonor-CMS by VIVAS Co.,Ltd.</p>
+        <p><b>&copy;Copyright <?php echo date('Y'); ?> </b>. G4AW-CMS by hungnd .,Ltd.</p>
     </div>
 </div>
 <div class="scroll-to-top">

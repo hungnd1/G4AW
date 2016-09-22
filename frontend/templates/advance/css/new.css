@@ -914,8 +914,9 @@ h2.title-cm p{
   clear: left;
 }
 .logo-cp img{
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
+  margin-right: 20px;
   border:1px solid #ccc;
 }
 
@@ -956,7 +957,7 @@ h2.title-cm p{
   float: left;
   margin-right: 2%;
 }
-.campain:nth-child(3n){
+.campain:nth-child(4n){
   float: right;
 }
 
@@ -2311,7 +2312,7 @@ table.tab-pac-course tr:first-child td:last-child{
   display: inline-block;
 }
 .post-related .news{
-    width: 31%;
+    width: 29%;
     float: left;
     margin-right: 3.33%;
 }
@@ -2993,19 +2994,19 @@ table.tab-pac-course tr:first-child td:last-child{
 }
 .list-item .news {
   float: left;
-  width: 31%;
+  width: 19%;
   position: relative;
   display: inline-block;
   padding-bottom: 20px;
   overflow: hidden;
+  margin-right: 3.333%;
   background: #FFF;
 }
 .news:nth-child(3n+1){
   float: left;
-  margin-right: 3.333%;
+  margin-right: 4.333%;
 }
-.news:nth-child(3n){
-  float: right;
+.news:nth-child(4n){
 }
 
 
@@ -3724,7 +3725,7 @@ span.bt-edit{
 }
 .cate-news ul li{
   float: left;
-  width: 25%;
+  width: 20%;
   margin-bottom: 10px;
   padding-left: 1%;
 }

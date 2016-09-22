@@ -39,14 +39,19 @@ class CategoryController extends Controller
      * Lists all Category models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($type = News::TYPE_NEW)
     {
+        $model = new Category();
         $searchModel = new CategorySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $params = Yii::$app->request->queryParams;
+        $params['CategorySearch']['type'] = $type;
+        $dataProvider = $searchModel->search($params);
 
         return $this->render('index', [
+            'model'=>$model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'type' => $type,
         ]);
     }
 
@@ -67,10 +72,10 @@ class CategoryController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($type = News::TYPE_NEW)
     {
         $model = new Category();
-
+        $model->type = $type;
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
@@ -111,7 +116,7 @@ class CategoryController extends Controller
                 }
                 if ($model->save()) {
                     Yii::$app->getSession()->setFlash('success', 'Tạo danh mục tin tức thành công');
-                    return $this->redirect(['index']);
+                    return $this->redirect(['index','type' => $type]);
                 } else {
                     Yii::$app->getSession()->setFlash('success', 'Lỗi hệ thống, vui lòng thử lại');
                     Yii::info($model->getErrors());
@@ -124,6 +129,7 @@ class CategoryController extends Controller
         }
         return $this->render('create', [
             'model' => $model,
+            'type' => $type
         ]);
     }
 
@@ -142,20 +148,14 @@ class CategoryController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post())){
-            $check = Category::find()->andWhere("status != :status")->addParams([':status'=>Category::STATUS_DELETED])->andWhere(['display_name'=> $model->display_name])->one();
-            if(isset($check)) {
-                Yii::$app->getSession()->setFlash('error', 'Tên danh mục đã tồn tại. Vui lòng chọn tên khác!');
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
-            }
             if($model->save()) {
                 Yii::$app->session->setFlash('success', 'Cập nhật danh mục tin tức thành công!');
-                return $this->redirect(['index']);
+                return $this->redirect(['index','type'=>$model->type]);
             }
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'type'=>$model->type
             ]);
         }
     }

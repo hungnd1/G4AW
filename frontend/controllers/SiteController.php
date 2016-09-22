@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\helpers\Brandname;
+use common\models\Area;
 use common\models\Campaign;
 use common\models\Category;
 use common\models\Comment;
@@ -95,39 +96,26 @@ class SiteController extends BaseController
      */
     public function actionIndex($id = 0, $filter = null)
     {
-        $listNewest = null;
-        $listProvince = null;
-        $listVillage = null;
-        $listCategory = null;
 
+        $listSlide  = News::find()->andWhere(['status'=>News::STATUS_ACTIVE])
+            ->orderBy(['created_at'=>SORT_DESC])->limit(6)->all();
 
+        $listArea = Area::find()->andWhere(['status'=>Area::STATUS_ACTIVE])->all();
 
-        $listCategory = Category::find()->andWhere(['status' => Category::STATUS_ACTIVE])->all();
-        $listProvince = Province::find()->andWhere(['status' => Province::STATUS_ACTIVE])->orderBy(['name'=>SORT_ASC])->all();
-        $newsQuery = Village::find()
-            ->andWhere(['status' => Village::STATUS_ACTIVE])
-            ->orderBy('name')->limit(10);
-        $countQuery = clone $newsQuery;
-        $pages = new Pagination(['totalCount' => $countQuery->count()]);
-        $listVillage = $newsQuery->all();
+        $listNew  = News::find()->andWhere(['status'=>News::STATUS_ACTIVE])->andWhere(['type'=>News::TYPE_NEW])
+            ->orderBy(['created_at'=>SORT_DESC])->limit(8)->all();
 
-        $listNewest = News::find()->andWhere(['status' => News::STATUS_ACTIVE])
-            ->orderBy(['published_at' => SORT_DESC, 'updated_at' => SORT_DESC])->limit(3)->all();
-        $listCampaign = News::find()->andWhere(['status' => News::STATUS_ACTIVE])
-            ->andWhere(['type' => News::TYPE_COMMON])
-            ->orderBy(['published_at' => SORT_DESC, 'updated_at' => SORT_DESC])->limit(3)->all();
-//        $listCampaign = Campaign::find()
-//            ->innerJoin('village','village.id = campaign.village_id')
-//            ->andWhere(['village.status'=>Village::STATUS_ACTIVE])
-//            ->andWhere(['campaign.status' => Campaign::STATUS_ACTIVE])
-//            ->andWhere('campaign.donation_request_id is null or campaign.donation_request_id  = 0')
-//            ->orderBy(['campaign.created_at' => SORT_DESC])->limit(3)->all();
-        $listLeadDonor = LeadDonor::find()->andWhere(['status' => LeadDonor::STATUS_ACTIVE])
-            ->orderBy(['name' => SORT_ASC])->all();
-        return $this->render('index', ['listProvince' => $listProvince, 'listVillage' => $listVillage, 'listNewest' => $listNewest
-            , 'listCampaign' => $listCampaign, 'listLeadDonor' => $listLeadDonor,
-            'pages'=>$pages,
-            'listCategory' => $listCategory]);
+        $listNewCategory = Category::find()->andWhere(['status'=>Category::STATUS_ACTIVE])->andWhere(['type'=>Category::TYPE_NEW])
+            ->orderBy(['order_number'=>SORT_ASC])->all();
+
+        $listKnow  = News::find()->andWhere(['status'=>News::STATUS_ACTIVE])->andWhere(['type'=>News::TYPE_KNOW])
+            ->orderBy(['created_at'=>SORT_DESC])->limit(8)->all();
+
+        $listKnowCategory = Category::find()->andWhere(['status'=>Category::STATUS_ACTIVE])->andWhere(['type'=>Category::TYPE_KNOW])
+            ->orderBy(['order_number'=>SORT_ASC])->all();
+
+        return $this->render('index',['listNew'=>$listNew,'listSlide'=>$listSlide,'listArea'=>$listArea,
+        'listNewCategory'=>$listNewCategory,'listKnow'=>$listKnow,'listKnowCategory'=>$listKnowCategory]);
     }
 
     public function actionRules()
@@ -142,68 +130,13 @@ class SiteController extends BaseController
             ->innerJoin('category', 'news_category_asm.category_id = category.id')
             ->andWhere(['category.id' => $id])
             ->andWhere(['news.status' => News::STATUS_ACTIVE])
-            ->orderBy(['news.published_at' => SORT_DESC, 'news.updated_at' => SORT_DESC])->limit(3)
+            ->orderBy(['news.published_at' => SORT_DESC, 'news.updated_at' => SORT_DESC])->limit(8)
             ->all();
         return $this->renderPartial('news_category', ['listNewest' => $listCategory]);
     }
 
-    public function actionGetVillage()
-    {
-        $listComment = null;
-
-        $id = $this->getParameter('id', 0);
-        $filter = $this->getParameter('filter', null);
-
-        if ($id == 0 && $filter == null && $filter == '') {
-            $newsQuery = Village::find()->andWhere(['status' => Village::STATUS_ACTIVE])
-                ->orderBy(['name' => SORT_ASC])->limit(10);
-            $countQuery = clone $newsQuery;
-            $pages = new Pagination(['totalCount' => $countQuery->count()]);
-            $listVillage = $newsQuery->all();
-        } else if ($id > 0) {
-            $newsQuery = Village::find()->andWhere(['status' => Village::STATUS_ACTIVE])
-                ->andWhere(['district_id'=>$id])
-                ->orderBy(['name' => SORT_ASC])->limit(10);
-            $countQuery = clone $newsQuery;
-            $pages = new Pagination(['totalCount' => $countQuery->count()]);
-            $listVillage = $newsQuery->all();
-        } else {
-            $newsQuery = Village::find()
-                ->andWhere(['status' => Village::STATUS_ACTIVE])
-                ->andWhere(['like', 'mid(lower(name),1,1)', strtolower($filter)])
-                ->orderBy(['name' => SORT_ASC])
-                ->limit(10);
-            $countQuery = clone $newsQuery;
-            $pages = new Pagination(['totalCount' => $countQuery->count()]);
-            $listVillage = $newsQuery->all();
-        }
-        return $this->renderPartial('_listVillage', ['listVillage' => $listVillage,'pages'=>$pages]);
-    }
 
 
-    public function actionGetVillages()
-    {
-        $listComment = null;
-        $page = $this->getParameter('page');
-
-        $id = $this->getParameter('id', 0);
-        $filter = $this->getParameter('filter', null);
-        if ($id == 0 && $filter == null && $filter == '') {
-            $listVillage = Village::find()->andWhere(['status' => Village::STATUS_ACTIVE])
-                ->orderBy(['name' => SORT_ASC])->limit(10)->offset($page)->all();
-        } else if ($id > 0) {
-            $listVillage = Village::find()->andWhere(['status' => Village::STATUS_ACTIVE])
-                ->andWhere(['district_id'=>$id])
-                ->orderBy(['name' => SORT_ASC])->limit(10)->offset($page)->all();
-        } else {
-            $listVillage = Village::find()
-                ->andWhere(['status' => Village::STATUS_ACTIVE])
-                ->andWhere(['like', 'mid(lower(name),1,1)', strtolower($filter)])
-                ->orderBy(['name' => SORT_ASC])
-                ->limit(10)->offset($page)->all();
-        }
-        return $this->renderPartial('_listVillageMore', ['listVillage' => $listVillage]);
-    }
 
     /**
      * Logs in a user.
@@ -482,13 +415,7 @@ class SiteController extends BaseController
         $keyword = FormatNumber::standardStringPreventSqlInjection($keyword);
         $keyword = strtolower($keyword);
 
-        $sql = "select distinct c.name as name,c.id,c.short_description as description, 1 as type from campaign c inner join village v on v.id = c.village_id  where  v.status = 10 and lower(c.name) like :keyword or lower(c.short_description) like :keyword and c.status = 10";
-        $sql .= " union all";
-        $sql .= " select distinct title as name,id,short_description as description,2 as type from news where lower(title) like :keyword or lower(short_description) like :keyword and status = 10";
-        $sql .= " union all";
-        $sql .= " select distinct name collate utf8_unicode_ci,id,description, 3 as type from village   where lower(name) like :keyword or lower(description) like :keyword and status = 10 ";
-        $sql .= " union all";
-        $sql .= " select distinct name,id, description,4 as type from lead_donor where lower(name) like :keyword or lower(description) like :keyword and status = 10";
+        $sql = " select distinct title as name,id,short_description as description,2 as type from news where lower(title) like :keyword or lower(short_description) like :keyword and status = 10";
         $sql .= " LIMIT " . $page_start . " , " . $page_end;
 
         $command = Yii::$app->db->createCommand($sql);
@@ -511,13 +438,7 @@ class SiteController extends BaseController
     public function countNumber($keyword)
     {
 
-        $sql = "select distinct name as name,id,short_description as description, 1 as type from campaign where name like :keyword or short_description like :keyword";
-        $sql .= " union all";
-        $sql .= " select distinct title as name,id,short_description as description,2 as type from news where title like :keyword or short_description like :keyword";
-        $sql .= " union all";
-        $sql .= " select distinct name collate utf8_unicode_ci,id,description, 3 as type from village   where name like :keyword or description like :keyword ";
-        $sql .= " union all";
-        $sql .= " select distinct name,id, description,4 as type from lead_donor where name like :keyword or description like :keyword";
+        $sql = " select distinct title as name,id,short_description as description,2 as type from news where title like :keyword or short_description like :keyword";
 
         $command = Yii::$app->db->createCommand($sql);
         $command->bindValue(":keyword", "%$keyword%", PDO::PARAM_STR);
@@ -526,9 +447,4 @@ class SiteController extends BaseController
     }
 
 
-    public function actionLeadDonor()
-    {
-        $listDonor = LeadDonor::findAll(['status' => LeadDonor::STATUS_ACTIVE]);
-        return $this->render('lead_donor', ['listDonor' => $listDonor]);
-    }
 }

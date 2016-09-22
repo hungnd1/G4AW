@@ -5,10 +5,11 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
+/* @var $model common\models\Category */
 /* @var $searchModel common\models\CategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Danh mục tin tức';
+$this->title = 'Danh mục '.$model->listType($type);
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -27,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="portlet-body">
                 <p>
-                    <?= Html::a('Thêm mới', ['create'], ['class' => 'btn btn-success']) ?>
+                    <?= Html::a('Thêm mới', ['create','type'=>$type], ['class' => 'btn btn-success']) ?>
                 </p>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
@@ -50,6 +51,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             'format' => 'html',
                             'value' => function ($model, $key, $index, $widget) {
                                 return Html::a($model->display_name, ['update', 'id' => $model->id], ['class' => 'label label-primary']);
+                            },
+
+                        ],
+                        [
+                            'class' => '\kartik\grid\DataColumn',
+                            'attribute' => 'display_name_en',
+                            'format' => 'html',
+                            'value' => function ($model, $key, $index, $widget) {
+                                return Html::a($model->display_name_en, ['update', 'id' => $model->id], ['class' => 'label label-primary']);
                             },
 
                         ],
