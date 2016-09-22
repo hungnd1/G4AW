@@ -18,6 +18,7 @@ Thumbs.db
 # composer vendor dir
 /vendor
 /forum1
+/vendor.zip
 
 # composer itself is not needed
 composer.phar
