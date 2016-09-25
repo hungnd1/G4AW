@@ -4,7 +4,7 @@
 use common\models\Category;
 use yii\helpers\Url;
 
-$this->title = 'VNDONOR';
+$this->title = 'G4WA';
 /** @var \common\models\User $user */
 $user = null;
 if (!Yii::$app->user->isGuest) {
@@ -213,126 +213,9 @@ if (!Yii::$app->user->isGuest) {
 
     <!--end list CT block-->
 
-
-    <!-- List NEW block-->
-
-    <div class="container">
-        <div class="news-block cm-block">
-            <h2>CHỢ NHÀ NÔNG<a href="<?= Url::toRoute(['news/index']) ?>"><span>Tất cả</span><i
-                        class="fa fa-chevron-right"></i></a></h2>
-            <div class="cate-news">
-                <ul>
-                    <?php if (isset($listNewCategory) && !empty($listNewCategory)) {
-                        foreach ($listNewCategory as $item) {
-                            /** @var $item \common\models\Category */
-                            ?>
-                            <li><a onclick="loadCategoryNews(<?= $item->id ?>)"><?= $item->display_name ?></a></li>
-                        <?php }
-                    } else { ?>
-                        <li><a href="">Chính sách phát triển</a></li>
-                        <li><a href="">Chính sách phát triển</a></li>
-                        <li><a href="">Chính sách phát triển</a></li>
-                        <li><a href="">Chính sách phát triển</a></li>
-                        <li><a href="">Chính sách phát triển</a></li>
-                        <li><a href="">Chính sách phát triển của bộ KHDT</a></li>
-                        <li><a href="">Chính sách phát triển</a></li>
-                        <li><a href="">Chính sách phát triển</a></li>
-                    <?php } ?>
-                </ul>
-            </div>
-            <div class="list-item">
-                <?php if (isset($listNew) && !empty($listNew)) {
-                    /** @var \common\models\News $item */
-                    foreach ($listNew as $item) {
-                        $thumbnail = $item->getThumbnailLink();
-                        ?>
-                        <div class="news">
-                            <div class="thumb-common">
-                                <img src="../img/blank.gif">
-                                <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>"><img class="thumb-cm"
-                                                                                                       src="<?= $thumbnail ?>"><br></a>
-                            </div>
-                            <div class="if-cm-2">
-                                <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>"><h3
-                                        class="name-1"><?= $item->title ?></h3><br></a>
-                                <span
-                                    class="des-cm-1"><?= str_replace(mb_substr($item->short_description, 100, strlen($item->short_description), 'utf-8'), '...', $item->short_description) ?>
-                                    <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>" class="read-more">Đọc
-                                        thêm</a></span>
-                            </div>
-                        </div>
-                    <?php }
-                } ?>
-            </div>
-        </div>
-    </div>
-
-    <!--end list CT block-->
-
-
-    <!-- List NEW block-->
-
-    <div class="container">
-        <div class="news-block cm-block">
-            <h2>SỨC KHỎE CỘNG ĐỒNG<a href="<?= Url::toRoute(['news/index']) ?>"><span>Tất cả</span><i
-                        class="fa fa-chevron-right"></i></a></h2>
-            <div class="cate-news">
-                <ul>
-                    <?php if (isset($listNewCategory) && !empty($listNewCategory)) {
-                        foreach ($listNewCategory as $item) {
-                            /** @var $item \common\models\Category */
-                            ?>
-                            <li><a onclick="loadCategoryNews(<?= $item->id ?>)"><?= $item->display_name ?></a></li>
-                        <?php }
-                    } else { ?>
-                        <li><a href="">Chính sách phát triển</a></li>
-                        <li><a href="">Chính sách phát triển</a></li>
-                        <li><a href="">Chính sách phát triển</a></li>
-                        <li><a href="">Chính sách phát triển</a></li>
-                        <li><a href="">Chính sách phát triển</a></li>
-                        <li><a href="">Chính sách phát triển của bộ KHDT</a></li>
-                        <li><a href="">Chính sách phát triển</a></li>
-                        <li><a href="">Chính sách phát triển</a></li>
-                    <?php } ?>
-                </ul>
-            </div>
-            <div class="list-item">
-                <?php if (isset($listNew) && !empty($listNew)) {
-                    /** @var \common\models\News $item */
-                    foreach ($listNew as $item) {
-                        $thumbnail = $item->getThumbnailLink();
-                        ?>
-                        <div class="news">
-                            <div class="thumb-common">
-                                <img src="../img/blank.gif">
-                                <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>"><img class="thumb-cm"
-                                                                                                       src="<?= $thumbnail ?>"><br></a>
-                            </div>
-                            <div class="if-cm-2">
-                                <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>"><h3
-                                        class="name-1"><?= $item->title ?></h3><br></a>
-                                <span
-                                    class="des-cm-1"><?= str_replace(mb_substr($item->short_description, 100, strlen($item->short_description), 'utf-8'), '...', $item->short_description) ?>
-                                    <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>" class="read-more">Đọc
-                                        thêm</a></span>
-                            </div>
-                        </div>
-                    <?php }
-                } ?>
-            </div>
-        </div>
-    </div>
-
-    <!--end list CT block-->
-
-
-
-
-    <!--Customer block-->
-
-    <div class="container">
+    <div class="container" >
         <div class="banner-block clearfix">
-            <img src="../img/banner2.png">
+            <img src="../img/banners.jpg">
         </div>
     </div>
 
@@ -344,12 +227,11 @@ if (!Yii::$app->user->isGuest) {
             <h2>Các đơn vị liên kết<a href="<?= Url::toRoute(['site/lead-donor']) ?>"><span>Tất cả</span><i
                         class="fa fa-chevron-right"></i></a></h2>
             <ul class="bxslider3">
-                <?php if (isset($listLeadDonor) && !empty($listLeadDonor)) {
-                    foreach ($listLeadDonor as $item) {
-                        /** @var $item \common\models\LeadDonor */ ?>
-                        <li><a href="<?= Url::toRoute(['donor/view', 'id' => $item->id]) ?>"><img
-                                    src="<?= $item->getImageLink() ?>">
-                                <h3><?= $item->name ?></h3>
+                <?php if (isset($listUnit) && !empty($listUnit)) {
+                    foreach ($listUnit as $item) {
+                        /** @var $item \common\models\UnitLink */ ?>
+                        <li style="width: 400px;"><a target="_blank" href="<?= $item->link ?>"><img
+                                    src="<?= $item->getThumbnailLink() ?>">
                             </a></li>
                     <?php }
                 } else { ?>

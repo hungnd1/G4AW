@@ -111,8 +111,27 @@ NavBar::begin([
 $menuItems = [
 
     [
-        'label' => 'QL Vùng',
-        'url' => ['area/index'],
+        'label' => 'QL Vùng,Xã',
+        'url' => 'javascript:;',
+        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
+        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
+        'items' => [
+            [
+                'encode' => false,
+                'label' => 'Quản lý vùng',
+                'url' => ['area/index'],
+            ],
+            [
+                'encode' => false,
+                'label' => 'Quản lý xã',
+                'url' => ['area/index'],
+            ],
+        ]
+
+    ],
+    [
+        'label' => 'QL Đơn vị liên kết',
+        'url' => ['unit-link/index'],
         'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
         'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true']
     ],
@@ -135,7 +154,7 @@ $menuItems = [
         ]
     ],
     [
-        'label' => 'Nhà nông cần biết',
+        'label' => 'Nhà nông nên biết',
         'url' => 'javascript:;',
         'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
         'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
@@ -149,42 +168,6 @@ $menuItems = [
                 'encode' => false,
                 'label' => 'Tin tức nhà nông',
                 'url' => ['news/index', 'type' => \common\models\News::TYPE_KNOW],
-            ],
-        ]
-    ],
-    [
-        'label' => 'Chợ nhà nông',
-        'url' => 'javascript:;',
-        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
-        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
-        'items' => [
-            [
-                'encode' => false,
-                'label' => 'Danh mục chợ nhà nông',
-                'url' => ['category/index','type' => \common\models\News::TYPE_MARKET],
-            ],
-            [
-                'encode' => false,
-                'label' => 'Tin tức chợ nhà nông',
-                'url' => ['news/index', 'type' => \common\models\News::TYPE_MARKET],
-            ],
-        ]
-    ],
-    [
-        'label' => 'Sức khỏe đời sống',
-        'url' => 'javascript:;',
-        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
-        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
-        'items' => [
-            [
-                'encode' => false,
-                'label' => 'Danh mục sức khỏe đời sống',
-                'url' => ['category/index','type' => \common\models\News::TYPE_HEALTH],
-            ],
-            [
-                'encode' => false,
-                'label' => 'Tin tức sức khỏe đời sống',
-                'url' => ['news/index', 'type' => \common\models\News::TYPE_HEALTH],
             ],
         ]
     ],

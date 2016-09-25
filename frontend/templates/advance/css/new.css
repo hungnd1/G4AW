@@ -115,7 +115,7 @@ a:hover{
 .header {
   z-index: 9;
   width: 100%;
-  height: 80px;
+  height: 50px;
   padding: 0;
   background: #fff ;
   z-index: 999;
@@ -916,8 +916,7 @@ h2.title-cm p{
 .logo-cp img{
   width: 30px;
   height: 30px;
-  margin-right: 20px;
-  border:1px solid #ccc;
+  margin-right: 0px;
 }
 
 .bar{
@@ -989,6 +988,7 @@ h2.title-cm p{
 
 .banner-block{
   width: 100%;
+  height:350px;
   margin-top: 20px;
 }
 .banner-block .container{
@@ -996,6 +996,7 @@ h2.title-cm p{
 }
 .banner-block img{
   width: 100%;
+  height:350px;
   display: block;
 }
 /* partner block */
@@ -1059,7 +1060,7 @@ h2.title-cm p{
 .partner-block .container ul li img{
   box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
     margin: 4px;
-    width: 180px;
+    width: 400px;
     height: 180px;
     border: 1px solid #ccc;
 }
@@ -3002,10 +3003,12 @@ table.tab-pac-course tr:first-child td:last-child{
   margin-right: 3.333%;
   background: #FFF;
 }
-.news:nth-child(3n+1){
+.news:nth-child(4n+1){
   float: left;
+  margin-left: 4.333%;
   margin-right: 4.333%;
 }
+
 .news:nth-child(4n){
 }
 

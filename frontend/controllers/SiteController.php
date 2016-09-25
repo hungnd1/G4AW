@@ -10,6 +10,7 @@ use common\models\LeadDonor;
 use common\models\News;
 use common\models\Province;
 use common\models\Transaction;
+use common\models\UnitLink;
 use common\models\User;
 use common\models\Village;
 use frontend\helpers\FormatNumber;
@@ -114,8 +115,11 @@ class SiteController extends BaseController
         $listKnowCategory = Category::find()->andWhere(['status'=>Category::STATUS_ACTIVE])->andWhere(['type'=>Category::TYPE_KNOW])
             ->orderBy(['order_number'=>SORT_ASC])->all();
 
+        $listUnit = UnitLink::findAll(['status'=>UnitLink::STATUS_ACTIVE]);
+
         return $this->render('index',['listNew'=>$listNew,'listSlide'=>$listSlide,'listArea'=>$listArea,
-        'listNewCategory'=>$listNewCategory,'listKnow'=>$listKnow,'listKnowCategory'=>$listKnowCategory]);
+        'listNewCategory'=>$listNewCategory,'listKnow'=>$listKnow,'listKnowCategory'=>$listKnowCategory,
+        'listUnit'=>$listUnit]);
     }
 
     public function actionRules()
