@@ -5,6 +5,7 @@
  * Date: 11-Aug-16
  * Time: 11:36 AM
  */
+use kartik\form\ActiveForm;
 use yii\helpers\Url;
 
 /** @var $model  \common\models\News */
@@ -29,23 +30,38 @@ use yii\helpers\Url;
                         <?= preg_replace('/(\<img[^>]+)(style\=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', $model->content) ?>
                     </div>
                     <div class="post-related">
-                        <h2>Tin tức liên quan</h2>
-                        <div>
-                            <?php if(isset($otherModels) && !empty($otherModels)){
-                                foreach($otherModels as $item){
-                                    /** @var $item \common\models\News */
+                        <h2>Bình luận</h2>
+                        <div class="top-box-comment">
+                            <b>Bạn muốn chia sẻ?</b>
+                            <?php $form = ActiveForm::begin([
+                                'id' => 'comment-form'
+                            ]); ?>
+                            <div>
+                                <textarea rows="4" id="comment"></textarea>
+                            </div>
+                            <div class="line-bottom-comment">
+                                <span><i>Nhập ý kiến của bạn</i></span>
+                                <a onclick="feedBack($(this));" class="send-comment">Gửi ý kiến</a><br><br>
+                            </div>
+                            <?php ActiveForm::end(); ?>
+                        </div>
+                        <div class="list-comments">
+                            <div id="head-comment"></div>
+                            <?php for ($i=0;$i<=4;$i++) {
                                     ?>
-                                    <div class="news">
-                                        <div class="thumb-common">
-                                            <img src="../img/blank.gif">
-                                            <a href="<?= Url::toRoute(['news/detail','id'=>$item->id]) ?>"><img class="thumb-cm" src="<?= $item->getThumbnailLink() ?>"><br></a>
-                                        </div>
-                                        <div class="if-cm-2">
-                                            <a href="<?= Url::toRoute(['news/detail','id'=>$item->id]) ?>"><h3 class="name-1"><?= $item->title ?></h3></a>
+                                    <div class="comment-box-item">
+                                        <img
+                                            src="<?= Yii::$app->request->baseUrl . '/img/avt_df.png' ?>">
+                                        <div class="left-comment">
+                                            <h5 class="">a <span
+                                                    class="time-up">aa</span>
+                                            </h5>
+
+                                            <p>aaa</p>
                                         </div>
                                     </div>
-                                <?php }
-                            } ?>
+                                <?php } ?>
+                            <div id="last-comment"></div>
                         </div>
                     </div>
                 </div>
