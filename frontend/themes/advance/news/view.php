@@ -15,10 +15,10 @@ use yii\helpers\Url;
 <div class="l-related">
     <div class="thumb-common">
         <img class="blank-img" src="../img/blank.gif">
-        <a href=""><img class="thumb-cm" src="<?= $content->getThumbnailLink() ?>"></a>
+        <a href="<?= Url::toRoute(['news/detail','id'=>$content->id]) ?>"><img class="thumb-cm" src="<?= $content->getThumbnailLink() ?>"></a>
     </div>
     <div class="l-i-rl">
-        <h4><a href=""><?= $content->title ?></a></h4>
+        <h4><a href="<?= Url::toRoute(['news/detail','id'=>$content->id]) ?>"><?= $content->title ?></a></h4>
         <p><?= str_replace(mb_substr($content->short_description, 100, strlen($content->short_description), 'utf-8'), '...', $content->short_description) ?></p>
     </div>
 </div>
