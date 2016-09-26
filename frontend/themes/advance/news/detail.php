@@ -5,7 +5,7 @@
  * Date: 11-Aug-16
  * Time: 11:36 AM
  */
-use kartik\form\ActiveForm;
+use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
 /** @var $model  \common\models\News */
