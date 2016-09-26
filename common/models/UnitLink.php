@@ -39,7 +39,7 @@ class UnitLink extends \yii\db\ActiveRecord
                  [['status','name'], 'required'],
                  [['created_at', 'updated_at'], 'integer'],
                  [['link', 'image','name'], 'string', 'max' => 500],
-                 [['image'], 'required', 'on' => 'create'],
+                [['image'], 'required', 'message' => 'Ảnh đại diện đơn vị không được để trống', 'on' => 'create'],
                  [['image'], 'image', 'extensions' => 'png,jpg,jpeg,gif',
                      'maxSize' => 1024 * 1024 * 10, 'tooBig' => 'Ảnh upload vượt quá dung lượng cho phép!'
                  ],
