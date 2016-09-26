@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
                 <p>
+                    <?= Html::a('Thêm mới', ['create','type' => $model->type], ['class' => 'btn btn-primary']) ?>
                     <?= Html::a('Cập nhật', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
                     <?= Html::a('Publish', ['update-status', 'id' => $model->id, 'status' => News::STATUS_ACTIVE], ['class' => 'btn btn-success']) ?>
                     <?= Html::a('Unpublish', ['update-status', 'id' => $model->id, 'status' => News::STATUS_INACTIVE], ['class' => 'btn btn-danger']) ?>

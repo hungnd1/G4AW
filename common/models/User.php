@@ -42,28 +42,25 @@ use yii\web\IdentityInterface;
  *
  * @property AuthAssignment[] $authAssignments
  * @property AuthItem[] $itemNames
- * @property Campaign[] $campaigns
- * @property Campaign[] $campaigns0
- * @property Campaign[] $campaignFollowings
- * @property DonationRequest[] $donationRequests
  * @property News[] $news
- * @property Transaction[] $transactions
  * @property UserActivity[] $userActivities
  * @property UserToken[] $userTokens
- * @property Campaign[] $donatedCampaign
- * @property DonationRequest[] $donationRequestsTo
  * @property UserFollowing[] $follows
  */
 class User extends ActiveRecord implements IdentityInterface
 {
     const TYPE_ADMIN = 1;
     const TYPE_MINISTRY_EDITOR = 2;    // tai khoan quan ly cac bai viet chung
+    const TYPE_LEAD_DONOR = 3;      // tai khoan cua doanh nghiep do dau
+    const TYPE_VILLAGE = 4;         // tai khoan cua xa
+    const TYPE_USER = 5;            // tai khoan cua nguoi dung
+    const TYPE_MANAGER = 6;         // tai khoan cua manager
+
 
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 1;
     const STATUS_ACTIVE = 10;
 
-    // add by TuanPham
 
     const GENDER_MALE = 1;
     const GENDER_FEMALE = 2;
@@ -162,6 +159,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['username'], 'required', 'on' => 'create', 'message' => 'Tên đăng nhập không được để trống'],
             [['username'], 'unique', 'on' => 'create', 'message' => 'Tên đăng nhập đã tồn tại, vui lòng chọn tên khác!'],
             [['username'], 'string', 'on' => 'create', 'min' => 2, 'max' => 255],
+
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required', 'message' => 'Địa chỉ email không được để trống'],
@@ -414,6 +412,11 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findByUsername($username)
     {
         return static::findOne(['username' => $username, 'status' => [self::STATUS_ACTIVE]]);
+    }
+
+    public static function findByUsernameFE($username)
+    {
+        return static::findOne(['username' => $username, 'status' => [self::STATUS_ACTIVE],'type'=>User::TYPE_USER]);
     }
 
     public static function findByUsernameActive($username)

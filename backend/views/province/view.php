@@ -4,9 +4,9 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\UnitLink */
+/* @var $model common\models\Province */
 
-$this->params['breadcrumbs'][] = ['label' => 'Quản lý đơn vị', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Quản lý tỉnh', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="area-view">
@@ -29,12 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'name',
-            'link',
+            'name_en',
             [
                 'attribute' => 'status',
                 'label' => 'Trạng thái',
                 'format' => 'raw',
-                'value' => ($model->status == \common\models\Area::STATUS_ACTIVE) ?
+                'value' => ($model->status == \common\models\Province::STATUS_ACTIVE) ?
                     '<span class="label label-success">' . $model->getStatusName() . '</span>' :
                     '<span class="label label-danger">' . $model->getStatusName() . '</span>',
             ],

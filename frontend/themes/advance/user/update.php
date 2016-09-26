@@ -79,9 +79,6 @@ $avatarPreview = $model->isNewRecord;
                         <?= $form->field($model, 'email')->textInput(['class'=>'t-span', 'maxlength' => 100])->label('Email (*)') ?>
                     </div>
                     <div class="block-edit">
-                        <?= $form->field($model, 'phone_number')->textInput(['class'=>'t-span', 'maxlength' => 100])->label('Số điện thoại') ?>
-                    </div>
-                    <div class="block-edit">
                         <?=
                             $form->field($model, 'gender')->dropDownList([
                                     'Chọn giới tính' => User::listGender(),

@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
+        <?= Html::a('Thêm mới', ['create'], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Cập nhật', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Xóa', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -30,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
 
             'name',
+            'name_en',
 
             [
                 'attribute' => 'status',

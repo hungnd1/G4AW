@@ -5,7 +5,6 @@ use kartik\grid\GridView;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\CampaignSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $type */
 

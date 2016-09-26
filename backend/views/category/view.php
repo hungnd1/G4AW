@@ -12,6 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-view">
     <p>
+        <?= Html::a('Thêm mới', ['create'], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Cập nhật', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Xóa', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',

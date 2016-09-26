@@ -1,16 +1,32 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: HungChelsea
+ * Date: 11-Aug-16
+ * Time: 11:36 AM
+ */
+use yii\helpers\Url;
 
-/* @var $this yii\web\View */
-
-use yii\helpers\Html;
-
-$this->title = 'About';
-$this->params['breadcrumbs'][] = $this->title;
+/** @var $model  \common\models\News */
 ?>
-<div class="site-about">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>This is the About page. You may modify the following file to customize its content:</p>
-
-    <code><?= __FILE__ ?></code>
+<!-- content -->
+<div class="content">
+    <div class="main-cm-2">
+        <div class="container">
+            <div class="left-content" style="width: 100%;">
+                <div class="cr-page-link">
+                    <a href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
+                    <span>/</span>
+                    <a href="<?= Url::toRoute(['site/about']) ?>">Giới thiệu</a>
+                </div>
+                <div class="m-content">
+                    <div class="content-dt">
+                        <?= preg_replace('/(\<img[^>]+)(style\=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', $model->content) ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- end content -->

@@ -6,6 +6,7 @@ use common\models\Area;
 use common\models\Campaign;
 use common\models\Category;
 use common\models\Comment;
+use common\models\Introduction;
 use common\models\LeadDonor;
 use common\models\News;
 use common\models\Province;
@@ -168,6 +169,12 @@ class SiteController extends BaseController
         }
     }
 
+    public function actionLinked()
+    {
+        $listDonor = UnitLink::findAll(['status' => UnitLink::STATUS_ACTIVE]);
+        return $this->render('lead_donor', ['listDonor' => $listDonor]);
+    }
+
     public function actionFeedback()
     {
         $id = $this->getParameter('contentId');
@@ -288,7 +295,8 @@ class SiteController extends BaseController
      */
     public function actionAbout()
     {
-        return $this->render('about');
+        $model = Introduction::findOne(['status'=>News::STATUS_ACTIVE]);
+        return $this->render('about',['model'=>$model]);
     }
 
     public function actionNews()
@@ -308,45 +316,6 @@ class SiteController extends BaseController
             ]);
     }
 
-    public function actionDonate($campaign_id)
-    {
-        $campaign = Campaign::findOne($campaign_id);
-        if (!$campaign) {
-            throw  new NotFoundHttpException('Không tìm thấy chiến dịch. vui lòng thử lại');
-        }
-        $transactionModel = new Transaction();
-        $transactionModel->campaign_id = $campaign_id;
-        $transactionModel->user_id = Yii::$app->user->id;
-        $transactionModel->username = $this->user->username;
-        $transactionModel->payment_type = Transaction::PAYMENT_TYPE_CARD;
-        return $this->render('donate', [
-            'model' => $transactionModel,
-            'campaign' => $campaign
-        ]);
-    }
-
-    public function actionDonateByMoney($campaign_id)
-    {
-        $campaign = Campaign::findOne($campaign_id);
-        if (!$campaign) {
-            throw  new NotFoundHttpException('Không tìm thấy chiến dịch. vui lòng thử lại');
-        }
-        $transactionModel = new Transaction();
-
-        if ($transactionModel->load(Yii::$app->request->post()) && $transactionModel->saveTransaction()) {
-            Brandname::sendSms($transactionModel);
-            Yii::$app->session->addFlash('success', 'Bạn đã ủng hộ thành công');
-
-        }
-        $transactionModel->campaign_id = $campaign_id;
-        $transactionModel->user_id = Yii::$app->user->id;
-        $transactionModel->username = $this->user->username;
-        $transactionModel->payment_type = Transaction::PAYMENT_TYPE_MONEY;
-        return $this->render('/site/_donate_type/money', [
-            'model' => $transactionModel,
-            'campaign' => $campaign
-        ]);
-    }
 
     public function actionSignup()
     {
@@ -449,6 +418,5 @@ class SiteController extends BaseController
         $rowCount = $command->execute();
         return $rowCount;
     }
-
 
 }

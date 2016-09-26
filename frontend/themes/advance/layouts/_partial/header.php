@@ -43,12 +43,44 @@ use yii\widgets\ActiveForm;
 
             <ul class="menu-web">
                 <li class="active"><a href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a></li>
-                <li><a href="">Giới thiệu</a></li>
+                <li><a href="<?= Url::toRoute(['site/about']) ?>">Giới thiệu</a></li>
                 <li><a href="<?= Url::toRoute(['news/index','type'=>News::TYPE_NEW]) ?>">Tin tức</a></li>
                 <li><a href="<?= Url::toRoute(['news/index','type'=>News::TYPE_KNOW]) ?>">Nhà nông nên biết</a></li>
-                <li><a href="<?= Url::toRoute(['news/index','type'=>News::TYPE_MARKET]) ?>">Chợ nhà nông</a></li>
-                <li><a href="<?= Url::toRoute(['news/index','type'=>News::TYPE_HEALTH]) ?>">Sức khỏe cộng đồng</a></li>
+                <li><a href="">Dịch vụ khuyến mãi</a></li>
+                <li><a href="">Video hướng dẫn</a></li>
             </ul>
+
+            <?php
+            if (Yii::$app->user->isGuest) {
+                ?>
+                <a href="<?= Url::toRoute(['site/login']) ?>" class="sign-in">Đăng nhập</a>
+                <a href="<?= Url::toRoute(['site/signup']) ?>" class="sign-up">Đăng ký</a>
+                <?php
+            } else {
+                ?>
+                <div class="bb-login-ok">
+                    <a data-toggle="collapse" href="#collapse-user" aria-expanded="false"
+                       aria-controls="collapseExample">
+                        Xin chào
+                        <?= Yii::$app->user->identity->username; ?>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="collapse-user">
+                        <ul>
+                            <li><a href="<?= Url::toRoute(['user/my-page', 'id' => Yii::$app->user->identity->id]) ?>">Cá
+                                    nhân</a></li>
+                            <li>
+                                <a href="<?= Url::toRoute(['user/change-my-password', 'id' => Yii::$app->user->identity->id]) ?>">Đổi
+                                    mật khẩu</a></li>
+                            <li><a href="<?= \yii\helpers\Url::to(['site/logout']) ?>" data-method="post">Đăng xuất</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
+
         </div>
     </div>
 </div>
@@ -57,11 +89,11 @@ use yii\widgets\ActiveForm;
         <ul class="menu-web">
             <li class="active"><a href="<?= Url::toRoute(['site/index']) ?>"><i class="fa fa-home hidden-md"></i>Trang chủ</a>
             </li>
-            <li><a href="">Giới thiệu</a></li>
+            <li><a href="<?= Url::toRoute(['site/about']) ?>">Giới thiệu</a></li>
             <li><a href="<?= Url::toRoute(['news/index','type'=>News::TYPE_NEW]) ?>">Tin tức</a></li>
             <li><a href="<?= Url::toRoute(['news/index','type'=>News::TYPE_KNOW]) ?>">Nhà nông nên biết</a></li>
-            <li><a href="<?= Url::toRoute(['news/index','type'=>News::TYPE_MARKET]) ?>">Chợ nhà nông</a></li>
-            <li><a href="<?= Url::toRoute(['news/index','type'=>News::TYPE_HEALTH]) ?>">Sức khỏe cộng đồng</a></li>
+            <li><a href="">Dịch vụ khuyến mãi</a></li>
+            <li><a href="">Video hướng dẫn</a></li>
             <div class="right-nav hidden-sm hidden-xs">
 
                 <div class="f-search">
@@ -76,6 +108,33 @@ use yii\widgets\ActiveForm;
                     <i class="fa fa-search"></i>
                     <?php ActiveForm::end(); ?>
                 </div>
+                <?php
+                if (Yii::$app->user->isGuest) {
+                    ?>
+                    <a href="<?= Url::toRoute(['site/login']) ?>" class="sign-in">Đăng nhập</a>
+                    <a href="<?= Url::toRoute(['site/signup']) ?>" class="sign-up">Đăng ký</a>
+                    <?php
+                } else {
+                    ?>
+                    <div class="hello-us dropdown hidden-sm hidden-xs">
+                        <a id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Xin chào
+                            <?= Yii::$app->user->identity->username; ?>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dLabel">
+                            <li><a href="<?= Url::toRoute(['user/my-page', 'id' => Yii::$app->user->identity->id]) ?>">Cá
+                                    nhân</a></li>
+                            <li>
+                                <a href="<?= Url::toRoute(['user/change-my-password', 'id' => Yii::$app->user->identity->id]) ?>">Đổi
+                                    mật khẩu</a></li>
+                            <li><a href="<?= \yii\helpers\Url::to(['site/logout']) ?>" data-method="post">Đăng xuất</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
         </ul>
     </div><!-- /.container -->

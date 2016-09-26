@@ -91,13 +91,13 @@ Yii::$app->session->set('KCFINDER', $kcfOptions);
 
     <?= $form->field($model, 'content')->widget(\common\widgets\CKEditor::className(), [
         'options' => [
-            'rows' => 6,
+            'rows' => 10,
         ],
         'preset' => 'basic'
     ]) ?>
     <?= $form->field($model, 'content_en')->widget(\common\widgets\CKEditor::className(), [
         'options' => [
-            'rows' => 6,
+            'rows' => 10,
         ],
         'preset' => 'basic'
     ]) ?>

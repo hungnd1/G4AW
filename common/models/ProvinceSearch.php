@@ -5,11 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use common\models\Province;
 
 /**
- * CategorySearch represents the model behind the search form about `common\models\Category`.
+ * ProvinceSearch represents the model behind the search form about `common\models\Province`.
  */
-class AreaSearch extends Area
+class ProvinceSearch extends Province
 {
     /**
      * @inheritdoc
@@ -18,7 +19,7 @@ class AreaSearch extends Area
     {
         return [
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name','name_en', 'image'], 'safe'],
+            [['name', 'name_en'], 'safe'],
         ];
     }
 
@@ -40,7 +41,9 @@ class AreaSearch extends Area
      */
     public function search($params)
     {
-        $query = Area::find();
+        $query = Province::find();
+
+        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -54,8 +57,7 @@ class AreaSearch extends Area
             return $dataProvider;
         }
 
-        $query->andFilterWhere(["=", 'status', Area::STATUS_ACTIVE]);
-
+        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'status' => $this->status,
@@ -64,8 +66,7 @@ class AreaSearch extends Area
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'image', $this->image])
-            ->andFilterWhere(['like', 'image', $this->name_en]);
+            ->andFilterWhere(['like', 'name_en', $this->name_en]);
 
         return $dataProvider;
     }

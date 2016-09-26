@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'enableClientValidation' =>true,
                 ]); ?>
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label('Tên đăng nhập (*)') ?>
+                <?= $form->field($model, 'username')->textInput(['autofocus' => true,'maxlength'=>11,'minlength'=>9])->label('Tên đăng nhập (*)') ?>
 
                 <?= $form->field($model, 'email')->textInput(['autofocus' => true])->label('Email (*)') ?>
 
@@ -33,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'confirm_password')->passwordInput()->label('Nhập lại mật khẩu (*)') ?>
 
-                <?= $form->field($model, 'phone_number')->textInput() ?>
 
                 <?= $form->field($model, 'address')->textInput() ?>
 

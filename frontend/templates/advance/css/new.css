@@ -219,7 +219,7 @@ a:hover{
 }
 .right-nav .f-search{
   margin-right: 20px;
-  width: 200px;
+  width: 170px;
   padding: 6px 30px 6px 10px;
   position: relative;
   border:1px solid #29a23a;
@@ -240,6 +240,7 @@ a:hover{
 }
 .navbar-brand{
   padding-left: 0;
+  padding-top: 10px;
 }
 .bottom-nav{
   width: 100%;
@@ -259,7 +260,7 @@ a:hover{
 .bottom-nav ul li a{
   color: rgba(249,249,249,0.99);
   font-weight: bold;
-  padding: 0 20px;
+  padding: 0 15px;
 }
 .bottom-nav ul li a i{
   font-size: 18px;
@@ -277,14 +278,14 @@ a:hover{
 }
 .sign-in {
   background: #2ead40;
-  padding: 8px 15px;
+  padding: 8px 10px;
   border-radius:3px;
   color: #FFF;
   border:1px solid #67d076;
   box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.1);
 }
 .sign-up {
-  padding: 8px 15px;
+  padding: 8px 10px;
   border-radius:3px;
   border:1px solid #67d076;
   color:#fff;

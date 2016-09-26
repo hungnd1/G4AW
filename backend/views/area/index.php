@@ -52,6 +52,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [
                             'class' => '\kartik\grid\DataColumn',
+                            'attribute' => 'name_en',
+                            'format' => 'html',
+                            'value' => function ($model, $key, $index, $widget) {
+                                return Html::a($model->name_en, ['update', 'id' => $model->id], ['class' => 'label label-primary']);
+                            },
+
+                        ],
+                        [
+                            'class' => '\kartik\grid\DataColumn',
                             'attribute' => 'status',
                             'format' => 'html',
                             'value' => function ($model, $key, $index, $widget) {

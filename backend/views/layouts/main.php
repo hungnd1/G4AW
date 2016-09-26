@@ -111,7 +111,7 @@ NavBar::begin([
 $menuItems = [
 
     [
-        'label' => 'QL Vùng,Xã',
+        'label' => 'Quản lý chung',
         'url' => 'javascript:;',
         'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
         'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
@@ -123,17 +123,21 @@ $menuItems = [
             ],
             [
                 'encode' => false,
+                'label' => 'Quản lý tỉnh',
+                'url' => ['province/index'],
+            ],
+            [
+                'encode' => false,
                 'label' => 'Quản lý xã',
-                'url' => ['area/index'],
+                'url' => ['village/index'],
+            ],
+            [
+                'encode' => false,
+                'label' => 'Quản lý đơn vị liên kết',
+                'url' => ['unit-link/index'],
             ],
         ]
 
-    ],
-    [
-        'label' => 'QL Đơn vị liên kết',
-        'url' => ['unit-link/index'],
-        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
-        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true']
     ],
     [
         'label' => 'QL Tin tức',
@@ -150,6 +154,11 @@ $menuItems = [
                 'encode' => false,
                 'label' => 'Quản lý tin tức',
                 'url' => ['news/index', 'type' => \common\models\News::TYPE_NEW],
+            ],
+            [
+                'encode' => false,
+                'label' => 'Quản lý trang giới thiệu',
+                'url' => ['introduction/index'],
             ],
         ]
     ],

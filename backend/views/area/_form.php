@@ -23,6 +23,8 @@ use yii\helpers\Url;
     ]); ?>
 
     <?= $form->field($model, 'name')->textInput() ?>
+    <?= $form->field($model, 'name_en')->textInput() ?>
+    <?= $form->field($model, 'name')->textInput() ?>
     <?= $form->field($model, 'status')->dropDownList(\common\models\Area::listStatus()) ?>
     <?php if ($model->isNewRecord) { ?>
     <?= $form->field($model, 'image')->label('Ảnh đại diện')->widget(FileInput::classname(), [

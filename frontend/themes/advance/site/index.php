@@ -224,7 +224,7 @@ if (!Yii::$app->user->isGuest) {
     <!--partner block-->
     <div class="partner-block clearfix">
         <div class="container">
-            <h2>Các đơn vị liên kết<a href="<?= Url::toRoute(['site/lead-donor']) ?>"><span>Tất cả</span><i
+            <h2>Các đơn vị liên kết<a href="<?= Url::toRoute(['site/linked']) ?>"><span>Tất cả</span><i
                         class="fa fa-chevron-right"></i></a></h2>
             <ul class="bxslider3">
                 <?php if (isset($listUnit) && !empty($listUnit)) {
@@ -232,6 +232,7 @@ if (!Yii::$app->user->isGuest) {
                         /** @var $item \common\models\UnitLink */ ?>
                         <li style="width: 400px;"><a target="_blank" href="<?= $item->link ?>"><img
                                     src="<?= $item->getThumbnailLink() ?>">
+                                <h3><?= $item->name ?></h3>
                             </a></li>
                     <?php }
                 } else { ?>

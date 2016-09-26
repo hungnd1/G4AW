@@ -14,7 +14,7 @@ use yii\helpers\Url;
         <div class="cr-page-link">
             <a href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
             <span>/</span>
-            <a href="">Danh sách đơn vị tài trợ</a>
+            <a href="">Danh sách đơn vị liên kết</a>
         </div>
     </div>
     <div class="container">
@@ -24,11 +24,11 @@ use yii\helpers\Url;
                 <ul class="list-dv-donor">
                     <?php if(isset($listDonor) && !empty($listDonor)) {
                         foreach($listDonor as $item){
-                            /** @var $item \common\models\LeadDonor */
+                            /** @var $item \common\models\UnitLink */
                             ?>
                             <li>
-                                <a href="<?=Url::toRoute(['donor/view','id'=>$item->id]) ?>">
-                                    <img src="<?= $item->getImageLink() ?>">
+                                <a href="<?= $item->link ?>">
+                                    <img src="<?= $item->getThumbnailLink() ?>">
                                     <h3><?= $item->name ?></h3>
                                 </a>
                             </li>

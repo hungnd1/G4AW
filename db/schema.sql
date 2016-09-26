@@ -139,6 +139,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `display_name` VARCHAR(200) NOT NULL,
   `type` SMALLINT(6) NOT NULL DEFAULT '1' COMMENT 'type tuong ung voi cac loai content:\n1 - video\n2 - live\n3 - music\n4 - news\n',
   `description` TEXT NULL DEFAULT NULL,
+  `display_name_en` TEXT NULL DEFAULT NULL,
   `status` INT(11) NOT NULL DEFAULT '1' COMMENT '10 - active\n0 - inactive\n3 - for test only',
   `order_number` INT(11) NOT NULL DEFAULT '0' COMMENT 'dung de sap xep category theo thu tu xac dinh, order chi dc so sanh khi cac category co cung level',
   `parent_id` INT(11) NULL,
@@ -163,139 +164,6 @@ CREATE TABLE IF NOT EXISTS `category` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 29;
 
-
--- -----------------------------------------------------
--- Table `donation_request`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `donation_request` ;
-
-CREATE TABLE IF NOT EXISTS `donation_request` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(1024) NOT NULL COMMENT 'title cua chien dich',
-  `short_description` VARCHAR(500) NULL,
-  `type` SMALLINT(6) NOT NULL DEFAULT '1' COMMENT '1 - tien\n2 - hien vat',
-  `content` TEXT NULL COMMENT 'HTML content',
-  `expected_amount` DOUBLE NOT NULL DEFAULT 0,
-  `status` INT(11) NOT NULL DEFAULT 0 COMMENT '0 - new (chua duyet)\n9 - dang duyet\n10 - active\n1 - expired\n2 - inactive\n5 - rejected\n',
-  `admin_note` VARCHAR(4000) NULL COMMENT 'ly do reject...',
-  `current_amount` DOUBLE NOT NULL DEFAULT 0,
-  `currency` VARCHAR(20) NULL DEFAULT 'VND',
-  `approved_at` INT(11) NULL,
-  `created_by` INT(11) NOT NULL,
-  `created_at` INT(11) NULL,
-  `updated_at` INT(11) NULL,
-  PRIMARY KEY (`id`),
-  INDEX `idx_name` (`title` ASC),
-  INDEX `idx_short_desc` (`short_description`(255) ASC),
-  INDEX `idx_is_deleted` (`status` ASC),
-  INDEX `fk_campaign_user1_idx` (`created_by` ASC),
-  CONSTRAINT `fk_campaign_user10`
-    FOREIGN KEY (`created_by`)
-    REFERENCES `user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-ROW_FORMAT = DYNAMIC
-AUTO_INCREMENT = 20
-COMMENT = 'TODO: thong tin ve cac thuoc tinh nhu dao dien, tac gia, ca ';
-
-
--- -----------------------------------------------------
--- Table `campaign`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `campaign` ;
-
-CREATE TABLE IF NOT EXISTS `campaign` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `donation_request_id` INT(11) NULL COMMENT 'campaign cho request nao',
-  `name` VARCHAR(1024) NOT NULL COMMENT 'title cua chien dich',
-  `ascii_name` VARCHAR(200) NULL COMMENT 'string khong dau cua name --> de search',
-  `short_description` VARCHAR(500) NULL,
-  `thumbnail` VARCHAR(200) NULL COMMENT 'danh sach cac images, json encoded\n',
-  `campaign_code` VARCHAR(20) NOT NULL COMMENT 'ma de mua noi dung (qua SMS)',
-  `type` SMALLINT(6) NOT NULL DEFAULT '1' COMMENT '1 - tien\n2 - hien vat',
-  `tags` VARCHAR(500) NULL,
-  `description` TEXT NULL,
-  `content` TEXT NULL COMMENT 'HTML content',
-  `view_count` INT(11) NOT NULL DEFAULT '0',
-  `like_count` INT(11) NOT NULL DEFAULT '0',
-  `comment_count` INT(11) NOT NULL DEFAULT '0',
-  `follower_count` INT(11) NOT NULL DEFAULT '0',
-  `status` INT(11) NOT NULL DEFAULT 0 COMMENT '0 - new (chua duyet)\n9 - dang duyet\n10 - active\n1 - expired\n2 - inactive\n5 - rejected\n',
-  `admin_note` VARCHAR(4000) NULL COMMENT 'ly do reject...',
-  `expected_amount` DOUBLE NOT NULL DEFAULT 0,
-  `current_amount` DOUBLE NOT NULL DEFAULT 0,
-  `donor_count` INT NOT NULL DEFAULT 0,
-  `currency` VARCHAR(20) NULL DEFAULT 'VND',
-  `honor` INT(11) NULL DEFAULT '0' COMMENT '0 --> nothing\n1 --> featured\n2 --> hot\n3 --> especial',
-  `approved_at` INT(11) NULL,
-  `created_by` INT(11) NOT NULL,
-  `created_for_user` INT(11) NOT NULL,
-  `created_at` INT(11) NULL,
-  `updated_at` INT(11) NULL,
-  `donation_status` SMALLINT NOT NULL DEFAULT 0 COMMENT '10 - gold reach',
-  PRIMARY KEY (`id`),
-  INDEX `idx_name` (`name` ASC),
-  INDEX `idx_tags` (`tags`(255) ASC),
-  INDEX `idx_short_desc` (`short_description`(255) ASC),
-  INDEX `idx_desc` (`description`(255) ASC),
-  INDEX `idx_view_count` (`view_count` ASC),
-  INDEX `idx_like_count` (`like_count` ASC),
-  INDEX `idx_comment_count` (`comment_count` ASC),
-  INDEX `idx_favorite_count` (`follower_count` ASC),
-  INDEX `idx_is_deleted` (`status` ASC),
-  UNIQUE INDEX `code_UNIQUE` (`campaign_code` ASC),
-  INDEX `fk_campaign_user1_idx` (`created_by` ASC),
-  INDEX `fk_campaign_user2_idx` (`created_for_user` ASC),
-  INDEX `fk_campaign_donation_request1_idx` (`donation_request_id` ASC),
-  CONSTRAINT `fk_campaign_user1`
-    FOREIGN KEY (`created_by`)
-    REFERENCES `user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_campaign_user2`
-    FOREIGN KEY (`created_for_user`)
-    REFERENCES `user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_campaign_donation_request1`
-    FOREIGN KEY (`donation_request_id`)
-    REFERENCES `donation_request` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-ROW_FORMAT = DYNAMIC
-AUTO_INCREMENT = 20
-COMMENT = 'TODO: thong tin ve cac thuoc tinh nhu dao dien, tac gia, ca ';
-
-
--- -----------------------------------------------------
--- Table `campaign_category_asm`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `campaign_category_asm` ;
-
-CREATE TABLE IF NOT EXISTS `campaign_category_asm` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `campaign_id` INT(11) NOT NULL,
-  `category_id` INT(11) NOT NULL,
-  `description` VARCHAR(255) NULL,
-  `created_at` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_vod_category_asset_mapping_vod_asset1_idx` (`campaign_id` ASC),
-  INDEX `fk_vod_category_asset_mapping_vod_category1_idx` (`category_id` ASC),
-  CONSTRAINT `fk_vod_category_asset_mapping_vod_asset1`
-    FOREIGN KEY (`campaign_id`)
-    REFERENCES `campaign` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_vod_category_asset_mapping_vod_category1`
-    FOREIGN KEY (`category_id`)
-    REFERENCES `category` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-ROW_FORMAT = DYNAMIC
-AUTO_INCREMENT = 18;
 
 
 -- -----------------------------------------------------
@@ -413,34 +281,6 @@ ROW_FORMAT = DYNAMIC
 AUTO_INCREMENT = 160;
 
 
--- -----------------------------------------------------
--- Table `campaign_following`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `campaign_following` ;
-
-CREATE TABLE IF NOT EXISTS `campaign_following` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` INT(11) NOT NULL,
-  `campaign_id` INT(11) NOT NULL,
-  `created_at` INT NULL,
-  `updated_at` INT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_campaign_following_user1_idx` (`user_id` ASC),
-  INDEX `fk_campaign_following_campaign1_idx` (`campaign_id` ASC),
-  CONSTRAINT `fk_campaign_following_user1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_campaign_following_campaign1`
-    FOREIGN KEY (`campaign_id`)
-    REFERENCES `campaign` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-ROW_FORMAT = DYNAMIC
-COMMENT = 'nguoi tao, nguoi request, nguoi donate mac dinh la follower (add luon record vao bang nay)';
-
 
 -- -----------------------------------------------------
 -- Table `news`
@@ -449,14 +289,16 @@ DROP TABLE IF EXISTS `news` ;
 
 CREATE TABLE IF NOT EXISTS `news` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `campaign_id` INT(11) NULL COMMENT 'tin tuc cua campaign nao',
   `title` VARCHAR(512) NOT NULL,
+  `title_en` VARCHAR(512) NOT NULL,
   `title_ascii` VARCHAR(512) NULL,
   `content` TEXT NULL DEFAULT NULL COMMENT 'HTML content',
+  `content_en` TEXT NULL DEFAULT NULL COMMENT 'HTML content',
   `thumbnail` VARCHAR(512) NULL COMMENT 'anh de hien thi trong list',
   `type` SMALLINT(6) NOT NULL DEFAULT '1' COMMENT '1 - html news\n2 - video (thumbnail c� n�t play)',
   `tags` VARCHAR(200) NULL,
   `short_description` VARCHAR(500) NULL,
+  `short_description_en` VARCHAR(500) NULL,
   `description` TEXT NULL,
   `video_url` VARCHAR(500) NULL COMMENT 'json encoded array, link downoad (doi voi video, app). Doi voi app co the la link den apptota, googleplay, apple store hoac link download truc tiep',
   `view_count` INT(11) NOT NULL DEFAULT '0',
@@ -471,6 +313,8 @@ CREATE TABLE IF NOT EXISTS `news` (
   `created_at` INT(11) NULL DEFAULT NULL,
   `updated_at` INT(11) NULL DEFAULT NULL,
   `user_id` INT(11) NOT NULL,
+  `published_at` INT(11) NOT NULL,
+  `area_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `idx_name` (`title` ASC),
   INDEX `idx_view_count` (`view_count` ASC),
@@ -478,13 +322,7 @@ CREATE TABLE IF NOT EXISTS `news` (
   INDEX `idx_comment_count` (`comment_count` ASC),
   INDEX `idx_favorite_count` (`favorite_count` ASC),
   INDEX `idx_status` (`status` ASC),
-  INDEX `fk_news_campaign1_idx` (`campaign_id` ASC),
   INDEX `fk_news_user1_idx` (`user_id` ASC),
-  CONSTRAINT `fk_news_campaign1`
-    FOREIGN KEY (`campaign_id`)
-    REFERENCES `campaign` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_news_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
@@ -499,32 +337,89 @@ COMMENT = 'TODO: thong tin ve cac thuoc tinh nhu dao dien, tac gia, ca ';
 -- -----------------------------------------------------
 -- Table `campaign_related_asm`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `campaign_related_asm` ;
+DROP TABLE IF EXISTS `news_category_asm` ;
 
-CREATE TABLE IF NOT EXISTS `campaign_related_asm` (
+CREATE TABLE IF NOT EXISTS `news_category_asm` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `source_id` INT(11) NOT NULL,
-  `destination_id` INT(11) NOT NULL,
-  `relation_type` SMALLINT NOT NULL DEFAULT 1,
-  `description` VARCHAR(255) NULL,
+  `news_id` INT(11) NOT NULL,
+  `category_id` INT(11) NOT NULL,
   `created_at` INT(11) NULL DEFAULT NULL,
   `updated_at` INT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_vod_category_asset_mapping_vod_asset1_idx` (`source_id` ASC),
-  INDEX `fk_campaign_related_asm_campaign1_idx` (`destination_id` ASC),
-  CONSTRAINT `fk_vod_category_asset_mapping_vod_asset10`
-    FOREIGN KEY (`source_id`)
-    REFERENCES `campaign` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_campaign_related_asm_campaign1`
-    FOREIGN KEY (`destination_id`)
-    REFERENCES `campaign` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`)
 ENGINE = InnoDB
 ROW_FORMAT = DYNAMIC
 AUTO_INCREMENT = 18;
+
+DROP TABLE IF EXISTS `area` ;
+
+CREATE TABLE `area` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `image` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `name_en` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `province` ;
+
+CREATE TABLE `province` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `status` int(11) NOT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  `name_en` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `introduction` ;
+
+CREATE TABLE `introduction` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` text COLLATE utf8_unicode_ci,
+  `status` int(11) NOT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  `content_en` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `unit_link` ;
+
+CREATE TABLE `unit_link` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `link` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `status` int(11) DEFAULT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `village` ;
+
+CREATE TABLE `village` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `number_code` int(11) DEFAULT NULL,
+  `id_province` int(11) NOT NULL,
+  `latitude` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `longitude` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `status` int(11) NOT NULL,
+  `establish_date` int(11) DEFAULT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  `name_en` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `description_en` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

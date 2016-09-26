@@ -216,98 +216,15 @@ class UserController extends Controller
     // add by TuanPham 20160810
 
     public function actionMyPage($id){
-        $modelCam = Campaign::find()
-            ->innerJoin('donation_request','donation_request.id = campaign.donation_request_id')
-            ->andWhere(['donation_request.created_by'=>$id])
-            ->andWhere("campaign.status != :status")->addParams([':status'=>campaign::STATUS_DELETED])
-            ->andWhere("campaign.status != :status1")->addParams([':status1'=>campaign::STATUS_NEW])
-            ->orderBy('campaign.published_at desc')->all();
-        $modelDonation = DonationRequest::find()
-            ->andWhere(['created_by'=>$id])
-            ->andWhere("status != :status")->addParams([':status'=>DonationRequest::STATUS_DELETED])
-            ->orderBy('created_at desc')->all();
-        $i = 0 ;
-        $cam = null;
-        foreach($modelCam as $item){
-            $cam[$i] = new \stdClass();
-            $cam[$i]->image = $item->getCampaignThumbnail();
-            $cam[$i]->name = $item->name;
-            $cam[$i]->id = $item->id;
-            $cam[$i]->short_description = $item->short_description;
-            $lead = LeadDonor::findOne($item->lead_donor_id);
-            /** @var LeadDonor $lead */
-            $cam[$i]->imagelead = $lead->getImageLink();
-            $cam[$i]->leadname = $lead->name;
-            $cam[$i]->leadid = $lead->id;
-            $cam[$i]->leadaddress = $lead->address;
-            $cam[$i]->status = $this->getDonationItem($item->id);
-            $i++;
-        }
-//        echo "<pre>";
-//        print_r($modelDonation);
-//        die();
         $model = User::findOne(['id'=>$id]);
         return $this->render('my-page',[
             'model'=>$model,
-//            'modelCam'=>$modelCam,
-            'modelDonation'=>$modelDonation,
-            'cam'=>$cam
         ]);
     }
 
-    public function getDonationItem($campaign_id)
-    {
-
-        $donation_item = DonationItem::find()
-            ->innerJoin('campaign_donation_item_asm', 'campaign_donation_item_asm.donation_item_id = donation_item.id')
-            ->andWhere(['campaign_donation_item_asm.campaign_id' => $campaign_id])->all();
-        $rateDonation = 0;
-        $i = 0;
-        foreach ($donation_item as $item) {
-            $listDonation[$i] = new \stdClass();
-            $listDonation[$i]->expected_number = $this->getCampaignId($item->id,$campaign_id);
-            $listDonation[$i]->number_donation = $this->getDonationMoney($item->id, $campaign_id);
-            if($listDonation[$i]->expected_number > 0) {
-                if($listDonation[$i]->number_donation > $listDonation[$i]->expected_number){
-                    $number_ = $listDonation[$i]->expected_number;
-                    $rateDonation += $number_ / $listDonation[$i]->expected_number;
-                }else{
-                    $rateDonation += $listDonation[$i]->number_donation / $listDonation[$i]->expected_number;
-                }
-
-            }else{
-                $rateDonation = 0;
-            }
-            $i++;
-        }
-
-        $rateDonation = $i>0?round(($rateDonation *100)/$i,2):0;
-        return $rateDonation;
-    }
-
-    public function getDonationMoney($donation_id,$campaign_id){
-
-        $sql = "select sum(a.donation_number) as money from transaction_donation_item_asm a inner join transaction t on t.id =  a.transaction_id where t.campaign_id = :campaignId and a.donation_item_id = :donation_id";
-        $command = Yii::$app->db->createCommand($sql);
-        $command->bindValue(":campaignId","$campaign_id",PDO::PARAM_INT);
-        $command->bindValue(":donation_id","$donation_id",PDO::PARAM_INT);
-        $dataReader = $command->query();
-        $listUser = null;
-        $i=0;
-        foreach($dataReader as $item){
-            return $item['money'];
-        }
-
-    }
-
-    public function getCampaignId($donation_id,$campaign_id){
-        $campaign = CampaignDonationItemAsm::findOne(['donation_item_id'=>$donation_id,'campaign_id'=>$campaign_id]);
-        return $campaign->expected_number;
-    }
 
     public function actionUpdate($id){
         $model = Muser::findOne(['id'=>$id, 'status' => User::STATUS_ACTIVE]);
-
         if(!$model){
             throw  new BadRequestHttpException('Người dùng không tồn tại');
         }

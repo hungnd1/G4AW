@@ -10,6 +10,7 @@ use yii\helpers\Url;
  *
  * @property integer $id
  * @property string $name
+ * @property string $name_en
  * @property integer $status
  * @property string $image
  * @property integer $created_at
@@ -34,9 +35,9 @@ class Area extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name','status'], 'required'],
+            [['name','name_en','status'], 'required'],
             [['created_at', 'updated_at'], 'integer'],
-            [['name', 'image'], 'string', 'max' => 500],
+            [['name','name_en', 'image'], 'string', 'max' => 500],
             [['image'], 'required', 'on' => 'create'],
             [['image'], 'image', 'extensions' => 'png,jpg,jpeg,gif',
                 'maxSize' => 1024 * 1024 * 10, 'tooBig' => 'Ảnh upload vượt quá dung lượng cho phép!'
@@ -52,6 +53,7 @@ class Area extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Tên vùng',
+            'name_en' => 'Tên vùng tiếng anh',
             'image' => 'Ảnh đại diện',
             'created_at' => 'Ngày tạo',
             'updated_at' => 'Ngày cập nhật',

@@ -5,11 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use common\models\Village;
 
 /**
- * CategorySearch represents the model behind the search form about `common\models\Category`.
+ * VillageSearch represents the model behind the search form about `common\models\Village`.
  */
-class AreaSearch extends Area
+class VillageSearch extends Village
 {
     /**
      * @inheritdoc
@@ -17,8 +18,8 @@ class AreaSearch extends Area
     public function rules()
     {
         return [
-            [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name','name_en', 'image'], 'safe'],
+            [['id', 'number_code', 'id_province', 'status', 'establish_date'], 'integer'],
+            [['name','name_en', 'latitude', 'longitude', 'image', 'description','description_en'], 'safe'],
         ];
     }
 
@@ -40,7 +41,9 @@ class AreaSearch extends Area
      */
     public function search($params)
     {
-        $query = Area::find();
+        $query = Village::find();
+
+        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -54,18 +57,22 @@ class AreaSearch extends Area
             return $dataProvider;
         }
 
-        $query->andFilterWhere(["=", 'status', Area::STATUS_ACTIVE]);
-
+        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'number_code' => $this->number_code,
+            'id_province' => $this->id_province,
             'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'establish_date' => $this->establish_date,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'latitude', $this->latitude])
+            ->andFilterWhere(['like', 'longitude', $this->longitude])
             ->andFilterWhere(['like', 'image', $this->image])
-            ->andFilterWhere(['like', 'image', $this->name_en]);
+            ->andFilterWhere(['like', 'name_en', $this->name_en])
+            ->andFilterWhere(['like', 'description_en', $this->description_en])
+            ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

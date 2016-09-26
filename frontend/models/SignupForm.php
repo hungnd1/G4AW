@@ -1,7 +1,6 @@
 <?php
 namespace frontend\models;
 
-use common\helpers\ForumHelper;
 use common\models\User;
 use Yii;
 use yii\base\Model;
@@ -32,7 +31,8 @@ class SignupForm extends Model
             ['username', 'filter', 'filter' => 'trim'],
             [['username'], 'required'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Tên đăng nhập đã tồn tại, vui lòng chọn tên khác!'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            [['username'], 'integer', 'message' => 'Tên đăng nhập phải là số điện thoại'],
+            ['username', 'is8NumbersOnly'],
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
@@ -54,46 +54,52 @@ class SignupForm extends Model
             ['accept', 'compare', 'compareValue' => 1, 'message' => ''],
             [['address'], 'safe'],
             [['captcha'], 'captcha'],
-            [['phone_number'], 'integer', 'message' => 'Số điện thoại phải là kiểu số'],
         ];
     }
 
-    public function attributeLabels()
+    public function is8NumbersOnly($attribute)
     {
-        return [
-            'username' => Yii::t('app', 'Tên đăng nhập'),
-            'phone_number' => Yii::t('app', 'Số điện thoại'),
-            'email' => Yii::t('app', 'Email'),
-            'address' => Yii::t('app', 'Địa chỉ'),
-            'password' => Yii::t('app', 'Mật khẩu'),
-            'confirm_password' => Yii::t('app', 'Xác nhận mật khẩu'),
-            'phone_number' => Yii::t('app', 'Số điện thoại'),
-            'captcha' => Yii::t('app', 'Mã captcha'),
-            'accept' => Yii::t('app', 'Vui lòng đồng ý với quy định và điều khoản của trang (*)')
-        ];
+        if (!preg_match('/^[0-9]{9}$/', $this->$attribute) && !preg_match('/^[0-9]{10}$/', $this->$attribute) && !preg_match('/^[0-9]{11}$/', $this->$attribute) ) {
+            $this->addError($attribute, 'Tên đăng nhập phải là số điện thoại');
+        }
     }
 
-    /**
-     * Signs user up.
-     *
-     * @return User|null the saved model or null if saving fails
-     */
-    public function signup()
-    {
-        if (!$this->validate()) {
-            return null;
+        public
+        function attributeLabels()
+        {
+            return [
+                'username' => Yii::t('app', 'Tên đăng nhập'),
+                'phone_number' => Yii::t('app', 'Số điện thoại'),
+                'email' => Yii::t('app', 'Email'),
+                'address' => Yii::t('app', 'Địa chỉ'),
+                'password' => Yii::t('app', 'Mật khẩu'),
+                'confirm_password' => Yii::t('app', 'Xác nhận mật khẩu'),
+                'captcha' => Yii::t('app', 'Mã captcha'),
+                'accept' => Yii::t('app', 'Vui lòng đồng ý với quy định và điều khoản của trang (*)')
+            ];
         }
 
-        $result = ForumHelper::createNewUser($this->username, $this->password, $this->email);
-//        $result = true;
-        Yii::info($result);
+        /**
+         * Signs user up.
+         *
+         * @return User|null the saved model or null if saving fails
+         */
+        public
+        function signup()
+        {
+            if (!$this->validate()) {
+                return null;
+            }
 
-        if ($result) {
+//        $result = ForumHelper::createNewUser($this->username, $this->password, $this->email);
+//        $result = true;
+//        Yii::info($result);
+
             $user = new User();
             $user->username = $this->username;
             $user->email = $this->email;
             $user->address = $this->address;
-            $user->phone_number = $this->phone_number;
+            $user->phone_number = $this->username;
             $user->birthday = $this->birthday;
             $user->password_reset_token = $this->password;
             $user->type = User::TYPE_USER;
@@ -101,9 +107,6 @@ class SignupForm extends Model
             $user->generateAuthKey();
 
             return $user->save() ? $user : null;
-        } else {
-            return null;
-        }
 
+        }
     }
-}
