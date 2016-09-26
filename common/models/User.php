@@ -185,6 +185,7 @@ class User extends ActiveRecord implements IdentityInterface
 
             // validate for create
             ['password', 'string', 'min' => '6', 'tooShort' => 'Mật khẩu phải tối thiểu 6 ký tự'],
+            ['password', 'checkPassword', 'on' => 'create'],
             ['old_password', 'string'],
             ['confirm_password', 'string'],
             ['new_password', 'string', 'min' => '6', 'tooShort' => 'Mật khẩu phải tối thiểu 6 ký tự'],
@@ -274,7 +275,17 @@ class User extends ActiveRecord implements IdentityInterface
             }
         }
     }
-
+    public function checkPassword($attribute)
+    {
+        if (strlen($this->password) < '6') {
+            $this->addError('password', 'Mật khẩu phải chứa tối thiểu 6 ký tự.');
+        }
+        elseif(!preg_match("@[0-9]@",$this->password)) {
+            $this->addError('password', 'Mật khẩu phải chứa ít nhất 1 số.');
+        } elseif(!preg_match("@[A-Z]@",$this->password)) {
+            $this->addError('password', 'Mật khẩu phải chứa ít nhất 1 chữ viết hoa.');
+        }
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -427,7 +438,7 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findByAdminUsername($username)
     {
         return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE,
-            'type' => [self::TYPE_ADMIN, self::TYPE_MINISTRY_EDITOR]]);
+            'type' => [self::TYPE_ADMIN, self::TYPE_MINISTRY_EDITOR,self::TYPE_VILLAGE]]);
     }
 
     /**
@@ -609,6 +620,8 @@ class User extends ActiveRecord implements IdentityInterface
         $lst = [
             self::TYPE_ADMIN => 'Admin',
             self::TYPE_MINISTRY_EDITOR => 'Ban biên tập tin tức',
+            self::TYPE_VILLAGE => 'Tài khoản xã',
+            self::TYPE_USER => 'Người dùng',
         ];
         return $lst;
     }

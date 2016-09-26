@@ -42,11 +42,6 @@ $formId = $form->id;
         <?= $form->field($model, 'address')->textInput(['placeholder' => 'Địa chỉ', 'maxlength' => 100]) ?>
         <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Nhập mật khẩu có độ dài  tối thiểu 6 kí tự']) ?>
         <?= $form->field($model, 'confirm_password')->passwordInput(['placeholder' => 'Nhập lại mật khẩu']) ?>
-        <?= $form->field($model, 'username')->textInput(['readonly' => true]) ?>
-        <?= $form->field($model, 'fullname')->textInput(['placeholder' => 'Họ và tên', 'maxlength' => 100]) ?>
-        <?= $form->field($model, 'email')->textInput(['placeholder' => 'Email', 'maxlength' => 100]) ?>
-        <?= $form->field($model, 'phone_number')->textInput(['placeholder' => 'Số điện thoại', 'maxlength' => 100]) ?>
-        <?= $form->field($model, 'address')->textInput(['placeholder' => 'Địa chỉ', 'maxlength' => 100]) ?>
         <!--        Nếu là chính nó thì không cho thay đổi trạng thái-->
         <?php if ($model->id != Yii::$app->user->getId()) { ?>
             <?= $form->field($model, 'status')->dropDownList(User::listStatus()) ?>

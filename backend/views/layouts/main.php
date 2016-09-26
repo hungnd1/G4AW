@@ -200,6 +200,17 @@ $menuItems = [
                 'label' => User::getTypeNameByID(User::TYPE_MINISTRY_EDITOR),
                 'url' => ['user/index', "type" => User::TYPE_MINISTRY_EDITOR],
             ],
+            [
+                'encode' => false,
+                'label' => User::getTypeNameByID(User::TYPE_VILLAGE),
+                'url' => ['user/index', "type" => User::TYPE_VILLAGE],
+            ],
+            [
+                'encode' => false,
+                'label' => User::getTypeNameByID(User::TYPE_USER),
+                'url' => ['user/index', "type" => User::TYPE_USER],
+            ],
+
         ]
     ],
     [
