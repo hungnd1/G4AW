@@ -2997,6 +2997,7 @@ table.tab-pac-course tr:first-child td:last-child{
 .list-item .news {
   float: left;
   width: 19%;
+  height:350px;
   position: relative;
   display: inline-block;
   padding-bottom: 20px;
