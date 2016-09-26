@@ -6,10 +6,10 @@ class m160926_050843_add_column_user extends Migration
 {
     public function up()
     {
-        $this->alterColumn('user','fb_email','VARCHAR(255)');
-        $this->alterColumn('user','fb_id','VARCHAR(50)');
-        $this->alterColumn('user','gender','SMALLINT(6)');
-        $this->alterColumn('user','birthday','DATETIME');
+        $this->addColumn('user','fb_email','VARCHAR(255)');
+        $this->addColumn('user','fb_id','VARCHAR(50)');
+        $this->addColumn('user','gender','SMALLINT(6)');
+        $this->addColumn('user','birthday','DATETIME');
     }
 
     public function down()
