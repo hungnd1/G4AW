@@ -5,9 +5,11 @@ namespace frontend\controllers;
 use common\models\Campaign;
 use common\models\CampaignDonationItemAsm;
 use common\models\Category;
+use common\models\Comment;
 use common\models\DonationItem;
 use common\models\DonationRequest;
 use common\models\News;
+use common\models\User;
 use common\models\Village;
 use Yii;
 use yii\data\Pagination;
@@ -74,6 +76,28 @@ class NewsController extends BaseController
 
         $model = $this->findModel($id);
 
+        $listComment = null;
+
+        $query = Comment::find()
+            ->andWhere(['id_new'=>$id])
+            ->andWhere(['type'=>Comment::TYPE_NEW])
+            ->andWhere(['status'=>Comment::STATUS_ACTIVE])
+            ->orderBy(['updated_at'=>SORT_DESC]);
+        $countQuery = clone  $query;
+        $pages = new Pagination(['totalCount'=>$countQuery->count()]);
+        $pageSize = Yii::$app->params['page_size'];
+        $pages->setPageSize($pageSize);
+        $comment = $query->offset($pages->offset)->limit(10)->all();
+
+        $j =0 ;
+        foreach($comment as $item ){
+            $listComment[$j] = new \stdClass();
+            $listComment[$j]->content  = $item->content;
+            $listComment[$j]->user = User::findOne(['id'=>$item->user_id]);
+            $listComment[$j]->updated_at = $item->updated_at;
+            $j++;
+        }
+
         $title = Category::listType($model->type);
 
         $otherModels = News::find()->innerJoin('news_category_asm', 'news_category_asm.news_id = news.id')
@@ -95,7 +119,8 @@ class NewsController extends BaseController
 
 
         return $this->render('detail', ['model' => $model, 'title' => $title, 'listNewRelated' => $listNewRelated,
-            'otherModels' => $otherModels]);
+            'otherModels' => $otherModels, 'listComment'=>$listComment,
+            'pages'=>$pages]);
     }
 
     public function actionView($id)

@@ -179,11 +179,14 @@ class SiteController extends BaseController
     {
         $id = $this->getParameter('contentId');
         $content = $this->getParameter('content');
+        $type = $this->getParameter('type');
         $check = false;
 //        $comment = Comment::findOne(['village_id' => $id, 'user_id' => Yii::$app->user->id]);
         $feedback = new Comment();
-            $feedback->village_id = $id;
+            $feedback->id_new = $id;
             $feedback->content = $content;
+            $feedback->type = $type;
+            $feedback->status = Comment::STATUS_DRAFT;
             $feedback->user_id = Yii::$app->user->id;
             $feedback->created_at = time();
             $feedback->updated_at = time();
@@ -205,10 +208,13 @@ class SiteController extends BaseController
         $contentId = $this->getParameter('contentId');
         $type = $this->getParameter('type');
         $page = $this->getParameter('page');
+        $type_new = $this->getParameter('type_new');
         $number = $this->getParameter('number');
 
         $query = Comment::find()
-            ->andWhere(['village_id'=>$contentId])
+            ->andWhere(['id_new'=>$contentId])
+            ->andWhere(['type'=>$type_new])
+            ->andWhere(['status'=>Comment::STATUS_ACTIVE])
             ->orderBy(['updated_at'=>SORT_DESC]);
         $countQuery = clone  $query;
         $pages = new Pagination(['totalCount'=>$countQuery->count()]);
@@ -217,7 +223,9 @@ class SiteController extends BaseController
 
         $listComment = null;
             $comment = Comment::find()
-                ->andWhere(['village_id'=>$contentId])
+                ->andWhere(['id_new'=>$contentId])
+                ->andWhere(['type'=>$type_new])
+                ->andWhere(['status'=>Comment::STATUS_ACTIVE])
                 ->orderBy(['updated_at'=>SORT_DESC])->limit(10)->offset($page)->all();
         $numberCheck = $number + sizeof($listComment);
         $j =0 ;
@@ -237,12 +245,15 @@ class SiteController extends BaseController
 
         $contentId = $this->getParameter('contentId');
         $type = $this->getParameter('type');
+        $type_new = $this->getParameter('type_new');
         $page = $this->getParameter('page');
         $number = $this->getParameter('number');
 
 
         $query = Comment::find()
-            ->andWhere(['village_id'=>$contentId])
+            ->andWhere(['id_new'=>$contentId])
+            ->andWhere(['type'=>$type_new])
+            ->andWhere(['status'=>Comment::STATUS_ACTIVE])
             ->orderBy(['updated_at'=>SORT_DESC]);
         $countQuery = clone  $query;
         $pages = new Pagination(['totalCount'=>$countQuery->count()]);
@@ -251,7 +262,9 @@ class SiteController extends BaseController
 
         $listComment = null;
         $comment = Comment::find()
-            ->andWhere(['village_id'=>$contentId])
+            ->andWhere(['id_new'=>$contentId])
+            ->andWhere(['type'=>$type_new])
+            ->andWhere(['status'=>Comment::STATUS_ACTIVE])
             ->orderBy(['updated_at'=>SORT_DESC])->limit(10)->all();
         $numberCheck = $number + sizeof($listComment);
         $j =0 ;
