@@ -107,6 +107,8 @@ class NewsController extends Controller
 
                 if($model->status == News::STATUS_ACTIVE){
                     $model->published_at = time();
+                }else{
+                    $model->published_at = 0;
                 }
 
                 if ($model->save()) {
@@ -163,6 +165,11 @@ class NewsController extends Controller
                     }
                 } else {
                     $model->thumbnail = $thumbnail;
+                }
+                if($model->status == News::STATUS_ACTIVE){
+                    $model->published_at = time();
+                }else{
+                    $model->published_at = 0;
                 }
 
                 if ($model->save()) {
