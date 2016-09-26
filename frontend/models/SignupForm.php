@@ -42,6 +42,7 @@ class SignupForm extends Model
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Tài khoản email của bạn đã được đăng ký trên hệ thống!'],
             ['password', 'string', 'min' => 6, 'message' => 'Mật khẩu phải tối thiểu 6 ký tự'],
+            ['password', 'checkPassword', 'on' => 'create'],
             [['confirm_password', 'password'], 'required'],
 
             [
@@ -55,6 +56,18 @@ class SignupForm extends Model
             [['address'], 'safe'],
             [['captcha'], 'captcha'],
         ];
+    }
+
+    public function checkPassword($attribute)
+    {
+        if (strlen($this->password) < '6') {
+            $this->addError('password', 'Mật khẩu phải chứa tối thiểu 6 ký tự.');
+        }
+        elseif(!preg_match("@[0-9]@",$this->password)) {
+            $this->addError('password', 'Mật khẩu phải chứa ít nhất 1 số.');
+        } elseif(!preg_match("@[A-Z]@",$this->password)) {
+            $this->addError('password', 'Mật khẩu phải chứa ít nhất 1 chữ viết hoa.');
+        }
     }
 
     public function is8NumbersOnly($attribute)
