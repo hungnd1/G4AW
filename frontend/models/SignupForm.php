@@ -42,7 +42,7 @@ class SignupForm extends Model
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Tài khoản email của bạn đã được đăng ký trên hệ thống!'],
             ['password', 'string', 'min' => 6, 'message' => 'Mật khẩu phải tối thiểu 6 ký tự'],
-            ['password', 'checkPassword', 'on' => 'create'],
+            ['password', 'checkPassword', 'on' => 'signup'],
             [['confirm_password', 'password'], 'required'],
 
             [
