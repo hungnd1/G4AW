@@ -316,7 +316,6 @@ CREATE TABLE IF NOT EXISTS `news` (
   `published_at` INT(11) NOT NULL,
   `area_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `idx_name` (`title` ASC),
   INDEX `idx_view_count` (`view_count` ASC),
   INDEX `idx_like_count` (`like_count` ASC),
   INDEX `idx_comment_count` (`comment_count` ASC),
@@ -330,9 +329,7 @@ CREATE TABLE IF NOT EXISTS `news` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 ROW_FORMAT = DYNAMIC
-AUTO_INCREMENT = 20
-COMMENT = 'TODO: thong tin ve cac thuoc tinh nhu dao dien, tac gia, ca ';
-
+AUTO_INCREMENT = 20;
 
 -- -----------------------------------------------------
 -- Table `campaign_related_asm`
