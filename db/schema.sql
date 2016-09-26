@@ -342,7 +342,7 @@ CREATE TABLE IF NOT EXISTS `news_category_asm` (
   `category_id` INT(11) NOT NULL,
   `created_at` INT(11) NULL DEFAULT NULL,
   `updated_at` INT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
   )
 ENGINE = InnoDB
 ROW_FORMAT = DYNAMIC
