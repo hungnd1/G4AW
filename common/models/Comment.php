@@ -42,20 +42,6 @@ class Comment extends \yii\db\ActiveRecord
         return $lst;
     }
 
-    public static function getListStatus($type = 'all')
-    {
-        return ['all' => [
-            self::STATUS_ACTIVE => 'Hoạt động',
-            self::STATUS_DRAFT => 'Soạn thảo',
-            self::STATUS_INACTIVE => 'Khóa',
-        ],
-            'filter' => [
-                self::STATUS_ACTIVE => 'Hoạt động',
-                self::STATUS_DRAFT => 'Soạn thảo',
-                self::STATUS_INACTIVE => 'Khóa',
-            ],
-        ][$type];
-    }
 
     public static function getNameByType($type)
     {
@@ -99,8 +85,6 @@ class Comment extends \yii\db\ActiveRecord
 
     public function spUpdateStatus($newStatus, $sp_id)
     {
-        $oldStatus = $this->status;
-        $listStatusNew = self::getListStatus('filter');
         $this->status = $newStatus;
         $this->updated_at = time();
         return $this->update(false);
