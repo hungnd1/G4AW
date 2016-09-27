@@ -248,7 +248,7 @@
 @media(max-width: 600px){
   .logo img{
     height: 35px;
-    margin-top: 10px;
+    margin-top: 0px;
   }
   .x-in-list{
     width: 33.33%;

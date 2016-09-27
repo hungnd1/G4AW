@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Cập nhật');
                 <div class="caption"><i class="fa fa-gift"></i><?=$this->title?></div>
             </div>
             <div class="portlet-body form">
-                <?= $this->render('_form', [
+                <?= $this->render('form_update', [
                     'model' => $model,
                 ]) ?>
             </div>

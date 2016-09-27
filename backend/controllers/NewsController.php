@@ -14,6 +14,7 @@ use common\models\NewsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 /**
@@ -248,5 +249,37 @@ class NewsController extends Controller
             Yii::$app->session->setFlash('error', 'Lỗi hệ thống, vui lòng thử lại!');
         }
         return $this->redirect(['view', 'id' => $model->id]);
+    }
+
+    public function actionUpdateStatusContent()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $post = Yii::$app->request->post();
+        $cp = Yii::$app->user->id;
+
+        if (isset($post['ids']) && isset($post['newStatus'])) {
+            $ids = $post['ids'];
+            $newStatus = $post['newStatus'];
+            $contents = News::findAll($ids);
+            $count = 0;
+
+            foreach ($contents as $content) {
+                if ($content->spStatus($newStatus, $cp)) {
+                    ++$count;
+                }
+            }
+
+            $successMess = $newStatus == News::STATUS_INACTIVE ? 'Xóa' : 'Cập nhật';
+
+            return [
+                'success' => true,
+                'message' => $successMess . ' ' . $count . ' tin tức thành công!',
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Không thành công. Vui lòng thử',
+            ];
+        }
     }
 }

@@ -3,12 +3,14 @@
 namespace backend\controllers;
 
 use common\auth\filters\Yii2Auth;
-use Yii;
 use common\models\Village;
 use common\models\VillageSearch;
+use kartik\form\ActiveForm;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 /**
@@ -70,7 +72,7 @@ class VillageController extends Controller
     public function actionCreate()
     {
         $model = new Village();
-
+        $model->setScenario('create');
         if ($model->load(Yii::$app->request->post())) {
             $model->created_at = time();
             $model->updated_at = time();
@@ -81,10 +83,10 @@ class VillageController extends Controller
                     $model->image = $file_name;
                 }
             }
-            if($model->save()) {
+            if ($model->save()) {
                 Yii::$app->getSession()->setFlash('success', 'Thêm xã thành công');
                 return $this->redirect(['view', 'id' => $model->id]);
-            }else {
+            } else {
                 Yii::$app->getSession()->setFlash('success', 'Thêm xã không thành công');
                 return $this->render('create', [
                     'model' => $model,
@@ -106,14 +108,41 @@ class VillageController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $model->establish_date ? $model->establish_date = date('d/m/Y', strtotime($model->establish_date)) : '';
+        $image_old = $model->image;
+        if ($model->load(Yii::$app->request->post())) {
+            $model->establish_date ? $model->establish_date = date('Y-m-d', strtotime($model->establish_date)) : '';
+            $image = UploadedFile::getInstance($model, 'image');
+            if ($image) {
+                $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
+                if ($image->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@village_image') . "/" . $file_name)) {
+                    $model->image = $file_name;
+                    if ($model->save()) {
+                        Yii::$app->getSession()->setFlash('success', 'Cập nhật xã thành công');
+                        return $this->redirect(['index']);
+                    } else {
+                        Yii::error($model->getErrors());
+                        Yii::$app->getSession()->setFlash('error', 'Lỗi hệ thống vui lòng thử lại');
+                    }
+                } else {
+                    Yii::error($model->getErrors());
+                    Yii::$app->getSession()->setFlash('error', 'Lỗi hệ thống vui lòng thử lại');
+                }
+            } else {
+                $model->image = $image_old;
+                if ($model->save()) {
+                    Yii::$app->getSession()->setFlash('success', 'Cập nhật xã thành công');
+                    return $this->redirect(['index']);
+                } else {
+                    Yii::error($model->getErrors());
+                    Yii::$app->getSession()->setFlash('error', 'Lỗi hệ thống vui lòng thử lại');
+                }
+            }
+            return $this->redirect(['index']);
+        }else{
+            return $this->render('update', ['model' => $model]);
         }
+
     }
 
     /**
@@ -122,7 +151,8 @@ class VillageController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public
+    function actionDelete($id)
     {
         $this->findModel($id)->delete();
 
@@ -136,7 +166,8 @@ class VillageController extends Controller
      * @return Village the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected
+    function findModel($id)
     {
         if (($model = Village::findOne($id)) !== null) {
             return $model;

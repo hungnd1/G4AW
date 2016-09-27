@@ -18,7 +18,7 @@ return [
         '@area_image' => 'area_image',
         '@images' => 'images',
         '@file_upload'=>'file_upload',
-        '@news_image'=>'news_image',
+        '@village_image'=>'village_image',
         '@avatar'=>'avatar',
     ],
     'components' => [

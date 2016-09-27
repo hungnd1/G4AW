@@ -75,6 +75,28 @@ class News extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function getListStatus($type = 'all')
+    {
+        return ['all' => [
+            self::STATUS_ACTIVE => 'Hoạt động',
+            self::STATUS_NEW => 'Soạn thảo',
+            self::STATUS_INACTIVE => 'Tạm dừng',
+        ],
+            'filter' => [
+                self::STATUS_ACTIVE => 'Hoạt động',
+                self::STATUS_NEW => 'Soạn thảo',
+                self::STATUS_INACTIVE => 'Tạm dừng',
+            ],
+        ][$type];
+    }
+
+    public function spStatus($newStatus, $sp_id)
+    {
+        $this->status = $newStatus;
+        $this->updated_at = time();
+        return $this->update(false);
+    }
+
     /**
      * @inheritdoc
      */

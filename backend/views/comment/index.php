@@ -1,26 +1,22 @@
 <?php
 
-use common\models\News;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
+/* @var $searchModel common\models\CommentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $type */
 
-$unPublishStatus = \common\models\News::STATUS_NEW;
-$showStatus = \common\models\News::STATUS_ACTIVE;
-$deleteStatus = \common\models\News::STATUS_INACTIVE;
+$unPublishStatus = \common\models\Comment::STATUS_DRAFT;
+$showStatus = \common\models\Comment::STATUS_ACTIVE;
+$deleteStatus = \common\models\Comment::STATUS_INACTIVE;
 
-$this->title = News::getNameByType($type);
+$this->title = \common\models\Comment::getNameByType($type);
 $this->params['breadcrumbs'][] = $this->title;
-
-$visible_campaign = false;
-$visible_village = false;
 
 ?>
 <?php
-$updateLink = \yii\helpers\Url::to(['news/update-status-content']);
+$updateLink = \yii\helpers\Url::to(['comment/update-status-content']);
 
 $js = <<<JS
     function updateStatusContent(newStatus){
@@ -75,11 +71,10 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                 </div>
             </div>
             <div class="portlet-body">
-                <p><?= Html::a('Thêm tin tức', ['create', 'type' => $type], ['class' => 'btn btn-success']) ?> </p>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
-                    'filterModel' => $searchModel,
                     'id' => 'content-index-grid',
+                    'filterModel' => $searchModel,
                     'responsive' => true,
                     'pjax' => true,
                     'hover' => true,
@@ -123,45 +118,36 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                     'columns' => [
                         [
                             'class' => '\kartik\grid\DataColumn',
-                            'attribute' => 'title',
-                            'format' => 'html',
+                            'header' => 'Tên nội dung',
                             'value' => function ($model, $key, $index, $widget) {
-                                return Html::a(\common\helpers\CUtils::subString($model->title, 60), ['update', 'id' => $model->id], ['class' => 'label label-primary']);
+                                /** @var $model \common\models\Comment */
+                                if($model->type == \common\models\Comment::TYPE_NEW){
+                                    /** @var $news \common\models\News */
+                                    $news = \common\models\News::findOne(['id'=>$model->id_new]);
+                                    return $news->title;
+                                }else{
+                                    /** @var $news \common\models\Village */
+                                    $news = \common\models\Village::findOne(['id'=>$model->id_new]);
+                                    return $news->name;
+                                }
                             },
                         ],
                         [
                             'class' => '\kartik\grid\DataColumn',
-                            'header' => 'Danh mục',
-                            'value' => function ($model, $key, $index, $widget) {
-                                /** @var $model \common\models\News */
-                                return $model->getCategory() ? $model->getCategory() : '';
-                            }
-                        ],
-
-                        [
-                            'class' => '\kartik\grid\DataColumn',
-//                            'attribute' => 'type',
-                            'header' => 'Loại bài viết',
+                            'attribute' => 'content',
                             'format' => 'html',
                             'value' => function ($model, $key, $index, $widget) {
-                                /** @var $model \common\models\News */
-                                return $model->getTypeName();
+                                return $model->content;
                             },
-//                            'filterType' => GridView::FILTER_SELECT2,
-//                            'filter' => \common\models\News::listType(),
-//                            'filterWidgetOptions' => [
-//                                'pluginOptions' => ['allowClear' => true],
-//                            ],
-//                            'filterInputOptions' => ['placeholder' => "Tất cả"],
-
                         ],
                         [
                             'class' => '\kartik\grid\DataColumn',
-                            'attribute' => 'short_description',
-                            'format' => 'html',
+                            'header' => 'Người bình luận',
                             'value' => function ($model, $key, $index, $widget) {
-                                /** @var $model \common\models\News */
-                                return \common\helpers\CUtils::subString($model->short_description, 20);
+                                    /** @var $model \common\models\Comment */
+                                    /** @var $user \common\models\User */
+                                    $user = \common\models\User::findOne(['id'=>$model->user_id]);
+                                    return $user->username;
                             },
                         ],
                         [
@@ -169,19 +155,15 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                             'attribute' => 'status',
                             'format' => 'html',
                             'value' => function ($model, $key, $index, $widget) {
-                                /** @var $model \common\models\News */
+                                /** @var $model \common\models\Comment */
                                 return $model->getStatusName();
                             },
                             'filterType' => GridView::FILTER_SELECT2,
-                            'filter' => \common\models\News::listStatus(),
+                            'filter' => \common\models\Comment::listStatus(),
                             'filterWidgetOptions' => [
                                 'pluginOptions' => ['allowClear' => true],
                             ],
                             'filterInputOptions' => ['placeholder' => "Tất cả"],
-                        ],
-                        [
-                            'class' => 'yii\grid\ActionColumn',
-                            'template' => '{view}{update}{delete}',
                         ],
                         [
                             'class' => 'kartik\grid\CheckboxColumn',
@@ -193,6 +175,7 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
         </div>
     </div>
 </div>
+
 <?php
 $js = <<<JS
 function submitForm(){

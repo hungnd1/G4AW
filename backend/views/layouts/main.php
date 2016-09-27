@@ -214,6 +214,29 @@ $menuItems = [
         ]
     ],
     [
+        'label' => 'QL Bình luận',
+        'url' => 'javascript:;',
+        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
+        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
+        'items' => [
+//                [
+//                    'encode' => false,
+//                    'label' => 'Quản lý người dùng',
+//                    'url' => ['user/index'],
+//                ],
+            [
+                'encode' => false,
+                'label' => 'Bình luận tin tức',
+                'url' => ['comment/index','type'=>\common\models\Comment::TYPE_NEW],
+            ],
+            [
+                'encode' => false,
+                'label' => 'Bình luận xã',
+                'url' => ['comment/index','type'=>\common\models\Comment::TYPE_VILLAGE],
+            ],
+        ]
+    ],
+    [
         'label' => 'QL Phân quyền',
         'url' => 'javascript:;',
         'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],

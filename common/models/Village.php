@@ -63,8 +63,8 @@ class Village extends \yii\db\ActiveRecord
     {
         return [
             [['name','name_en', 'id_province', 'image', 'status'], 'required'],
-            [['number_code', 'id_province', 'status', 'establish_date','created_at', 'updated_at'], 'integer'],
-            [['description','description_en'], 'string'],
+            [['number_code', 'id_province', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['description','establish_date','description_en'], 'string'],
             [['name','name_en'], 'string', 'max' => 200],
             [['latitude', 'longitude'], 'string', 'max' => 10],
             [['image'], 'string', 'max' => 500],
@@ -86,7 +86,7 @@ class Village extends \yii\db\ActiveRecord
             'id_province' => 'Tỉnh',
             'latitude' => 'Vĩ độ',
             'longitude' => 'Kinh độ',
-            'image' => 'Ảnh đại diện',
+            'image' => 'Ảnh đại diện xã',
             'description' => 'Mô tả',
             'description_en' => 'Mô tả tiếng anh',
             'status' => 'Trạng thái',

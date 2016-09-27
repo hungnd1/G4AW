@@ -79,7 +79,7 @@ if (!Yii::$app->user->isGuest) {
             <div class="top-bl-x">
                 <span class="tit-x">Danh sách vùng</span>
             </div>
-            <div class="listVillage">
+            <div class="listVillage1">
                 <?php if (isset($listArea) && !empty($listArea)) {
                     /** @var \common\models\Area $item */
                     foreach ($listArea as $item) {
@@ -104,6 +104,98 @@ if (!Yii::$app->user->isGuest) {
     </div>
 
     <!-- List NEW block-->
+
+    <!--end list CT block-->
+
+    <div class="container">
+        <div class="block-x">
+            <div class="top-bl-x">
+                <span class="tit-x">Danh sách xã</span>
+                <div class="select-prv">
+
+                    Tỉnh/ Thành phố <a class="active-prv" id="dLabel" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">"Tất cả"
+                        <span class="caret"></span></a>
+                    <!--   <div class="block-prv"> -->
+                    <ul class="block-prv dropdown-menu" aria-labelledby="dLabel">
+                        <li id="all" class="active"><a onclick="loadVillage(0,'Tất cả','')">Tất cả </a></li>
+                        <?php if (isset($listProvince)) {
+                            foreach ($listProvince as $province) { ?>
+                                <li id="li_active"><a
+                                        onclick="loadVillage(<?= $province->id ?>,'<?= $province->name ?>','')"><?= $province->name ?></a>
+                                </li>
+                            <?php }
+                        } ?>
+                    </ul>
+                    <!--  </div> -->
+                </div>
+            </div>
+            <div class="listVillage">
+                <?php if (isset($listVillage) && !empty($listVillage)) {
+                    /** @var \common\models\Village $item */
+                    foreach ($listVillage as $item) {
+                        $image = $item->getImageLink(); ?>
+
+                        <div class="x-in-list">
+                            <div class="thumb-common">
+                                <img src="../img/blank.gif">
+                                <a href="<?= \yii\helpers\Url::toRoute(['village/view', 'id' => $item->id]) ?>"><img
+                                        class="thumb-cm" src="<?= $image ?>"><br></a>
+                            </div>
+                            <h4><?= $item->name ?></h4>
+                        </div>
+                    <?php } ?>
+                    <div id="last-comment"></div>
+                    <input type="hidden" name="page" id="page"
+                           value="<?= sizeof($listVillage) - 1 ?>">
+                    <input type="hidden" name="numberCount" id="numberCount" value="<?= sizeof($listVillage) ?>">
+                    <input type="hidden" name="total" id="total" value="<?= $pages->totalCount ?>">
+                    <?php if (count($listVillage) >= 10) { ?>
+                        <div class="text-center">
+                            <a id="more" onclick="loadMore();" class="more-2">Xem thêm xã</a>
+                        </div>
+                    <?php } ?>
+                <?php } ?>
+            </div>
+            <input type="hidden" id="id" value="">
+            <input type="hidden" id="filter" value="">
+            <!-- abc -->
+            <div class="tab-key">
+                <ul>
+                    <li class="active"><a onclick="loadVillage(0,'Tất cả','')">Tất cả</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','a')">A</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','b')">B</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','c')">C</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','d')">D</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','đ')">Đ</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','e')">E</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','f')">F</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','g')">G</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','h')">H</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','i')">I</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','j')">J</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','k')">K</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','l')">L</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','m')">M</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','n')">N</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','o')">O</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','p')">P</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','q')">Q</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','r')">R</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','s')">S</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','t')">T</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','u')">U</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','v')">V</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','x')">X</a></li>
+                    <li><a onclick="loadVillage(0,'Tất cả','y')">Y</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- List NEW block-->
+
 
     <div class="container">
         <div class="news-block cm-block">

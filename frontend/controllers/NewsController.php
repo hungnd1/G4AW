@@ -109,16 +109,8 @@ class NewsController extends BaseController
             ->andWhere('news.id <> :id', [':id' => $model->id])
             ->orderBy(['news.created_at' => SORT_DESC])->limit(6)->all();
 
-        $listNewRelated = News::find()
-            ->innerJoin('news_category_asm', 'news_category_asm.news_id = news.id')
-            ->innerJoin('category', 'category.id = news_category_asm.category_id')
-            ->andWhere(['news.status' => News::STATUS_ACTIVE])
-            ->andWhere(['category.status' => Category::STATUS_ACTIVE])
-            ->andWhere('category.type != :type', [':type' => $model->type])
-            ->orderBy(['news.created_at' => SORT_DESC])->limit(5)->all();
 
-
-        return $this->render('detail', ['model' => $model, 'title' => $title, 'listNewRelated' => $listNewRelated,
+        return $this->render('detail', ['model' => $model, 'title' => $title,
             'otherModels' => $otherModels, 'listComment'=>$listComment,
             'pages'=>$pages]);
     }

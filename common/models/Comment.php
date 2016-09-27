@@ -33,6 +33,59 @@ class Comment extends \yii\db\ActiveRecord
         return 'comment';
     }
 
+    public static function listType()
+    {
+        $lst = [
+            self::TYPE_NEW => 'Bình luận tin tức',
+            self::TYPE_VILLAGE => 'Bình luận xã',
+        ];
+        return $lst;
+    }
+
+    public static function getListStatus($type = 'all')
+    {
+        return ['all' => [
+            self::STATUS_ACTIVE => 'Hoạt động',
+            self::STATUS_DRAFT => 'Soạn thảo',
+            self::STATUS_INACTIVE => 'Khóa',
+        ],
+            'filter' => [
+                self::STATUS_ACTIVE => 'Hoạt động',
+                self::STATUS_DRAFT => 'Soạn thảo',
+                self::STATUS_INACTIVE => 'Khóa',
+            ],
+        ][$type];
+    }
+
+    public static function getNameByType($type)
+    {
+        $lst = self::listType();
+        if (array_key_exists($type, $lst)) {
+            return $lst[$type];
+        }
+        return $type;
+    }
+
+    public function getStatusName()
+    {
+        $lst = self::listStatus();
+        if (array_key_exists($this->status, $lst)) {
+            return $lst[$this->status];
+        }
+        return $this->status;
+    }
+
+
+    public static function listStatus()
+    {
+        $lst = [
+            self::STATUS_DRAFT => 'Soạn thảo',
+            self::STATUS_ACTIVE => 'Hoạt động',
+            self::STATUS_INACTIVE => 'Tạm dừng',
+        ];
+        return $lst;
+    }
+
     /**
      * @inheritdoc
      */
@@ -44,6 +97,15 @@ class Comment extends \yii\db\ActiveRecord
         ];
     }
 
+    public function spUpdateStatus($newStatus, $sp_id)
+    {
+        $oldStatus = $this->status;
+        $listStatusNew = self::getListStatus('filter');
+        $this->status = $newStatus;
+        $this->updated_at = time();
+        return $this->update(false);
+    }
+
     /**
      * @inheritdoc
      */
@@ -52,12 +114,14 @@ class Comment extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_new' => 'Id New',
-            'content' => 'Content',
-            'status' => 'Status',
+            'content' => 'Nội dung',
+            'status' => 'Trạng thái',
             'type' => 'Type',
             'user_id' => 'User ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
     }
+
+
 }

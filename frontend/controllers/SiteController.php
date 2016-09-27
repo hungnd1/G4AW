@@ -118,9 +118,20 @@ class SiteController extends BaseController
 
         $listUnit = UnitLink::findAll(['status'=>UnitLink::STATUS_ACTIVE]);
 
+        $newsQuery = Village::find()
+            ->andWhere(['status' => Village::STATUS_ACTIVE])
+            ->orderBy('name')->limit(10);
+        $countQuery = clone $newsQuery;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $listVillage = $newsQuery->all();
+
+        $listProvince = Province::find()->andWhere(['status' => Province::STATUS_ACTIVE])->orderBy(['name'=>SORT_ASC])->all();
+
+
         return $this->render('index',['listNew'=>$listNew,'listSlide'=>$listSlide,'listArea'=>$listArea,
         'listNewCategory'=>$listNewCategory,'listKnow'=>$listKnow,'listKnowCategory'=>$listKnowCategory,
-        'listUnit'=>$listUnit]);
+            'pages'=>$pages,'listProvince' => $listProvince,
+        'listUnit'=>$listUnit,'listVillage'=>$listVillage]);
     }
 
     public function actionRules()
@@ -140,6 +151,38 @@ class SiteController extends BaseController
         return $this->renderPartial('news_category', ['listNewest' => $listCategory]);
     }
 
+
+    public function actionGetVillage()
+    {
+
+        $id = $this->getParameter('id', 0);
+        $filter = $this->getParameter('filter', null);
+
+        if ($id == 0 && $filter == null && $filter == '') {
+            $newsQuery = Village::find()->andWhere(['status' => Village::STATUS_ACTIVE])
+                ->orderBy(['name' => SORT_ASC])->limit(10);
+            $countQuery = clone $newsQuery;
+            $pages = new Pagination(['totalCount' => $countQuery->count()]);
+            $listVillage = $newsQuery->all();
+        } else if ($id > 0) {
+            $newsQuery = Village::find()->andWhere(['status' => Village::STATUS_ACTIVE])
+                ->andWhere(['id_province'=>$id])
+                ->orderBy(['name' => SORT_ASC])->limit(10);
+            $countQuery = clone $newsQuery;
+            $pages = new Pagination(['totalCount' => $countQuery->count()]);
+            $listVillage = $newsQuery->all();
+        } else {
+            $newsQuery = Village::find()
+                ->andWhere(['status' => Village::STATUS_ACTIVE])
+                ->andWhere(['like', 'mid(lower(name),1,1)', strtolower($filter)])
+                ->orderBy(['name' => SORT_ASC])
+                ->limit(10);
+            $countQuery = clone $newsQuery;
+            $pages = new Pagination(['totalCount' => $countQuery->count()]);
+            $listVillage = $newsQuery->all();
+        }
+        return $this->renderPartial('_listVillage', ['listVillage' => $listVillage,'pages'=>$pages]);
+    }
 
 
 

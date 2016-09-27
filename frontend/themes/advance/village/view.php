@@ -10,8 +10,6 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
 /** @var $model \common\models\Village */
-/** @var $listCampaign \common\models\Campaign */
-/** @var $leadDonor \common\models\LeadDonor */
 /** @var $this \yii\web\View */
 
 $this->title = 'Chi tiết xã';
@@ -31,30 +29,19 @@ $this->title = 'Chi tiết xã';
                 <div class="left-top-ct">
                     <div class="thumb-common">
                         <img src="../img/blank.gif">
-                        <a href="<?= Url::toRoute(['village/view', 'id_village' => $model->id]) ?>"><img
+                        <a href="<?= Url::toRoute(['village/view', 'id' => $model->id]) ?>"><img
                                 class="thumb-cm"
                                 src="<?= $model->getImageLink() ?>"><br></a>
-                    </div>
-                    <div class="bt-comp2">
-                        <?php if (isset($leadDonor) && !empty($leadDonor)) {
-                            /** @var $leadDonor \common\models\LeadDonor */
-                            ?>
-                            <a href="<?= Url::toRoute(['donor/view', 'id' => $leadDonor->id]) ?>" class="logo-cp"><img
-                                    src="<?= $leadDonor->getImageLink() ?>"></a>
-                            <h5><?= $leadDonor->name ?><br>
-                                <span>Đơn vị bảo trợ</span>
-                            </h5>
-                        <?php } ?>
                     </div>
                 </div>
 
                 <div class="bt-comp hidden-sm hidden-xs">
 
                     <p>
-                        <b> Tập đoàn VNPT</b><br>
+                        <b> Học viện PTIT</b><br>
                         <span>Đơn vị tài trợ CNTT</span>
                     </p>
-                    <a href="<?= Url::toRoute(['donor/view', 'id' => 1]) ?>" class="logo-cp"><img
+                    <a href="" class="logo-cp"><img
                             src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/logo-cp.png">
                     </a>
                 </div>
@@ -66,21 +53,9 @@ $this->title = 'Chi tiết xã';
                                 echo "Đang cập nhật";
                             } ?></p>
                         <p><span class="t-des">Vị trí địa lý:</span>
-                        <div id="map" style="height: 200px;width:300px;"></div>
+                        <div id="map" style="height: 200px;width:300px;"></div><br>
+                        <p><span class="t-des">Mô tả: </span><?= $model->description ?>
                         <br>
-                        <p><span class="t-des">Bản đồ hành chính:</span><br>
-                            <?php if ($model->getMapImageLink()) { ?>
-                                <img width="300px" height="200px" class="bd-hc" src="<?= $model->getMapImageLink() ?>">
-                            <?php } else {
-                                echo "Đang cập nhật";
-                            } ?>
-                        </p>
-                        <!--                        <p><span class="t-des">Bản đồ hành chính:</span>-->
-                        <?php //if ($model->description) {
-                        //                                echo $model->description;
-                        //                            } else {
-                        //                                echo "Đang cập nhật";
-                        //                            } ?><!--</p>-->
                     </div>
                 </div>
             </div>
@@ -90,26 +65,12 @@ $this->title = 'Chi tiết xã';
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#t1" aria-controls="my-cp" role="tab"
                                                                   data-toggle="tab">Thông tin cơ bản</a></li>
-                        <li role="presentation"><a href="#t2" aria-controls="favorite" role="tab" data-toggle="tab">Phát
-                                triển cộng đồng</a></li>
-                        <li role="presentation"><a href="#t3" aria-controls="request" role="tab" data-toggle="tab">Đề
-                                xuất ý tưởng PTCĐ</a></li>
-                        <li role="presentation"><a href="#t4" aria-controls="request" role="tab" data-toggle="tab">Mua
-                                bán sản phẩm địa phương</a></li>
-                        <li role="presentation"><a href="#t5" aria-controls="request" role="tab" data-toggle="tab">Những
-                                tấm lòng nhân ái</a></li>
                         <li role="presentation"><a href="#t6" aria-controls="request" role="tab" data-toggle="tab">Thông
                                 tin chia sẻ</a></li>
                     </ul>
                 </div>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="t1">
-                        <?php if ($model->file_upload) { ?>
-                            <div class="o-save"><a href="<?= $model->getFileUpload() ?>" class="save-info">Tải file
-                                    thông tin <i class="fa fa-download"
-                                                 aria-hidden="true"></i></a>
-                            </div>
-                        <?php } ?>
 
                         <div class="out-tb-x">
                             <table class="tb-x">
@@ -119,216 +80,9 @@ $this->title = 'Chi tiết xã';
                                     <td>Đơn vị tính</td>
                                     <td>Số lượng</td>
                                 </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Diện tích đất tự nhiên</td>
-                                    <td>ha</td>
-                                    <td><?= $model->natural_area ? $model->natural_area : 'Đang cập nhật' ?></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Diện tích đất canh tác</td>
-                                    <td>ha</td>
-                                    <td><?= $model->arable_area ? $model->arable_area : 'Đang cập nhật' ?></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Ngành sản xuất chính</td>
-                                    <td></td>
-                                    <td><?= $model->main_industry ? $model->main_industry : 'Đang cập nhật' ?></td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Sản phẩm chủ lực</td>
-                                    <td></td>
-                                    <td><?= $model->main_product ? $model->main_product : 'Đang cập nhật' ?></td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Dân số</td>
-                                    <td>người</td>
-                                    <td><?= $model->population ? $model->population : 'Đang cập nhật' ?></td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Thu nhập bình quân trên đầu người</td>
-                                    <td>triệu</td>
-                                    <td><?= $model->gdp ? $model->gdp : 'Đang cập nhật' ?></td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Số hộ nghèo</td>
-                                    <td>hộ</td>
-                                    <td><?= $model->poor_family ? $model->poor_family : 'Đang cập nhật' ?></td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>Số hộ chưa có nhà kiên cố</td>
-                                    <td>hộ</td>
-                                    <td><?= $model->no_house_family ? $model->no_house_family : 'Đang cập nhật' ?></td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>Số lớp học còn thiếu</td>
-                                    <td>lớp</td>
-                                    <td><?= $model->missing_classes ? $model->missing_classes : 'Đang cập nhật' ?></td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>Tình hình điện chiếu sáng</td>
-                                    <td></td>
-                                    <td><?= $model->lighting_condition ? $model->lighting_condition : 'Đang cập nhật' ?></td>
-                                </tr>
-                                <tr>
-                                    <td>11</td>
-                                    <td>Tình hình cấp nước sinh hoạt</td>
-                                    <td></td>
-                                    <td><?= $model->water_condition ? $model->water_condition : 'Đang cập nhật' ?></td>
-                                </tr>
-                                <tr>
-                                    <td>12</td>
-                                    <td>Số sân chơi trẻ em, nhà văn hóa còn thiếu</td>
-                                    <td></td>
-                                    <td><?= $model->missing_playground ? $model->missing_playground : 'Đang cập nhật' ?></td>
-                                </tr>
                             </table>
                         </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="t2">
-                        <div class="list-item">
-                            <?php if (isset($listCampaignDonor) && !empty($listCampaignDonor)) {
-                                foreach ($listCampaignDonor as $item) {
-                                    ?>
-                                    <div class="out-card">
-                                        <div class="card-item">
-                                            <div class="thumb-common">
-                                                <img src="../img/blank.gif">
-                                                <a href="<?= Url::toRoute(['campaign/view', 'id' => $item->id]) ?>"><img
-                                                        class="thumb-cm"
-                                                        src="<?= $item->thumbnail ?>"><br></a>
-                                            </div>
-                                            <div class="if-cm-1">
-                                                <div class="top-cp">
-                                                    <a href="<?= Url::toRoute(['campaign/view', 'id' => $item->id]) ?>">
-                                                        <h3 class="name-1"><?= $item->name ?></h3><br></a>
-                                                </div>
-                                                <div class="bt-cp">
-                                                    <a href="<?= Url::toRoute(['donor/view', 'id' => $item->id]) ?>"
-                                                       class="logo-cp"><img
-                                                            src="<?= $item->image ?>"></a>
-                                                    <a href="<?= Url::toRoute(['donor/view', 'id' => $item->id]) ?>">
-                                                        <h4><?= $item->lead_donor_name ?></h4></a>
-                                                    <span
-                                                        class="add-cp"><?= LeadDonor::_substr($item->lead_donor_add, 25) ?></span>
-                                                    <div class="bar">
-                                                        <div class="bar-status"
-                                                             style="width:<?= $item->status ?>%;"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php }
-                            } ?>
-                        </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="t3">
-                        <div class="list-item list-tab-2">
-                            <?php if (isset($newIdea) && !empty($newIdea)) {
-                                foreach ($newIdea as $item) {
-                                    /** @var $item \common\models\News */
-                                    ?>
-                                    <div class="out-card">
-                                        <div class="card-item">
-                                            <div class="thumb-common">
-                                                <img src="../img/blank.gif">
-                                                <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>"><img
-                                                        class="thumb-cm" src="<?= $item->getThumbnailLink() ?>"><br></a>
-                                            </div>
-                                            <div class="if-cm-1">
-                                                <div class="top-cp">
-                                                    <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>">
-                                                        <h3 class="name-1"><?= $item->title ?></h3><br></a>
-                                                    <p class="des-ct-2"><?= $item->short_description ?></p>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php }
-                            } ?>
-                        </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="t4">
-                        <div class="list-item list-tab-3">
-                            <?php if (isset($newTrade) && !empty($newTrade)) {
-                                foreach ($newTrade as $item) {
-                                    /** var $item \common\models\News */
-                                    ?>
-                                    <div class="out-card">
-                                        <div class="card-item">
-                                            <div class="thumb-common">
-                                                <img src="../img/blank.gif">
-                                                <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>"><img
-                                                        class="thumb-cm" src="<?= $item->getThumbnailLink() ?>"><br></a>
-                                            </div>
-                                            <div class="if-cm-1">
-                                                <div class="top-cp">
-                                                    <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>">
-                                                        <h3 class="name-1"><?= $item->title ?></h3><br></a>
-                                                    <p class="des-ct-2"><?= $item->short_description ?></p>
-                                                </div>
-                                                <div class="bt-cp">
-                                                    <p class="price">Giá: <span><?= $item->price ?></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php }
-                            } ?>
-
-                        </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="t5">
-                        <div class="list-item list-tab-4">
-                            <?php if (isset($listCampaignKind) && !empty($listCampaignKind)) {
-                                foreach ($listCampaignKind as $item) {
-                                    ?>
-                                    <div class="out-card">
-                                        <div class="card-item">
-                                            <div class="thumb-common">
-                                                <img src="../img/blank.gif">
-                                                <a href="<?= Url::toRoute(['campaign/view', 'id' => $item->id]) ?>"><img
-                                                        class="thumb-cm" src="<?= $item->thumbnail ?>"><br></a>
-                                            </div>
-                                            <div class="if-cm-1">
-                                                <div class="top-cp">
-                                                    <a href="<?= Url::toRoute(['campaign/view', 'id' => $item->id]) ?>">
-                                                        <h3 class="name-1"><?= $item->name ?></h3><br></a>
-                                                    <p class="des-ct-2"><?= $item->short_description ?></p>
-                                                </div>
-                                                <div class="bt-cp">
-                                                    <a href="<?= Url::toRoute(['donor/view', 'id' => $item->id_lead_donor]) ?>"
-                                                       class="logo-cp"><img
-                                                            src="<?= $item->image ?>"></a>
-                                                    <a href="<?= Url::toRoute(['donor/view', 'id' => $item->id_lead_donor]) ?>">
-                                                        <h4><?= $item->lead_donor_name ?></h4></a>
-                                                    <span
-                                                        class="add-cp"><?= LeadDonor::_substr($item->lead_donor_add, 25) ?></span>
-                                                    <div class="bar">
-                                                        <div class="bar-status"
-                                                             style="width:<?= $item->status ?>%;"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php }
-                            } ?>
-                        </div>
-
-                    </div>
-
                     <div role="tabpanel" class="tab-pane" id="t6">
                         <div class="box-comment">
                             <div class="top-box-comment">
@@ -383,39 +137,6 @@ $this->title = 'Chi tiết xã';
                 </div>
             </div>
         </div>
-
-        <div class="block-ads-cp">
-            <div class="left-block-ads">
-                <a href="<?= Url::toRoute(['donor/view', 'id' => $leadDonor->id]) ?>" class="img-cp"><img
-                        class="thumb-cm" src="<?= $leadDonor->getImageLink() ?>"></a>
-                <div class="left-info-ads">
-                    <h3>
-                        <a href="<?= Url::toRoute(['donor/view', 'id' => $leadDonor->id]) ?>"><?= $leadDonor->name ?></a>
-                    </h3>
-                    <p class="if-leaddn">
-                        <i class="fa fa-globe" aria-hidden="true"></i> <span>Website:</span> <a target="_blank"
-                                                                                                href="<?= $leadDonor->website ?>"><?= $leadDonor->website ?></a><br>
-
-                        <i class="fa fa-envelope" aria-hidden="true"></i> <span>Email:</span> <?= $leadDonor->email ?>
-                        <br>
-
-                        <i class="fa fa-mobile" aria-hidden="true"></i>
-                        <span>Số điện thoại:</span> <?= $leadDonor->phone ?><br>
-
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                        <span>Địa chỉ:</span> <?= $leadDonor->address ?>
-                    </p>
-                </div>
-            </div>
-            <div class="right-block-ads">
-                <?php if ($leadDonor->video) { ?>
-                    <video width="400" controls>
-                        <source src="<?= $leadDonor->getVideoUrl() ?>" type="video/mp4">
-                        <source src="<?= $leadDonor->getVideoUrl() ?>" type="video/avi">
-                    </video>
-                <?php } ?>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -463,6 +184,7 @@ $this->title = 'Chi tiết xã';
                 'contentId': <?= $model->id?>,
                 'type': 'comment',
                 'page': page,
+                'type_new':<?= \common\models\Comment::TYPE_VILLAGE ?>,
                 'number': <?= sizeof($listComment) ?>
             },
             type: "GET",
@@ -516,7 +238,8 @@ $this->title = 'Chi tiết xã';
                 url: url,
                 data: {
                     'contentId': <?= $model->id?>,
-                    'content': text
+                    'content': text,
+                    'type':<?= \common\models\Comment::TYPE_VILLAGE ?>
                 },
                 type: "GET",
                 crossDomain: true,
@@ -536,12 +259,14 @@ $this->title = 'Chi tiết xã';
                                 'contentId': <?= $model->id?>,
                                 'type': 1,//load lai comments
                                 'page': 1,
+                                'type_new':<?= \common\models\Comment::TYPE_VILLAGE ?>,
                                 'number': <?= sizeof($listComment) ?>
                             },
                             type: "GET",
                             crossDomain: true,
                             dataType: "text",
                             success: function (result) {
+                                alert('Bình luận của quý khách sẽ được duyệt trong thời gian sớm nhất. Cám ơn quý khách!');
                                 if (null != result && '' != result) {
                                     $('div .list-comments').html(result);
                                     document.getElementById("page").value = page + 9;

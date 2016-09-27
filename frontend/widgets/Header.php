@@ -23,17 +23,10 @@ class Header extends Widget {
     public $id;
     public function init(){
         $id = \Yii::$app->request->get('id_village',0);
-        if($id){
-            self::$leadDonor = LeadDonor::find()
-                ->innerJoin('village','village.lead_donor_id = lead_donor.id')
-                ->andWhere(['lead_donor.status'=>LeadDonor::STATUS_ACTIVE])
-                ->andWhere(['village.id'=>$id])
-                ->andWhere(['village.status'=>Village::STATUS_ACTIVE])->one();
-        }
 
     }
 
     public function run() {
-        return $this->render('/layouts/_partial/header',['id'=>$this->id,'leadDonor'=>self::$leadDonor]);
+        return $this->render('/layouts/_partial/header',['id'=>$this->id]);
     }
 } 
