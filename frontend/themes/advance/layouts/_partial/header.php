@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 <div class="top-nav header">
     <div class="container">
         <a class="navbar-brand logo" href="<?= Url::toRoute(['site/index']) ?>"><img
-                src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/unnamed.png" height="35"></a>
+                src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/unnamed.png" height="80"></a>
 
         <a class="ic-mn-mb hidden-mn" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
             <i class="fa fa-bars" aria-hidden="true"></i>
