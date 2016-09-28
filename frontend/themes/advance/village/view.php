@@ -48,10 +48,6 @@ $this->title = 'Chi tiết xã';
                 <div class="i-f-right">
                     <h1><?= $model->name ?></h1>
                     <div class="des-dt-1">
-                        <p><span
-                                class="t-des">Ngày thành lập:</span> <?php if ($model->establish_date) { ?> <?= date('d/m/Y', strtotime($model->establish_date)) ?><?php } else {
-                                echo "Đang cập nhật";
-                            } ?></p>
                         <p><span class="t-des">Vị trí địa lý:</span>
                         <div id="map" style="height: 200px;width:300px;"></div><br>
                         <p><span class="t-des">Mô tả: </span><?= $model->description ?>
