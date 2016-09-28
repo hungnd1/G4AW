@@ -15,7 +15,7 @@
         <div class="x-in-list">
             <div class="thumb-common">
                 <img src="../img/blank.gif">
-                <a href="<?= \yii\helpers\Url::toRoute(['village/view', 'id_village' => $item->id]) ?>"><img
+                <a href="<?= \yii\helpers\Url::toRoute(['village/view', 'id' => $item->id]) ?>"><img
                         class="thumb-cm" src="<?= $image ?>"><br></a>
             </div>
             <h4><?= $item->name ?></h4>
