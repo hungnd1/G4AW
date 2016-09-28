@@ -212,6 +212,30 @@ class SiteController extends BaseController
         }
     }
 
+    public function actionGetVillages()
+    {
+        $listComment = null;
+        $page = $this->getParameter('page');
+
+        $id = $this->getParameter('id', 0);
+        $filter = $this->getParameter('filter', null);
+        if ($id == 0 && $filter == null && $filter == '') {
+            $listVillage = Village::find()->andWhere(['status' => Village::STATUS_ACTIVE])
+                ->orderBy(['name' => SORT_ASC])->limit(10)->offset($page)->all();
+        } else if ($id > 0) {
+            $listVillage = Village::find()->andWhere(['status' => Village::STATUS_ACTIVE])
+                ->andWhere(['id_province'=>$id])
+                ->orderBy(['name' => SORT_ASC])->limit(10)->offset($page)->all();
+        } else {
+            $listVillage = Village::find()
+                ->andWhere(['status' => Village::STATUS_ACTIVE])
+                ->andWhere(['like', 'mid(lower(name),1,1)', strtolower($filter)])
+                ->orderBy(['name' => SORT_ASC])
+                ->limit(10)->offset($page)->all();
+        }
+        return $this->renderPartial('_listVillageMore', ['listVillage' => $listVillage]);
+    }
+
     public function actionLinked()
     {
         $listDonor = UnitLink::findAll(['status' => UnitLink::STATUS_ACTIVE]);
