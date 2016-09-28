@@ -30,14 +30,6 @@ $avatarPreview = !$model->isNewRecord && !empty($model->image);
     <?= $form->field($model, 'number_code' )->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'latitude' )->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'longitude' )->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'establish_date')->widget(DatePicker::classname(), [
-        'options' => ['placeholder' => 'Ngày thành lập'],
-        'pluginOptions' => [
-            'autoclose' => true,
-            'displayFormat' => 'd/m/yyyy'
-        ]
-    ]);
-    ?>
 
     <?=
     $form->field($model, 'id_province')->widget(Select2::classname(), [

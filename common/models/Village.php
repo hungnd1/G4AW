@@ -21,7 +21,6 @@ use yii\helpers\Url;
  * @property string $description
  * @property string $description_en
  * @property integer $status
- * @property integer $establish_date
  */
 class Village extends \yii\db\ActiveRecord
 {
@@ -64,7 +63,7 @@ class Village extends \yii\db\ActiveRecord
         return [
             [['name','name_en', 'id_province', 'image', 'status'], 'required'],
             [['number_code', 'id_province', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['description','establish_date','description_en'], 'string'],
+            [['description','description_en'], 'string'],
             [['name','name_en'], 'string', 'max' => 200],
             [['latitude', 'longitude'], 'string', 'max' => 10],
             [['image'], 'string', 'max' => 500],
@@ -90,7 +89,6 @@ class Village extends \yii\db\ActiveRecord
             'description' => 'Mô tả',
             'description_en' => 'Mô tả tiếng anh',
             'status' => 'Trạng thái',
-            'establish_date' => 'Ngày thành lập',
             'created_at' => Yii::t('app', 'Ngày tạo mới'),
             'updated_at' => Yii::t('app', 'Ngày thay đổi thông tin'),
         ];

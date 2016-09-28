@@ -77,10 +77,6 @@ $active=1;
                                         'value' => \common\models\Province::findOne(['id'=>$model->id_province])->name,
                                     ],
                                     [
-                                        'attribute' => 'establish_date',
-                                        'value' => $model->establish_date?date('m/d/Y',strtotime($model->establish_date)):'',
-                                    ],
-                                    [
                                         'attribute' => 'status',
                                         'label' => 'Trạng thái',
                                         'format' => 'raw',
