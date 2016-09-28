@@ -80,7 +80,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'template' => '{view}{update}',
                         ],
 
-                        ['class' => 'yii\grid\ActionColumn'],
                     ],
                 ]); ?>
             </div>
