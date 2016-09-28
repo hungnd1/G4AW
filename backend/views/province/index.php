@@ -84,13 +84,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ]);
 
                                 },
-                                'delete' => function ($url,$model) {
-                                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', Url::toRoute(['province/delete','id'=>$model->id]), [
-                                        'title' => 'Xóa yêu cầu',
-                                        'data-confirm' => "Bạn chắc chắn muốn xóa tỉnh này?",
-                                        'data-method' => 'post',
-                                    ]);
-                                },
+//                                'delete' => function ($url,$model) {
+//                                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', Url::toRoute(['province/delete','id'=>$model->id]), [
+//                                        'title' => 'Xóa yêu cầu',
+//                                        'data-confirm' => "Bạn chắc chắn muốn xóa tỉnh này?",
+//                                        'data-method' => 'post',
+//                                    ]);
+//                                },
                             ],
                         ],
                     ]

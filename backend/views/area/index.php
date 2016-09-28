@@ -75,6 +75,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             'filterInputOptions' => ['placeholder' => "Tất cả"],
 
                         ],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{view}{update}',
+                        ],
 
                         ['class' => 'yii\grid\ActionColumn'],
                     ],
