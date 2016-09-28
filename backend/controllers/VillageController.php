@@ -108,10 +108,8 @@ class VillageController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->establish_date ? $model->establish_date = date('d/m/Y', strtotime($model->establish_date)) : '';
         $image_old = $model->image;
         if ($model->load(Yii::$app->request->post())) {
-            $model->establish_date ? $model->establish_date = date('Y-m-d', strtotime($model->establish_date)) : '';
             $image = UploadedFile::getInstance($model, 'image');
             if ($image) {
                 $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;

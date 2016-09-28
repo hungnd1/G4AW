@@ -18,7 +18,7 @@ class VillageSearch extends Village
     public function rules()
     {
         return [
-            [['id', 'number_code', 'id_province', 'status', 'establish_date'], 'integer'],
+            [['id', 'number_code', 'id_province', 'status'], 'integer'],
             [['name','name_en', 'latitude', 'longitude', 'image', 'description','description_en'], 'safe'],
         ];
     }
@@ -63,7 +63,6 @@ class VillageSearch extends Village
             'number_code' => $this->number_code,
             'id_province' => $this->id_province,
             'status' => $this->status,
-            'establish_date' => $this->establish_date,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
