@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 <div class="top-nav header">
     <div class="container">
         <a class="navbar-brand logo" href="<?= Url::toRoute(['site/index']) ?>"><img
-                src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/unnamed.png" height="80"></a>
+                src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/unnamed.png" height="70" style="padding-top: 10px;"></a>
         <?php if(UserHelper::isMobile()){ ?>
             <a href="<?= Url::toRoute(['site/session', 'vi' => 'vi']) ?>" class="navbar-brand logo"
                style="margin: 40px 0px 0px 40px;padding: 5px 9px;">VI</a>
