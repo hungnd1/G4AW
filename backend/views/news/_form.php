@@ -83,8 +83,8 @@ Yii::$app->session->set('KCFINDER', $kcfOptions);
     <?= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>
     <?= $form->field($model, 'short_description_en')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'area_id')->dropDownList(ArrayHelper::map(\common\models\Area::find()
-        ->andWhere(['status' => Area::STATUS_ACTIVE])->all(), 'id', 'name'),['prompt'=>'Chọn vùng']) ?>
+<!--    --><?//= $form->field($model, 'area_id')->dropDownList(ArrayHelper::map(\common\models\Area::find()
+//        ->andWhere(['status' => Area::STATUS_ACTIVE])->all(), 'id', 'name'),['prompt'=>'Chọn vùng']) ?>
 
     <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::find()
         ->andWhere(['status' => Category::STATUS_ACTIVE])->andWhere(['type'=>$type])->all(), 'id', 'display_name')) ?>

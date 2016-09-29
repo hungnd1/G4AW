@@ -73,38 +73,6 @@ if (!Yii::$app->user->isGuest) {
         </div> <!-- Carousel -->
     </div>
     <!-- end slide -->
-    <!--end list CT block-->
-
-    <div class="container">
-        <div class="block-x">
-            <div class="top-bl-x">
-                <span class="tit-x"><?= UserHelper::multilanguage('Danh sách vùng','List area') ?></span>
-            </div>
-            <div class="listVillage1">
-                <?php if (isset($listArea) && !empty($listArea)) {
-                    /** @var \common\models\Area $item */
-                    foreach ($listArea as $item) {
-                        $image = $item->getThumbnailLink(); ?>
-
-                        <div class="x-in-list">
-                            <div class="thumb-common">
-                                <img src="../img/blank.gif">
-                                <a href="<?= Url::toRoute(['news/index','id'=>$item->id]) ?>"><img
-                                        class="thumb-cm" src="<?= $image ?>"><br></a>
-                            </div>
-                            <h4><?= UserHelper::multilanguage($item->name,$item->name_en) ?></h4>
-                        </div>
-                    <?php } ?>
-                <?php } ?>
-            </div>
-            <!-- abc -->
-            <div class="tab-key">
-
-            </div>
-        </div>
-    </div>
-
-    <!-- List NEW block-->
 
     <!--end list CT block-->
 

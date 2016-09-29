@@ -116,11 +116,11 @@ $menuItems = [
         'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
         'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
         'items' => [
-            [
-                'encode' => false,
-                'label' => 'Quản lý vùng',
-                'url' => ['area/index'],
-            ],
+//            [
+//                'encode' => false,
+//                'label' => 'Quản lý vùng',
+//                'url' => ['area/index'],
+//            ],
             [
                 'encode' => false,
                 'label' => 'Quản lý tỉnh',
