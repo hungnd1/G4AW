@@ -44,9 +44,9 @@ if (!Yii::$app->user->isGuest) {
                             <div class="carousel-caption">
                                 <div>
                                     <h3>
-                                        <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>"><?= $item->title ?></a>
+                                        <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>"><?= UserHelper::multilanguage($item->title,$item->title_en) ?></a>
                                     </h3>
-                                    <?= str_replace(mb_substr($item->short_description, 200, strlen($item->short_description), 'utf-8'), '...', $item->short_description) ?>
+                                    <?= str_replace(mb_substr(UserHelper::multilanguage($item->short_description,$item->short_description_en), 200, strlen(UserHelper::multilanguage($item->short_description,$item->short_description_en)), 'utf-8'), '...', UserHelper::multilanguage($item->short_description,$item->short_description_en)) ?>
                                     <br>
                                     <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>" class="bt-more-1">
                                         <?= UserHelper::multilanguage('Xem thêm','Read more') ?></a>
