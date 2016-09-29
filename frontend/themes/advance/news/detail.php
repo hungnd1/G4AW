@@ -25,7 +25,7 @@ use yii\helpers\Url;
                     <a href=""><?= UserHelper::multilanguage($model->title,$model->title_en) ?></a>
                 </div>
                 <div class="m-content">
-                    <h1><?= $model->title ?></h1>
+                    <h1><?= UserHelper::multilanguage($model->title,$model->title_en) ?></h1>
                     <p class="des-dt"><?= UserHelper::multilanguage($model->short_description,$model->short_description_en) ?></p>
                     <div class="content-dt">
                         <?= preg_replace('/(\<img[^>]+)(style\=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', UserHelper::multilanguage($model->content,$model->content_en)) ?>
