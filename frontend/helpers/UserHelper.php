@@ -116,4 +116,15 @@ class UserHelper {
     public static function removeMsisdn() {
         Yii::$app->session->remove(UserHelper::SESSION_MSISDN);
     }
+    public static function multilanguage($contentVi,$contentEn){
+         if($_SESSION['vi'] == 'vi'){
+             return $contentVi;
+         }else{
+             return $contentEn;
+         }
+    }
+
+    public static function isMobile() {
+        return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
+    }
 }

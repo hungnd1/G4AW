@@ -91,6 +91,43 @@ class SiteController extends BaseController
         ];
     }
 
+    public function actionSession($vi){
+        $_SESSION['vi'] = $vi;
+        $listSlide  = News::find()->andWhere(['status'=>News::STATUS_ACTIVE])
+            ->orderBy(['created_at'=>SORT_DESC])->limit(6)->all();
+
+        $listArea = Area::find()->andWhere(['status'=>Area::STATUS_ACTIVE])->all();
+
+        $listNew  = News::find()->andWhere(['status'=>News::STATUS_ACTIVE])->andWhere(['type'=>News::TYPE_NEW])
+            ->orderBy(['created_at'=>SORT_DESC])->limit(8)->all();
+
+        $listNewCategory = Category::find()->andWhere(['status'=>Category::STATUS_ACTIVE])->andWhere(['type'=>Category::TYPE_NEW])
+            ->orderBy(['order_number'=>SORT_ASC])->all();
+
+        $listKnow  = News::find()->andWhere(['status'=>News::STATUS_ACTIVE])->andWhere(['type'=>News::TYPE_KNOW])
+            ->orderBy(['created_at'=>SORT_DESC])->limit(8)->all();
+
+        $listKnowCategory = Category::find()->andWhere(['status'=>Category::STATUS_ACTIVE])->andWhere(['type'=>Category::TYPE_KNOW])
+            ->orderBy(['order_number'=>SORT_ASC])->all();
+
+        $listUnit = UnitLink::findAll(['status'=>UnitLink::STATUS_ACTIVE]);
+
+        $newsQuery = Village::find()
+            ->andWhere(['status' => Village::STATUS_ACTIVE])
+            ->orderBy('name')->limit(10);
+        $countQuery = clone $newsQuery;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $listVillage = $newsQuery->all();
+
+        $listProvince = Province::find()->andWhere(['status' => Province::STATUS_ACTIVE])->orderBy(['name'=>SORT_ASC])->all();
+
+
+        return $this->render('index',['listNew'=>$listNew,'listSlide'=>$listSlide,'listArea'=>$listArea,
+            'listNewCategory'=>$listNewCategory,'listKnow'=>$listKnow,'listKnowCategory'=>$listKnowCategory,
+            'pages'=>$pages,'listProvince' => $listProvince,
+            'listUnit'=>$listUnit,'listVillage'=>$listVillage]);
+    }
+
     /**
      * Displays homepage.
      *
@@ -98,6 +135,15 @@ class SiteController extends BaseController
      */
     public function actionIndex($id = 0, $filter = null)
     {
+        if(!isset($_SESSION['vi'])){
+            $_SESSION['vi'] = 'vi';
+        }
+        if($_SESSION['vi'] == 'en'){
+            $_SESSION['vi'] = 'en';
+        }else{
+            $_SESSION['vi'] = 'vi';
+        }
+
 
         $listSlide  = News::find()->andWhere(['status'=>News::STATUS_ACTIVE])
             ->orderBy(['created_at'=>SORT_DESC])->limit(6)->all();

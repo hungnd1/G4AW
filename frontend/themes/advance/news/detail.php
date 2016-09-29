@@ -5,6 +5,7 @@
  * Date: 11-Aug-16
  * Time: 11:36 AM
  */
+use frontend\helpers\UserHelper;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
@@ -17,22 +18,22 @@ use yii\helpers\Url;
         <div class="container">
             <div class="left-content">
                 <div class="cr-page-link">
-                    <a href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
+                    <a href="<?= Url::toRoute(['site/index']) ?>"><?= UserHelper::multilanguage('Trang chủ','Home')  ?></a>
                     <span>/</span>
                     <a href="<?= Url::toRoute(['news/index']) ?>"><?= $title ?></a>
                     <span>/</span>
-                    <a href=""><?= $model->title ?></a>
+                    <a href=""><?= UserHelper::multilanguage($model->title,$model->title_en) ?></a>
                 </div>
                 <div class="m-content">
                     <h1><?= $model->title ?></h1>
-                    <p class="des-dt"><?= $model->short_description ?></p>
+                    <p class="des-dt"><?= UserHelper::multilanguage($model->short_description,$model->short_description_en) ?></p>
                     <div class="content-dt">
-                        <?= preg_replace('/(\<img[^>]+)(style\=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', $model->content) ?>
+                        <?= preg_replace('/(\<img[^>]+)(style\=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', UserHelper::multilanguage($model->content,$model->content_en)) ?>
                     </div>
                     <div class="post-related">
-                        <h2>Bình luận</h2>
+                        <h2><?= UserHelper::multilanguage('Bình luận','Comment') ?></h2>
                         <div class="top-box-comment">
-                            <b>Bạn muốn chia sẻ?</b>
+                            <b><?= UserHelper::multilanguage('Bạn muốn chia sẻ?','You want share?') ?></b>
                             <?php $form = ActiveForm::begin([
                                 'id' => 'comment-form'
                             ]); ?>
@@ -40,8 +41,8 @@ use yii\helpers\Url;
                                 <textarea rows="4" id="comment"></textarea>
                             </div>
                             <div class="line-bottom-comment">
-                                <span><i>Nhập ý kiến của bạn</i></span>
-                                <a onclick="feedBack($(this));" class="send-comment">Gửi ý kiến</a><br><br>
+                                <span><i><?= UserHelper::multilanguage('Nhập ý kiến của bạn','Enter your comment') ?></i></span>
+                                <a onclick="feedBack($(this));" class="send-comment"><?= UserHelper::multilanguage('Gửi ý kiến','Send') ?></a><br><br>
                             </div>
                             <?php ActiveForm::end(); ?>
                         </div>
@@ -54,7 +55,7 @@ use yii\helpers\Url;
                                         <img
                                             src="<?= $item->user->getAvatar() ? $item->user->getAvatar() : Yii::$app->request->baseUrl . '/img/avt_df.png' ?>">
                                         <div class="left-comment">
-                                            <h5 class=""><?= $item->user->username ?> <span
+                                            <h5 class=""><?= str_replace(substr($item->user->username,8),'***',$item->user->username) ?><span
                                                     class="time-up"><?= date('d/m/Y H:i:s', $item->updated_at) ?></span>
                                             </h5>
 
@@ -63,7 +64,7 @@ use yii\helpers\Url;
                                     </div>
                                 <?php }
                             } else {
-                                echo "<span style='text-align: center'>Chưa có bình luận.</span>";
+                                echo "<span style='text-align: center'>".UserHelper::multilanguage('Chưa có bình luận','Not found comment')."</span>";
                             } ?>
                             <div id="last-comment"></div>
                             <input type="hidden" name="page" id="page"
@@ -73,7 +74,7 @@ use yii\helpers\Url;
                             <?php
                             if (!isset($numberCheck) && $pages->totalCount > sizeof($listComment)) { ?>
                                 <div class="text-center" style="    padding-top: 20px;">
-                                    <a id="more" onclick="readMore();" class="more-2">Xem thêm</a>
+                                    <a id="more" onclick="readMore();" class="more-2"><?= UserHelper::multilanguage('Xem thêm','Read more') ?></a>
                                 </div>
                             <?php }
                             ?>
@@ -83,7 +84,7 @@ use yii\helpers\Url;
             </div>
             <div class="right-content">
                 <div class="block-related block-cm-2">
-                    <h3>Tin tức liên quan</h3>
+                    <h3><?= UserHelper::multilanguage('TIN TỨC LIÊN QUAN','NEWS RELATED') ?></h3>
                     <div class="list-related">
                         <?php if(isset($otherModels) && !empty($otherModels)){
                             foreach($otherModels as $item ) {?>
@@ -109,16 +110,15 @@ use yii\helpers\Url;
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel"><span style="color: #FD7D12"
                                                                 class="glyphicon glyphicon-bell"
-                                                                aria-hidden="true"></span> <b>THÔNG BÁO</b>
+                                                                aria-hidden="true"></span> <b><?= UserHelper::multilanguage('THÔNG BÁO','NOTIFICATION') ?></b>
                 </h4>
             </div>
             <div class="modal-body" id="msg3"></div>
             <div class="modal-footer">
                 <button type="button" class="bg-color-1" data-dismiss="modal">
-                    Để Sau
+                    <?= UserHelper::multilanguage('Để sau','Later') ?>
                 </button>
-                <button type="button" class="bg-color-2" onclick="backUrl();">Đồng
-                    Ý
+                <button type="button" class="bg-color-2" onclick="backUrl();"><?= UserHelper::multilanguage('Đồng ý','OK') ?>
                 </button>
                 <a id="notice-a1" data-toggle="modal" data-target="#notice-modala" data-dismiss="modal"></a>
             </div>
@@ -178,12 +178,12 @@ use yii\helpers\Url;
         var page = parseInt($('#page').val()) + 1;
         var numberCount = parseInt($('#numberCount').val()) + 10;
         if (check_user == 1) {
-            $('#msg3').html("Quý khách cần đăng nhập để thực hiện chức năng này");
+            $('#msg3').html("<?= UserHelper::multilanguage('Quý khách cần đăng nhập để thực hiện chức năng này','You need to log in to perform this function') ?>");
             $('#notice-a1').click();
         } else {
             var text = 'undefined' != $.trim($('#comment').val()) ? $.trim($('#comment').val()) : '';
             if (null == text || '' == text) {
-                alert("Không thành công. Qúy khách vui lòng nhập lời bình.");
+                alert("<?= UserHelper::multilanguage('Không thành công. Qúy khách vui lòng nhập lời bình.','Unsuccessful. Please enter your comments.') ?>");
                 $('#comment').val('');
                 $('#comment').focus();
                 return;
@@ -222,7 +222,7 @@ use yii\helpers\Url;
                             crossDomain: true,
                             dataType: "text",
                             success: function (result) {
-                                alert('Bình luận của quý khách sẽ được duyệt trong thời gian sớm nhất. Cám ơn quý khách!');
+                                alert("<?= UserHelper::multilanguage('Bình luận của quý khách sẽ được duyệt trong thời gian sớm nhất. Cám ơn quý khách!','Your comment will be reviewed as soon as possible. Thank you!') ?>");
                                 if (null != result && '' != result) {
                                     $('div .list-comments').html(result);
                                     document.getElementById("page").value = page + 9;
@@ -236,7 +236,7 @@ use yii\helpers\Url;
                                 return;
                             },
                             error: function (result) {
-                                alert('Không thành công. Quý khách vui lòng thử lại sau ít phút.');
+                                alert("<?= UserHelper::multilanguage('Không thành công. Quý khách vui lòng thử lại sau ít phút.','Unsuccessful. Please try again in a few minutes.') ?>");
                                 return;
                             }
                         });//end jQuery.ajax

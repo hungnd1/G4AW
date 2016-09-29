@@ -16,7 +16,7 @@
             <img
                 src="<?= $item->user->getAvatar() ? $item->user->getAvatar() : Yii::$app->request->baseUrl . '/img/avt_df.png' ?>">
             <div class="left-comment">
-                <h5 class=""><?= $item->user->username ?> <span
+                <h5 class=""><?= str_replace(substr($item->user->username,8),'***',$item->user->username) ?> <span
                         class="time-up"><?= date('d/m/Y H:i:s', $item->updated_at) ?></span></h5>
 
                 <p><?= $item->content ?></p>
@@ -35,7 +35,7 @@
     <?php
     if ($pages->totalCount > sizeof($listComments)) { ?>
         <div class="text-center" style="    padding-top: 20px;">
-            <a id="more" onclick="readMore();" class="more-2">Xem thêm</a>
+            <a id="more" onclick="readMore();" class="more-2"><?= \frontend\helpers\UserHelper::multilanguage('Xem thêm','Read more') ?></a>
         </div>
     <?php }
 }

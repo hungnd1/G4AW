@@ -18,7 +18,7 @@ use yii\helpers\Html;
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	<meta name="description" content="">
 	<meta name="author" content="">
-	<title>Chương trình phát triển các dự án nông nghiệp</title>
+	<title><?= \frontend\helpers\UserHelper::multilanguage('Chương trình phát triển các dự án nông nghiệp','Information services for sustainable coffee farm management') ?></title>
 
 	<?= Html::csrfMetaTags() ?>
 

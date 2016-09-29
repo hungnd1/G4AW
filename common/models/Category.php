@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use frontend\helpers\UserHelper;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -96,13 +97,13 @@ class Category extends \yii\db\ActiveRecord
     {
 
         if($type == self::TYPE_NEW){
-            return 'Tin tức';
+            return UserHelper::multilanguage('Tin tức','News');
         }else if($type == self::TYPE_MARKET){
             return 'Chợ nhà nông';
         }else if($type == self::TYPE_HEALTH){
             return 'Sức khỏe đời sống';
         }else if($type == self::TYPE_KNOW){
-            return 'Nhà nông nên biết';
+            return UserHelper::multilanguage('Nhà nông nên biết','Farms Know');
         }
 
     }

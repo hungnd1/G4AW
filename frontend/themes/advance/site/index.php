@@ -2,6 +2,7 @@
 
 /* @var $this yii\web\View */
 use common\models\Category;
+use frontend\helpers\UserHelper;
 use yii\helpers\Url;
 
 $this->title = 'G4WA';
@@ -47,8 +48,8 @@ if (!Yii::$app->user->isGuest) {
                                     </h3>
                                     <?= str_replace(mb_substr($item->short_description, 200, strlen($item->short_description), 'utf-8'), '...', $item->short_description) ?>
                                     <br>
-                                    <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>" class="bt-more-1">Xem
-                                        thêm</a>
+                                    <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>" class="bt-more-1">
+                                        <?= UserHelper::multilanguage('Xem thêm','Read more') ?></a>
                                 </div>
                             </div>
                         </div>
@@ -77,7 +78,7 @@ if (!Yii::$app->user->isGuest) {
     <div class="container">
         <div class="block-x">
             <div class="top-bl-x">
-                <span class="tit-x">Danh sách vùng</span>
+                <span class="tit-x"><?= UserHelper::multilanguage('Danh sách vùng','List area') ?></span>
             </div>
             <div class="listVillage1">
                 <?php if (isset($listArea) && !empty($listArea)) {
@@ -91,7 +92,7 @@ if (!Yii::$app->user->isGuest) {
                                 <a href="<?= Url::toRoute(['news/index','id'=>$item->id]) ?>"><img
                                         class="thumb-cm" src="<?= $image ?>"><br></a>
                             </div>
-                            <h4><?= $item->name ?></h4>
+                            <h4><?= UserHelper::multilanguage($item->name,$item->name_en) ?></h4>
                         </div>
                     <?php } ?>
                 <?php } ?>
@@ -110,19 +111,20 @@ if (!Yii::$app->user->isGuest) {
     <div class="container">
         <div class="block-x">
             <div class="top-bl-x">
-                <span class="tit-x">Danh sách xã</span>
+                <span class="tit-x"><?= UserHelper::multilanguage('Danh sách xã','List village') ?></span>
                 <div class="select-prv">
 
-                    Tỉnh/ Thành phố <a class="active-prv" id="dLabel" data-toggle="dropdown" aria-haspopup="true"
-                                       aria-expanded="false">"Tất cả"
+                    <?= UserHelper::multilanguage('Tỉnh/Thành phố','Province') ?> <a class="active-prv" id="dLabel" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">"<?= UserHelper::multilanguage('Tất cả','All') ?>"
                         <span class="caret"></span></a>
                     <!--   <div class="block-prv"> -->
                     <ul class="block-prv dropdown-menu" aria-labelledby="dLabel">
-                        <li id="all" class="active"><a onclick="loadVillage(0,'Tất cả','')">Tất cả </a></li>
+                        <li id="all" class="active"><a onclick="loadVillage(0,'Tất cả','')"><?= UserHelper::multilanguage('Tất cả','All') ?> </a></li>
                         <?php if (isset($listProvince)) {
+                            /** @var  $province \common\models\Province */
                             foreach ($listProvince as $province) { ?>
                                 <li id="li_active"><a
-                                        onclick="loadVillage(<?= $province->id ?>,'<?= $province->name ?>','')"><?= $province->name ?></a>
+                                        onclick="loadVillage(<?= $province->id ?>,'<?= $province->name ?>','')"><?= UserHelper::multilanguage($province->name, $province->name_en) ?></a>
                                 </li>
                             <?php }
                         } ?>
@@ -142,7 +144,7 @@ if (!Yii::$app->user->isGuest) {
                                 <a href="<?= \yii\helpers\Url::toRoute(['village/view', 'id' => $item->id]) ?>"><img
                                         class="thumb-cm" src="<?= $image ?>"><br></a>
                             </div>
-                            <h4><?= $item->name ?></h4>
+                            <h4><?= UserHelper::multilanguage($item->name,$item->name_en) ?></h4>
                         </div>
                     <?php } ?>
                     <div id="last-comment"></div>
@@ -152,7 +154,7 @@ if (!Yii::$app->user->isGuest) {
                     <input type="hidden" name="total" id="total" value="<?= $pages->totalCount ?>">
                     <?php if (count($listVillage) >= 10) { ?>
                         <div class="text-center">
-                            <a id="more" onclick="loadMore();" class="more-2">Xem thêm xã</a>
+                            <a id="more" onclick="loadMore();" class="more-2"><?= UserHelper::multilanguage('Xem thêm xã','Read more Village') ?></a>
                         </div>
                     <?php } ?>
                 <?php } ?>
@@ -162,7 +164,7 @@ if (!Yii::$app->user->isGuest) {
             <!-- abc -->
             <div class="tab-key">
                 <ul>
-                    <li class="active"><a onclick="loadVillage(0,'Tất cả','')">Tất cả</a></li>
+                    <li class="active"><a onclick="loadVillage(0,'Tất cả','')"><?= UserHelper::multilanguage('Tất cả','All') ?></a></li>
                     <li><a onclick="loadVillage(0,'Tất cả','a')">A</a></li>
                     <li><a onclick="loadVillage(0,'Tất cả','b')">B</a></li>
                     <li><a onclick="loadVillage(0,'Tất cả','c')">C</a></li>
@@ -199,7 +201,7 @@ if (!Yii::$app->user->isGuest) {
 
     <div class="container">
         <div class="news-block cm-block">
-            <h2>DANH MỤC TIN TỨC<a href="<?= Url::toRoute(['news/index']) ?>"><span>Tất cả</span><i
+            <h2><?= UserHelper::multilanguage('DANH MỤC TIN TỨC','Category News') ?><a href="<?= Url::toRoute(['news/index']) ?>"><span><?= UserHelper::multilanguage('Tất cả','All') ?></span><i
                         class="fa fa-chevron-right"></i></a></h2>
             <div class="cate-news">
                 <ul>
@@ -207,7 +209,7 @@ if (!Yii::$app->user->isGuest) {
                         foreach ($listNewCategory as $item) {
                             /** @var $item \common\models\Category */
                             ?>
-                            <li><a onclick="loadCategoryNews(<?= $item->id ?>)"><?= $item->display_name ?></a></li>
+                            <li><a onclick="loadCategoryNews(<?= $item->id ?>)"><?= UserHelper::multilanguage($item->display_name,$item->display_name_en) ?></a></li>
                         <?php }
                     } else { ?>
                         <li><a href="">Chính sách phát triển</a></li>
@@ -235,11 +237,10 @@ if (!Yii::$app->user->isGuest) {
                             </div>
                             <div class="if-cm-2">
                                 <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>"><h3
-                                        class="name-1"><?= $item->title ?></h3><br></a>
+                                        class="name-1"><?= UserHelper::multilanguage($item->title,$item->title_en) ?></h3><br></a>
                                 <span
-                                    class="des-cm-1"><?= str_replace(mb_substr($item->short_description, 100, strlen($item->short_description), 'utf-8'), '...', $item->short_description) ?>
-                                    <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>" class="read-more">Đọc
-                                        thêm</a></span>
+                                    class="des-cm-1"><?= str_replace(mb_substr(UserHelper::multilanguage($item->short_description,$item->short_description_en), 100, strlen(UserHelper::multilanguage($item->short_description,$item->short_description_en)), 'utf-8'), '...', UserHelper::multilanguage($item->short_description,$item->short_description_en)) ?>
+                                    <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>" class="read-more"><?= UserHelper::multilanguage('Đọc thêm','Read more') ?></a></span>
                             </div>
                         </div>
                     <?php }
@@ -254,7 +255,7 @@ if (!Yii::$app->user->isGuest) {
 
     <div class="container">
         <div class="news-block cm-block">
-            <h2>NHÀ NÔNG NÊN BIẾT<a href="<?= Url::toRoute(['news/index','type'=>Category::TYPE_KNOW]) ?>"><span>Tất cả</span><i
+            <h2><?= UserHelper::multilanguage('NHÀ NÔNG NÊN BIẾT','FARMERS NEWS') ?><a href="<?= Url::toRoute(['news/index','type'=>Category::TYPE_KNOW]) ?>"><span><?= UserHelper::multilanguage('Tất cả','All') ?></span><i
                         class="fa fa-chevron-right"></i></a></h2>
             <div class="cate-news">
                 <ul>
@@ -262,7 +263,7 @@ if (!Yii::$app->user->isGuest) {
                         foreach ($listKnowCategory as $item) {
                             /** @var $item \common\models\Category */
                             ?>
-                            <li><a onclick="loadCategoryNews(<?= $item->id ?>)"><?= $item->display_name ?></a></li>
+                            <li><a onclick="loadCategoryNews(<?= $item->id ?>)"><?= UserHelper::multilanguage($item->display_name,$item->display_name_en) ?></a></li>
                         <?php }
                     } else { ?>
                         <li><a href="">Chính sách phát triển</a></li>
@@ -290,11 +291,11 @@ if (!Yii::$app->user->isGuest) {
                             </div>
                             <div class="if-cm-2">
                                 <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>"><h3
-                                        class="name-1"><?= $item->title ?></h3><br></a>
+                                        class="name-1"><?= UserHelper::multilanguage($item->title,$item->title_en) ?></h3><br></a>
                                 <span
-                                    class="des-cm-1"><?= str_replace(mb_substr($item->short_description, 100, strlen($item->short_description), 'utf-8'), '...', $item->short_description) ?>
-                                    <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>" class="read-more">Đọc
-                                        thêm</a></span>
+                                    class="des-cm-1"><?= str_replace(mb_substr(UserHelper::multilanguage($item->short_description,$item->short_description_en), 100, strlen(UserHelper::multilanguage($item->short_description,$item->short_description_en)), 'utf-8'), '...', UserHelper::multilanguage($item->short_description,$item->short_description_en)) ?>
+                                    <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>" class="read-more"><?= UserHelper::multilanguage('Đọc thêm','Read
+                                    more') ?></a></span>
                             </div>
                         </div>
                     <?php }
@@ -316,7 +317,7 @@ if (!Yii::$app->user->isGuest) {
     <!--partner block-->
     <div class="partner-block clearfix">
         <div class="container">
-            <h2>Các đơn vị liên kết<a href="<?= Url::toRoute(['site/linked']) ?>"><span>Tất cả</span><i
+            <h2><?= UserHelper::multilanguage('Các đơn vị liên kết','Unit Link') ?><a href="<?= Url::toRoute(['site/linked']) ?>"><span><?= UserHelper::multilanguage('Tất cả','All') ?></span><i
                         class="fa fa-chevron-right"></i></a></h2>
             <ul class="bxslider3">
                 <?php if (isset($listUnit) && !empty($listUnit)) {
@@ -324,7 +325,7 @@ if (!Yii::$app->user->isGuest) {
                         /** @var $item \common\models\UnitLink */ ?>
                         <li style="width: 400px;"><a target="_blank" href="<?= $item->link ?>"><img
                                     src="<?= $item->getThumbnailLink() ?>">
-                                <h3><?= $item->name ?></h3>
+                                <h3><?= UserHelper::multilanguage($item->name,$item->name) ?></h3>
                             </a></li>
                     <?php }
                 } else { ?>

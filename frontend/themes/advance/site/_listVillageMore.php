@@ -18,7 +18,7 @@
                 <a href="<?= \yii\helpers\Url::toRoute(['village/view', 'id' => $item->id]) ?>"><img
                         class="thumb-cm" src="<?= $image ?>"><br></a>
             </div>
-            <h4><?= $item->name ?></h4>
+            <h4><?= \frontend\helpers\UserHelper::multilanguage($item->name,$item->name_en) ?></h4>
         </div>
     <?php }
  ?>

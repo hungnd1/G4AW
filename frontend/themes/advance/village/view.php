@@ -5,7 +5,7 @@
  * Date: 14/03/2016
  * Time: 11:28 AM
  */
-use common\models\LeadDonor;
+use frontend\helpers\UserHelper;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
@@ -18,9 +18,9 @@ $this->title = 'Chi tiết xã';
 <div class="content">
     <div class="container">
         <div class="cr-page-link">
-            <a href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
+            <a href="<?= Url::toRoute(['site/index']) ?>"><?= UserHelper::multilanguage('Trang chủ', 'Home') ?></a>
             <span>/</span>
-            <a href="<?= Url::toRoute(['village/view', 'id_village' => $model->id]) ?>"><?= $model->name ?></a>
+            <a href="<?= Url::toRoute(['village/view', 'id_village' => $model->id]) ?>"><?= UserHelper::multilanguage($model->name, $model->name_en) ?></a>
         </div>
     </div>
     <div class="container">
@@ -38,8 +38,8 @@ $this->title = 'Chi tiết xã';
                 <div class="bt-comp hidden-sm hidden-xs">
 
                     <p>
-                        <b> Học viện PTIT</b><br>
-                        <span>Đơn vị tài trợ CNTT</span>
+                        <b><?= UserHelper::multilanguage('ERIPT','ERIPT') ?></b><br>
+                        <span><?= UserHelper::multilanguage('Đơn vị tài trợ CNTT','Sponsors IT') ?></span>
                     </p>
                     <a href="" class="logo-cp"><img
                             src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/logo-cp.png">
@@ -48,10 +48,11 @@ $this->title = 'Chi tiết xã';
                 <div class="i-f-right">
                     <h1><?= $model->name ?></h1>
                     <div class="des-dt-1">
-                        <p><span class="t-des">Vị trí địa lý:</span>
-                        <div id="map" style="height: 200px;width:300px;"></div><br>
-                        <p><span class="t-des">Mô tả: </span><?= $model->description ?>
+                        <p><span class="t-des"><?= UserHelper::multilanguage('Vị trí địa lý','Geographical location') ?>:</span>
+                        <div id="map" style="height: 200px;width:300px;"></div>
                         <br>
+                        <p><span class="t-des"><?= UserHelper::multilanguage('Mô tả','Description') ?>: </span><?= UserHelper::multilanguage($model->description,$model->description_en) ?>
+                            <br>
                     </div>
                 </div>
             </div>
@@ -60,9 +61,8 @@ $this->title = 'Chi tiết xã';
                 <div class="out-ul-tab">
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#t1" aria-controls="my-cp" role="tab"
-                                                                  data-toggle="tab">Thông tin cơ bản</a></li>
-                        <li role="presentation"><a href="#t6" aria-controls="request" role="tab" data-toggle="tab">Thông
-                                tin chia sẻ</a></li>
+                                                                  data-toggle="tab"><?= UserHelper::multilanguage('Thông tin cơ bản','Basic information') ?></a></li>
+                        <li role="presentation"><a href="#t6" aria-controls="request" role="tab" data-toggle="tab"><?= UserHelper::multilanguage('Thông tin chia sẻ','Share information') ?></a></li>
                     </ul>
                 </div>
                 <div class="tab-content">
@@ -72,9 +72,9 @@ $this->title = 'Chi tiết xã';
                             <table class="tb-x">
                                 <tr>
                                     <td>STT</td>
-                                    <td>Các thông tin cơ bản</td>
-                                    <td>Đơn vị tính</td>
-                                    <td>Số lượng</td>
+                                    <td><?= UserHelper::multilanguage('Thông tin cơ bản','Basic information') ?></td>
+                                    <td><?= UserHelper::multilanguage('Đơn vị tính','Unit') ?></td>
+                                    <td><?= UserHelper::multilanguage('Số luợng','Number') ?></td>
                                 </tr>
                             </table>
                         </div>
@@ -82,7 +82,7 @@ $this->title = 'Chi tiết xã';
                     <div role="tabpanel" class="tab-pane" id="t6">
                         <div class="box-comment">
                             <div class="top-box-comment">
-                                <b>Bạn muốn chia sẻ?</b>
+                                <b><?= UserHelper::multilanguage('Bạn muốn chia sẻ?','You want share?') ?></b>
                                 <?php $form = ActiveForm::begin([
                                     'id' => 'comment-form'
                                 ]); ?>
@@ -90,8 +90,8 @@ $this->title = 'Chi tiết xã';
                                     <textarea rows="4" id="comment"></textarea>
                                 </div>
                                 <div class="line-bottom-comment">
-                                    <span><i>Nhập ý kiến của bạn</i></span>
-                                    <a onclick="feedBack($(this));" class="send-comment">Gửi ý kiến</a><br><br>
+                                    <span><i><?= UserHelper::multilanguage('Nhập ý kiến của bạn','Enter your comment') ?></i></span>
+                                    <a onclick="feedBack($(this));" class="send-comment"><?= UserHelper::multilanguage('Gửi ý kiến','Send') ?></a><br><br>
                                 </div>
                                 <?php ActiveForm::end(); ?>
                             </div>
@@ -104,7 +104,7 @@ $this->title = 'Chi tiết xã';
                                             <img
                                                 src="<?= $item->user->getAvatar() ? $item->user->getAvatar() : Yii::$app->request->baseUrl . '/img/avt_df.png' ?>">
                                             <div class="left-comment">
-                                                <h5 class=""><?= $item->user->username ?> <span
+                                                <h5 class=""><?= str_replace(substr($item->user->username,8),'***',$item->user->username) ?>  <span
                                                         class="time-up"><?= date('d/m/Y H:i:s', $item->updated_at) ?></span>
                                                 </h5>
 
@@ -113,7 +113,7 @@ $this->title = 'Chi tiết xã';
                                         </div>
                                     <?php }
                                 } else {
-                                    echo "<span style='text-align: center'>Chưa có bình luận.</span>";
+                                    echo "<span style='text-align: center'".UserHelper::multilanguage('Chưa có bình luận','Not found comment')."</span>";
                                 } ?>
                                 <div id="last-comment"></div>
                                 <input type="hidden" name="page" id="page"
@@ -123,7 +123,7 @@ $this->title = 'Chi tiết xã';
                                 <?php
                                 if (!isset($numberCheck) && $pages->totalCount > sizeof($listComment)) { ?>
                                     <div class="text-center" style="    padding-top: 20px;">
-                                        <a id="more" onclick="readMore();" class="more-2">Xem thêm</a>
+                                        <a id="more" onclick="readMore();" class="more-2"><?= UserHelper::multilanguage('Xem thêm','Read more') ?></a>
                                     </div>
                                 <?php }
                                 ?>
@@ -147,16 +147,15 @@ $this->title = 'Chi tiết xã';
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel"><span style="color: #FD7D12"
                                                                 class="glyphicon glyphicon-bell"
-                                                                aria-hidden="true"></span> <b>THÔNG BÁO</b>
+                                                                aria-hidden="true"></span> <b><?= UserHelper::multilanguage('THÔNG BÁO','NOTIFICATION') ?></b>
                 </h4>
             </div>
             <div class="modal-body" id="msg3"></div>
             <div class="modal-footer">
                 <button type="button" class="bg-color-1" data-dismiss="modal">
-                    Để Sau
+                    <?= UserHelper::multilanguage('Để sau','Later') ?>
                 </button>
-                <button type="button" class="bg-color-2" onclick="backUrl();">Đồng
-                    Ý
+                <button type="button" class="bg-color-2" onclick="backUrl();"><?= UserHelper::multilanguage('Đồng ý','OK') ?>
                 </button>
                 <a id="notice-a1" data-toggle="modal" data-target="#notice-modal1" data-dismiss="modal"></a>
             </div>
@@ -218,12 +217,12 @@ $this->title = 'Chi tiết xã';
         var page = parseInt($('#page').val()) + 1;
         var numberCount = parseInt($('#numberCount').val()) + 10;
         if (check_user == 1) {
-            $('#msg3').html("Quý khách cần đăng nhập để thực hiện chức năng này");
+            $('#msg3').html("<?= UserHelper::multilanguage('Quý khách cần đăng nhập để thực hiện chức năng này','You need to log in to perform this function') ?>");
             $('#notice-a1').click();
         } else {
             var text = 'undefined' != $.trim($('#comment').val()) ? $.trim($('#comment').val()) : '';
             if (null == text || '' == text) {
-                alert("Không thành công. Qúy khách vui lòng nhập lời bình.");
+                alert("<?= UserHelper::multilanguage('Không thành công. Qúy khách vui lòng nhập lời bình.','Unsuccessful. Please enter your comments.') ?>");
                 $('#comment').val('');
                 $('#comment').focus();
                 return;
@@ -262,7 +261,7 @@ $this->title = 'Chi tiết xã';
                             crossDomain: true,
                             dataType: "text",
                             success: function (result) {
-                                alert('Bình luận của quý khách sẽ được duyệt trong thời gian sớm nhất. Cám ơn quý khách!');
+                                alert("<?= UserHelper::multilanguage('Bình luận của quý khách sẽ được duyệt trong thời gian sớm nhất. Cám ơn quý khách!','Your comment will be reviewed as soon as possible. Thank you!') ?>");
                                 if (null != result && '' != result) {
                                     $('div .list-comments').html(result);
                                     document.getElementById("page").value = page + 9;

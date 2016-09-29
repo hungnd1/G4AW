@@ -5,6 +5,8 @@
  * Date: 18-Aug-16
  * Time: 2:27 PM
  */
+use frontend\helpers\UserHelper;
+
 ?>
 
 <?php if (isset($listVillage) && !empty($listVillage)) {
@@ -18,7 +20,7 @@
                 <a href="<?= \yii\helpers\Url::toRoute(['village/view', 'id' => $item->id]) ?>"><img
                         class="thumb-cm" src="<?= $image ?>"><br></a>
             </div>
-            <h4><?= $item->name ?></h4>
+            <h4><?= UserHelper::multilanguage($item->name,$item->name_en) ?></h4>
         </div>
     <?php }
     ?>
@@ -29,7 +31,7 @@
     <input type="hidden" name="total" id="total" value="<?= $pages->totalCount ?>">
     <?php if (count($listVillage) >= 10) { ?>
         <div class="text-center">
-            <a id="more" onclick="loadMore();" class="more-2">Xem thêm xã</a>
+            <a id="more" onclick="loadMore();" class="more-2"><?= UserHelper::multilanguage('Xem thêm xã','Read more village') ?></a>
         </div>
     <?php } ?>
 <?php } ?>
