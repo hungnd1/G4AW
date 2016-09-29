@@ -117,6 +117,9 @@ class UserHelper {
         Yii::$app->session->remove(UserHelper::SESSION_MSISDN);
     }
     public static function multilanguage($contentVi,$contentEn){
+        if(!isset($_SESSION['vi'])){
+            $_SESSION['vi'] = 'vi';
+        }
          if($_SESSION['vi'] == 'vi'){
              return $contentVi;
          }else{
