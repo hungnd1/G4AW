@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\helpers\CommonUtils;
+use frontend\helpers\UserHelper;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\data\ActiveDataProvider;
@@ -68,8 +69,8 @@ class User extends ActiveRecord implements IdentityInterface
     public static function listGender()
     {
         $lst = [
-            self::GENDER_MALE => 'Nam',
-            self::GENDER_FEMALE => 'Nữ',
+            self::GENDER_MALE => UserHelper::multilanguage('Nam','Male'),
+            self::GENDER_FEMALE => UserHelper::multilanguage('Nữ','Female'),
         ];
         return $lst;
     }
@@ -195,14 +196,14 @@ class User extends ActiveRecord implements IdentityInterface
                 ['confirm_password'],
                 'compare',
                 'compareAttribute' => 'password',
-                'message' => 'Xác nhận mật khẩu chưa đúng.',
+                'message' => UserHelper::multilanguage('Xác nhận mật khẩu  không đúng.','Confirm  password not match'),
                 'on' => 'create'
             ],
             [
                 ['confirm_password'],
                 'compare',
                 'compareAttribute' => 'new_password',
-                'message' => 'Xác nhận mật khẩu chưa đúng.',
+                'message' => UserHelper::multilanguage('Xác nhận mật khẩu  không đúng.','Confirm  password not match'),
                 'on' => 'change-password'
             ],
             [['new_password'], 'required', 'message' => 'Mật khẩu không được để trống.', 'on' => 'change-password'],
@@ -211,16 +212,18 @@ class User extends ActiveRecord implements IdentityInterface
 
 
             [['file_excel', 'setting_new_password', 'old_password', 'fb_email', 'fb_id'], 'safe'],
-            [['setting_new_password'], 'required', 'message' => 'Mật khẩu mới không được để trống.', 'on' => 'user-setting'],
-            [['setting_new_password'], 'string', 'min' => 6, 'message' => 'Mật khẩu mới không được để trống.', 'on' => 'user-setting'],
-            [['old_password'], 'required', 'message' => 'Mật khẩu cũ không được để trống.', 'on' => 'user-setting'],
+            [['setting_new_password'], 'required', 'message' => UserHelper::multilanguage('Mật khẩu mới không được để trống.','New password not empty'), 'on' => 'user-setting'],
+            [['setting_new_password'], 'string', 'min' => 6, 'message' => UserHelper::multilanguage('Mật khẩu mới không được để trống.','New password not empty'), 'on' => 'user-setting'],
+            [['old_password'], 'required', 'message' => UserHelper::multilanguage('Mật khẩu cũ không được để trống.','Old password not empty'), 'on' => 'user-setting'],
             ['old_password', 'validator_password', 'on' => 'user-setting'],
-            [['confirm_password'], 'required', 'message' => 'Xác nhận mật khẩu mới không được để trống.', 'on' => 'user-setting'],
+            ['setting_new_password', 'checkPassword', 'on' => 'user-setting'],
+            ['new_password', 'checkPassword', 'on' => 'user-setting'],
+            [['confirm_password'], 'required', 'message' => UserHelper::multilanguage('Xác nhận mật khẩu không được để trống.','Confirm password not empty'), 'on' => 'user-setting'],
             [
                 ['confirm_password'],
                 'compare',
                 'compareAttribute' => 'setting_new_password',
-                'message' => 'Xác nhận mật khẩu mới không đúng.',
+                'message' => UserHelper::multilanguage('Xác nhận mật khẩu mới không đúng.','Confirm new password not match'),
                 'on' => 'user-setting'
             ],
 //            [
@@ -259,9 +262,9 @@ class User extends ActiveRecord implements IdentityInterface
             'type' => Yii::t('app', 'Type'),
             'access_login_token' => Yii::t('app', 'Access Login Token'),
             'setting_new_password' => Yii::t('app', 'Mật khẩu mới'),
-            'old_password' => Yii::t('app', 'Mật khẩu cũ'),
-            'confirm_password' => Yii::t('app', 'Xác nhận mật khẩu'),
-            'new_password' => Yii::t('app', 'Mật khẩu mới'),
+            'old_password' => UserHelper::multilanguage('Mật khẩu cũ','Old password'),
+            'confirm_password' => UserHelper::multilanguage('Xác nhận mật khẩu','Confirm password'),
+            'new_password' => UserHelper::multilanguage('Mật khẩu mới','New password'),
             'gender' => Yii::t('app', 'Giới tính'),
             'birthday' => Yii::t('app', 'Ngày sinh'),
         ];
@@ -271,7 +274,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         if (!$this->hasErrors()) {
             if (!$this->validatePassword($this->old_password)) {
-                $this->addError('old_password', 'Mật khẩu cũ không đúng.');
+                $this->addError('old_password', UserHelper::multilanguage('Mật khẩu cũ không đúng.','Old password wrong'));
             }
         }
     }
@@ -303,21 +306,7 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(AuthItem::className(), ['name' => 'item_name'])->viaTable('{{%auth_assignment}}', ['user_id' => 'id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCampaigns()
-    {
-        return $this->hasMany(Campaign::className(), ['created_by' => 'id']);
-    }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCampaigns0()
-    {
-        return $this->hasMany(Campaign::className(), ['created_for_user' => 'id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -327,26 +316,6 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(UserFollowing::className(), ['user_id' => 'id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCampaignFollowings()
-    {
-        return $this->hasMany(Campaign::className(), ['id' => 'campaign_id'])->viaTable('campaign_following', ['user_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDonationRequests()
-    {
-        return $this->hasMany(DonationRequest::className(), ['created_by' => 'id']);
-    }
-
-    public function getDonationRequestsTo()
-    {
-        return $this->hasMany(DonationRequest::className(), ['organization_id' => 'id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -356,21 +325,7 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(News::className(), ['user_id' => 'id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTransactions()
-    {
-        return $this->hasMany(Transaction::className(), ['user_id' => 'id']);
-    }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDonatedCampaign()
-    {
-        return $this->hasMany(Campaign::className(), ['id' => 'campaign_id'])->viaTable('transaction', ['user_id' => 'id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery

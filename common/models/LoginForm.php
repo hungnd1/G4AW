@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use frontend\helpers\UserHelper;
 use Yii;
 use yii\base\Model;
 
@@ -34,9 +35,9 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => Yii::t('app', 'Tên đăng nhập'),
-            'password' =>Yii::t('app', 'Mật khẩu'),
-            'rememberMe' =>Yii::t('app', 'Nhớ Mật khẩu')
+            'username' => UserHelper::multilanguage('Tên đăng nhập','Username'),
+            'password' =>UserHelper::multilanguage('Mật khẩu','Password'),
+            'rememberMe' =>UserHelper::multilanguage('Remember password','Nhớ mật khẩu')
         ];
     }
 
@@ -53,7 +54,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Tên đăng nhập hoặc mật khẩu không đúng.');
+                $this->addError($attribute, UserHelper::multilanguage('Tên đăng nhập hoặc mật khẩu không đúng.','Username or password wrong'));
             }
         }
     }

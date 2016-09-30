@@ -4,6 +4,7 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \frontend\models\SignupForm */
 
+use frontend\helpers\UserHelper;
 use yii\captcha\Captcha;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -17,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="box-login-page">
             <div class="form-login">
-                <h3>Đăng Ký<a href="<?= Url::toRoute(['site/login']) ?>">Đăng nhập</a></h3>
+                <h3><?= UserHelper::multilanguage('Đăng Ký','Sign-in') ?><a href="<?= Url::toRoute(['site/login']) ?>"><?= UserHelper::multilanguage('Đăng nhập','Login') ?></a></h3>
 
                 <?php $form = ActiveForm::begin([
                     'id' => 'form-signup',
@@ -25,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'enableClientValidation' =>true,
                 ]); ?>
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true,'maxlength'=>11,'minlength'=>9])->label('Tên đăng nhập (*)') ?>
+                <?= $form->field($model, 'username')->textInput(['autofocus' => true,'maxlength'=>11,'minlength'=>9])->label(UserHelper::multilanguage('Tên đăng nhập (*)','Username (*)')) ?>
 
-                <?= $form->field($model, 'email')->textInput(['autofocus' => true])->label('Email (*)') ?>
+                <?= $form->field($model, 'email')->textInput(['autofocus' => true])->label(UserHelper::multilanguage('Email (*)','Email (*)')) ?>
 
-                <?= $form->field($model, 'password')->passwordInput()->label('Mật khẩu (*)') ?>
+                <?= $form->field($model, 'password')->passwordInput()->label(UserHelper::multilanguage('Mật khẩu (*)','Password (*)')) ?>
 
-                <?= $form->field($model, 'confirm_password')->passwordInput()->label('Nhập lại mật khẩu (*)') ?>
+                <?= $form->field($model, 'confirm_password')->passwordInput()->label(UserHelper::multilanguage('Xác nhận mật khẩu (*)','Confirm password (*)')) ?>
 
 
                 <?= $form->field($model, 'address')->textInput() ?>
@@ -41,11 +42,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]) ?>
 
                 <div class="re-and-log re-and-log2">
-                    <?= $form->field($model,'accept')->checkbox()->label('Tôi đồng ý với quy định và điều khoản của trang (*)')?>
+                    <?= $form->field($model,'accept')->checkbox()?>
                 </div>
 
                 <div class="text-center line-bt" >
-                    <a href="#" class="bt-common-1" onclick="document.getElementById('form-signup').submit()">ĐĂNG KÝ</a>
+                    <a href="#" class="bt-common-1" onclick="document.getElementById('form-signup').submit()"><?= UserHelper::multilanguage('Đăng Ký','Sign-in') ?></a>
                 </div>
 
                 <?php ActiveForm::end(); ?>

@@ -2,6 +2,7 @@
 namespace frontend\models;
 
 use common\models\User;
+use frontend\helpers\UserHelper;
 use Yii;
 use yii\base\Model;
 
@@ -24,7 +25,8 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required'],
+            [['username'], 'required','message'=>UserHelper::multilanguage('Tên đăng nhập không được để trống','Username not empty')],
+            [[ 'password'], 'required','message'=>UserHelper::multilanguage('Mật khẩu không được để trống','Password not empty')],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
@@ -44,7 +46,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Tên đăng nhập hoặc mật khẩu không đúng');
+                $this->addError($attribute, UserHelper::multilanguage('Tên đăng nhập hoặc mật khẩu không đúng.','Username or password wrong'));
             }
         }
     }
@@ -83,9 +85,9 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => Yii::t('app', 'Tên đăng nhập'),
-            'password' => Yii::t('app', 'Mật khẩu'),
-            'rememberMe' => Yii::t('app', 'Ghi nhớ'),
+            'username' => UserHelper::multilanguage('Tên đăng nhập','Username'),
+            'password' =>UserHelper::multilanguage('Mật khẩu','Password'),
+            'rememberMe' =>UserHelper::multilanguage('Remember password','Nhớ mật khẩu')
 
         ];
     }

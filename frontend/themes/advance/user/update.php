@@ -6,6 +6,7 @@
  * Time: 9:54 AM
  */
 use common\models\User;
+use frontend\helpers\UserHelper;
 use kartik\widgets\DatePicker;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
@@ -16,11 +17,11 @@ $avatarPreview = $model->isNewRecord;
 <div class="content">
     <div class="container">
         <div class="cr-page-link">
-            <a href="<?= Url::toRoute(['site/index'])?>">Trang chủ</a>
+            <a href="<?= Url::toRoute(['site/index'])?>"><?= UserHelper::multilanguage('Trang chủ','Home') ?></a>
             <span>/</span>
-            <a href="<?= Url::toRoute(['user/my-page','id'=>Yii::$app->user->identity->id])?>">Cá nhân</a>
+            <a href="<?= Url::toRoute(['user/my-page','id'=>Yii::$app->user->identity->id])?>"><?= UserHelper::multilanguage('Cá nhân','Personal') ?></a>
             <span>/</span>
-            <a href="<?= Url::toRoute(['user/update','id'=>Yii::$app->user->identity->id])?>">Cập nhật thông tin</a>
+            <a href="<?= Url::toRoute(['user/update','id'=>Yii::$app->user->identity->id])?>"><?= UserHelper::multilanguage('Cập nhật thông tin','Update information') ?></a>
         </div>
     </div>
     <div class="container">
@@ -33,7 +34,7 @@ $avatarPreview = $model->isNewRecord;
                     <p><?= $model->address ?></p>
                 </div>
                 <div class="block-cm-left">
-                    <span class="t-span">Số điện thoại</span><br>
+                    <span class="t-span"><?= UserHelper::multilanguage('Số điện thoại','Phone number') ?></span><br>
                     <span class="b-span"><?= $model->phone_number ?></span>
                 </div>
                 <div class="block-cm-left">
@@ -41,13 +42,13 @@ $avatarPreview = $model->isNewRecord;
                     <span class="b-span"><?= $model->email ?></span>
                 </div>
                 <div class="block-cm-left">
-                    <span class="t-span">Giới tính</span><br>
+                    <span class="t-span"><?= UserHelper::multilanguage('Giới tính','Gender') ?></span><br>
                     <span class="b-span">
                         <?= User::getGenderName($model->gender)?>
                     </span>
                 </div>
                 <div class="block-cm-left">
-                    <span class="t-span">Tuổi</span><br>
+                    <span class="t-span"><?=  UserHelper::multilanguage('Tuổi','Old') ?></span><br>
                     <span class="b-span"><?= User::getOld($model->birthday) ?></span>
                 </div>
             </div>
@@ -67,23 +68,23 @@ $avatarPreview = $model->isNewRecord;
                         </a>
                     </div>
                     <div class="block-edit">
-                        <?= $form->field($model, 'username')->textInput(['readonly' => true])->label('Tên đăng nhập') ?>
+                        <?= $form->field($model, 'username')->textInput(['readonly' => true])->label(UserHelper::multilanguage('Tên đăng nhập (*)','Username (*)')) ?>
                     </div>
                     <div class="block-edit">
-                        <?= $form->field($model, 'fullname')->textInput(['class'=>'t-span', 'maxlength' => 100])->label('Họ và Tên') ?>
+                        <?= $form->field($model, 'fullname')->textInput(['class'=>'t-span', 'maxlength' => 100])->label(UserHelper::multilanguage('Họ và tên','Fullname')) ?>
                     </div>
                     <div class="block-edit">
-                        <?= $form->field($model, 'address')->textInput(['class'=>'t-span', 'maxlength' => 100])->label('Địa chỉ') ?>
+                        <?= $form->field($model, 'address')->textInput(['class'=>'t-span', 'maxlength' => 100])->label(UserHelper::multilanguage('Địa chỉ','Address')) ?>
                     </div>
                     <div class="block-edit">
-                        <?= $form->field($model, 'email')->textInput(['class'=>'t-span', 'maxlength' => 100])->label('Email (*)') ?>
+                        <?= $form->field($model, 'email')->textInput(['class'=>'t-span', 'maxlength' => 100])->label(UserHelper::multilanguage('Email (*)','Email (*)')) ?>
                     </div>
                     <div class="block-edit">
                         <?=
                             $form->field($model, 'gender')->dropDownList([
                                     'Chọn giới tính' => User::listGender(),
                                 ])
-                                ->label('Giới tính')
+                                ->label(UserHelper::multilanguage('Giới tính','Gender'))
                         ?>
                     </div>
 
@@ -92,9 +93,10 @@ $avatarPreview = $model->isNewRecord;
                             $form->field($model, 'birthday')->widget(DatePicker::classname(), [
                                 'pluginOptions' => [
                                     'autoclose'=>true,
-                                    'placeholder' => ''
+                                    'placeholder' => '',
+                                    'dateFormat'=>'yyyy-MM-dd'
                                 ],
-                            ])->label('Ngày sinh')
+                            ])->label(UserHelper::multilanguage('Ngày sinh','Birthday'))
                         ?>
                     </div>
                     <div class="block-edit">
@@ -107,18 +109,18 @@ $avatarPreview = $model->isNewRecord;
                                 'showUpload' => false,
                                 'browseClass' => 'btn btn-primary btn-block',
                                 'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
-                                'browseLabel' => 'Chọn hình ảnh đại diện',
+                                'browseLabel' => UserHelper::multilanguage('Chọn ảnh đại diện','Choose image'),
                                 'initialPreview' => $avatarPreview
                             ],
                             'options' => [
                                 'accept' => 'image/*',
                             ],
-                        ])->label('Ảnh đại diện')
+                        ])->label(UserHelper::multilanguage('Ảnh đại diện','Avatar'))
                         ?>
                     </div>
                     <div class="line-bt line-bt-3">
-                        <?= Html::a('Huỷ', ['user/my-page','id'=>$model->id], ['class' => 'bt-common-1 bt-st-2']) ?>
-                        <?= Html::submitButton('Lưu thay đổi', ['class' => 'bt-common-1','style'=>'width:180px']) ?>
+                        <?= Html::a(UserHelper::multilanguage('Hủy','Cancel'), ['user/my-page','id'=>$model->id], ['class' => 'bt-common-1 bt-st-2']) ?>
+                        <?= Html::submitButton(UserHelper::multilanguage('Lưu thay đổi','Save'), ['class' => 'bt-common-1','style'=>'width:180px']) ?>
                     </div>
                     <?php ActiveForm::end(); ?>
                 </div>

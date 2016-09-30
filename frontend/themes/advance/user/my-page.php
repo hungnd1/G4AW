@@ -9,6 +9,7 @@ use common\models\Campaign;
 use common\models\DonationRequest;
 use common\models\LeadDonor;
 use common\models\User;
+use frontend\helpers\UserHelper;
 use kartik\alert\Alert;
 use yii\helpers\Url;
 
@@ -16,9 +17,9 @@ use yii\helpers\Url;
 <div class="content">
     <div class="container">
         <div class="cr-page-link">
-            <a href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
+            <a href="<?= Url::toRoute(['site/index']) ?>"><?= UserHelper::multilanguage('Trang chủ','Home') ?></a>
             <span>/</span>
-            <a href="<?= Url::toRoute(['user/my-page', 'id' => Yii::$app->user->identity->id]) ?>">Cá nhân</a>
+            <a href="<?= Url::toRoute(['user/my-page', 'id' => Yii::$app->user->identity->id]) ?>"><?= UserHelper::multilanguage('Cá nhân','Personal') ?></a>
         </div>
     </div>
     <div class="container">
@@ -32,7 +33,7 @@ use yii\helpers\Url;
                     <p><?= $model->address ?></p>
                 </div>
                 <div class="block-cm-left">
-                    <span class="t-span">Số điện thoại</span><br>
+                    <span class="t-span"><?= UserHelper::multilanguage('Số điện thoại','Phone number') ?></span><br>
                     <span class="b-span"><?= $model->phone_number ?></span>
                 </div>
                 <div class="block-cm-left">
@@ -40,13 +41,13 @@ use yii\helpers\Url;
                     <span class="b-span"><?= $model->email ?></span>
                 </div>
                 <div class="block-cm-left">
-                    <span class="t-span">Giới tính</span><br>
+                    <span class="t-span"><?= UserHelper::multilanguage('Giới tính','Gender') ?></span><br>
                     <span class="b-span">
                         <?= User::getGenderName($model->gender)?>
                     </span>
                 </div>
                 <div class="block-cm-left">
-                    <span class="t-span">Tuổi</span><br>
+                    <span class="t-span"><?=  UserHelper::multilanguage('Tuổi','Old') ?></span><br>
                     <span class="b-span"><?= User::getOld($model->birthday) ?></span>
                 </div>
             </div>

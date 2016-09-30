@@ -10,6 +10,7 @@ use common\models\LeadDonor;
 use common\models\LoginForm;
 use common\models\User;
 use DateTime;
+use frontend\helpers\UserHelper;
 use frontend\models\Muser;
 use yii\db\mssql\PDO;
 use frontend\models\SignupForm;
@@ -29,57 +30,6 @@ use yii\web\UploadedFile;
  */
 class UserController extends Controller
 {
-    public function actionPartnerRegister()
-    {
-        $model = new SignupForm();
-        $model->type = User::TYPE_ORGANIZATION;
-        if ($model->load(Yii::$app->request->post())) {
-            $model->type = User::TYPE_ORGANIZATION;
-
-            if ($user = $model->signup()) {
-                Brandname::sendRegisterSms($user);
-                $user->status = User::STATUS_WAITING;
-                if ($user->save(false) && Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
-        }
-
-        return $this->render('partner-register', ['model' => $model]);
-    }
-
-    public function actionDonorRegister()
-    {
-        $model = new SignupForm();
-        $model->type = User::TYPE_DONOR;
-        if ($model->load(Yii::$app->request->post())) {
-            $model->type = User::TYPE_DONOR;
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
-        }
-
-        return $this->render('donor-register', ['model' => $model]);
-    }
-
-    public function actionDoneeRegister()
-    {
-        $model = new SignupForm();
-        $model->type = User::TYPE_DONEE;
-        if ($model->load(Yii::$app->request->post())) {
-            $model->type = User::TYPE_DONEE;
-            if ($user = $model->signup()) {
-                Brandname::sendRegisterSms($user);
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
-        }
-
-        return $this->render('donee-register', ['model' => $model]);
-    }
 
     public function actionSetting($active = 1)
     {
@@ -133,11 +83,11 @@ class UserController extends Controller
             $model->setPassword($model->setting_new_password);
             $model->password_reset_token = $model->setting_new_password;
             if ($model->save(false)) {
-                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Đổi mật khẩu thành công'));
+                Yii::$app->getSession()->setFlash('success',UserHelper::multilanguage('Đổi mật khẩu thành công','Change password success'));
                 return $this->redirect(['my-page','id'=>$id]);
             } else {
                 Yii::warning($model->getErrors());
-                Yii::$app->getSession()->setFlash('danger', Yii::t('app', 'Đổi mật khẩu không thành công'));
+                Yii::$app->getSession()->setFlash('danger', UserHelper::multilanguage('Đổi mật khẩu không thành công','Change password unsuccess'));
                 return $this->redirect(['my-page','id'=>$id]);
             }
         }
@@ -237,9 +187,9 @@ class UserController extends Controller
 
         $avatar_old = $model->avatar;
 
-        $model->birthday = $model->birthday?date('d/m/Y',strtotime($model->birthday)):'';
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->birthday = $model->birthday?date('d/m/Y',strtotime($model->birthday)):'';
             $avatar  = UploadedFile::getInstance($model, 'avatar');
             if ($avatar) {
                 $avatar_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $avatar->extension;
