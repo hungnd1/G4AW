@@ -1,11 +1,9 @@
 <?php
 
-use common\models\Area;
 use common\models\Category;
 use common\models\News;
 use kartik\file\FileInput;
 use kartik\form\ActiveForm;
-use kartik\widgets\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -15,6 +13,8 @@ use yii\helpers\Url;
 /* @var $form yii\widgets\ActiveForm */
 
 // http://kcfinder.sunhater.com/install#dynamic
+
+$videoPreview = !$model->isNewRecord && !empty($model->video_url);
 $kcfOptions = array_merge(\common\widgets\CKEditor::$kcfDefaultOptions, [
     'uploadURL' => Yii::getAlias('@web') . '/uploads/',
     'access' => [
@@ -82,13 +82,40 @@ Yii::$app->session->set('KCFINDER', $kcfOptions);
 
     <?= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>
     <?= $form->field($model, 'short_description_en')->textarea(['rows' => 6]) ?>
+    <?php if($type == News::TYPE_VIDEO) { ?>
+        <?= $form->field($model, 'video_url')->widget(\kartik\file\FileInput::classname(), [
+            'pluginOptions' => [
 
-<!--    --><?//= $form->field($model, 'area_id')->dropDownList(ArrayHelper::map(\common\models\Area::find()
-//        ->andWhere(['status' => Area::STATUS_ACTIVE])->all(), 'id', 'name'),['prompt'=>'Chọn vùng']) ?>
-
+//            'showPreview' => false,
+                'showCaption' => false,
+                'showRemove' => false,
+                'showUpload' => false,
+                'browseClass' => 'btn btn-primary btn-block',
+                'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+                'browseLabel' => 'Chọn video giới thiệu',
+                'initialPreview' => $videoPreview ? [
+                    "<video width='213px' height='160px' controls>
+                    <source src='".Yii::getAlias('@web') . '/' . Yii::getAlias('@news_video') . "/" . $model->video_url."' type='video/mp4'>
+                    <div class='file-preview-other'>
+                        <span class='file-icon-4x'><i class='glyphicon glyphicon-file'></i></span>
+                    </div>
+                </video>"
+                ] : [],
+            ],
+            'options' => [
+                'accept' => 'video/*',
+            ],
+        ]);
+        ?>
+        <?= $form->field($model, 'source_url')->textInput(['maxlength' => true]) ?>
+    <?php }?>
+    <?php if($type != News::TYPE_VIDEO) { ?>
     <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::find()
         ->andWhere(['status' => Category::STATUS_ACTIVE])->andWhere(['type'=>$type])->all(), 'id', 'display_name')) ?>
-
+    <?php }else{ ?>
+        <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::find()
+            ->andWhere(['status' => Category::STATUS_ACTIVE])->andWhere(['type'=>$type])->all(), 'id', 'display_name'))->hiddenInput() ?>
+    <?php }?>
     <?= $form->field($model, 'content')->widget(\common\widgets\CKEditor::className(), [
         'options' => [
             'rows' => 10,

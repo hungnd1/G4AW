@@ -7,12 +7,18 @@
  */
 use frontend\helpers\UserHelper;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 /** @var $model  \common\models\News */
 ?>
 
 <!-- content -->
+    <script src="<?= Yii::$app->request->baseUrl ?>/js/jwplayer/jwplayer.js"></script>
+    <script src="<?= Yii::$app->request->baseUrl ?>/js/ng_player.js"></script>
+    <script src="<?= Yii::$app->request->baseUrl ?>/js/ng_swfobject.js"></script>
+    <script src="<?= Yii::$app->request->baseUrl ?>/js/ParsedQueryString.js"></script>
+<script>jwplayer.key = "tOf3A+hW+N76uJtefCw6XMUSRejNvQozOQIaBw==";</script>
 <div class="content">
     <div class="main-cm-2">
         <div class="container">
@@ -27,6 +33,12 @@ use yii\helpers\Url;
                 <div class="m-content">
                     <h1><?= UserHelper::multilanguage($model->title,$model->title_en) ?></h1>
                     <p class="des-dt"><?= UserHelper::multilanguage($model->short_description,$model->short_description_en) ?></p>
+                    <?php if($model->type == \common\models\News::TYPE_VIDEO){?>
+                    <a id="player" onclick="playVideo();"><img
+                            src="<?= $model->getThumbnailLink() ?>"
+                            width="100%"></a>
+                    <p style="text-align: center;font-size: 18px;"><?= UserHelper::multilanguage('Click ảnh trên để xem video','Click image to watch video') ?></p>
+                    <?php } ?>
                     <div class="content-dt">
                         <?= preg_replace('/(\<img[^>]+)(style\=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', UserHelper::multilanguage($model->content,$model->content_en)) ?>
                     </div>
@@ -255,7 +267,11 @@ use yii\helpers\Url;
             });//end jQuery.ajax
         }
     }
-
+    function playVideo() {
+        var url = '<?= $model->getVideoUrl() ?  $model->getVideoUrl() : $model->source_url ?>';
+        loadPlayer(url, '', '<?= $model->getThumbnailLink() ?>');
+//        tag.attr('data-dismiss', 'modal');
+    }
 </script>
 
 <!-- end Modal message notice -->

@@ -30,18 +30,23 @@ class NewsController extends BaseController
     public function actionIndex($type = Category::TYPE_NEW, $id = null)
     {
         $title = Category::listType($type);
+        if($type == News::TYPE_VIDEO){
+            $listNews = News::find()
+                ->andWhere(['news.status' => News::STATUS_ACTIVE])
+                ->andWhere(['news.type' => News::TYPE_VIDEO]);
+        }else {
 
-        $listNews = News::find()
-            ->innerJoin('news_category_asm', 'news_category_asm.news_id = news.id')
-            ->innerJoin('category', 'category.id = news_category_asm.category_id')
-            ->andWhere(['news.status' => News::STATUS_ACTIVE])
-            ->andWhere(['category.status' => Category::STATUS_ACTIVE]);
-        if ($id) {
-            $listNews->andWhere(['news.area_id' => $id]);
-        } else {
-            $listNews->andWhere('category.type = :type', [':type' => $type]);
+            $listNews = News::find()
+                ->innerJoin('news_category_asm', 'news_category_asm.news_id = news.id')
+                ->innerJoin('category', 'category.id = news_category_asm.category_id')
+                ->andWhere(['news.status' => News::STATUS_ACTIVE])
+                ->andWhere(['category.status' => Category::STATUS_ACTIVE]);
+            if ($id) {
+                $listNews->andWhere(['news.area_id' => $id]);
+            } else {
+                $listNews->andWhere('category.type = :type', [':type' => $type]);
+            }
         }
-
         $listNews->orderBy(['news.created_at' => SORT_DESC]);
         $countQuery = clone $listNews;
         $pages = new Pagination(['totalCount' => $countQuery->count()]);

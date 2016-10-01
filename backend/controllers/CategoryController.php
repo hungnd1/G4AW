@@ -170,17 +170,17 @@ class CategoryController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->status == Category::STATUS_ACTIVE) {
-            Yii::$app->getSession()->setFlash('error', 'Bạn không thể xóa danh mục tin tức ở trạng thái Hoạt động');
-            return $this->redirect(['index']);
-        }
+//        if ($model->status == Category::STATUS_ACTIVE) {
+//            Yii::$app->getSession()->setFlash('error', 'Bạn không thể xóa danh mục tin tức ở trạng thái Hoạt động');
+//            return $this->redirect(['index']);
+//        }
 
-        $news = News::find()->joinWith('newsCategoryAsms')->andFilterWhere(['!=', 'news.status', News::STATUS_DELETED])
-            ->andWhere(['news_category_asm.category_id' => $model->id])->all();
-        if ($news) {
-            Yii::$app->getSession()->setFlash('error', 'Bạn không thể xóa danh mục tin tức đang chứa bài viết');
-            return $this->redirect(['index']);
-        }
+//        $news = News::find()->joinWith('newsCategoryAsms')->andFilterWhere(['!=', 'news.status', News::STATUS_DELETED])
+//            ->andWhere(['news_category_asm.category_id' => $model->id])->all();
+//        if ($news) {
+//            Yii::$app->getSession()->setFlash('error', 'Bạn không thể xóa danh mục tin tức đang chứa bài viết');
+//            return $this->redirect(['index']);
+//        }
 
         $model->status = Category::STATUS_DELETED;
         if ($model->save()) {

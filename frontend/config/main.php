@@ -20,6 +20,7 @@ return [
         '@file_upload'=>'file_upload',
         '@village_image'=>'village_image',
         '@avatar'=>'avatar',
+        '@news_video'=>'news_video',
     ],
     'components' => [
         'user' => [

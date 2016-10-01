@@ -33,6 +33,7 @@ return [
         '@village_image' => 'village_image',
         '@file_upload' => 'file_upload',
         '@area_image' => 'area_image',
+        '@news_video' => 'news_video',
     ],
     'components' => [
         'user' => [

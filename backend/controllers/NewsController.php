@@ -103,6 +103,17 @@ class NewsController extends Controller
                     }
                 }
 
+                //Xu ly video
+                $video = UploadedFile::getInstance($model, 'video_url');
+                if ($video) {
+                    $file_name = uniqid() . time() . '.' . $video->extension;
+                    if ($video->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@news_video') . "/" . $file_name)) {
+                        $model->video_url = $file_name;
+                    } else {
+                        Yii::$app->getSession()->setFlash('error', 'Lỗi hệ thống, vui lòng thử lại');
+                    }
+                }
+
                 $model->user_id = $user->id;
                 $model->created_user_id = $user->id;
 
@@ -144,7 +155,7 @@ class NewsController extends Controller
     {
         $model = $this->findModel($id);
         $thumbnail = $model->thumbnail;
-
+        $video_old = $model->video_url;
         /** @var NewsCategoryAsm $asm */
         $asm = NewsCategoryAsm::findOne(['news_id' => $model->id]);
         if ($asm) {
@@ -167,6 +178,19 @@ class NewsController extends Controller
                 } else {
                     $model->thumbnail = $thumbnail;
                 }
+                $video = UploadedFile::getInstance($model, 'video_url');
+                if ($video) {
+                    $file_name = uniqid() . time() . '.' . $video->extension;
+                    if ($video->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@news_video') . "/" . $file_name)) {
+                        $model->video = $file_name;
+                    } else {
+                        $model->video = $video_old;
+//                    Yii::$app->getSession()->setFlash('error', 'Lỗi hệ thống, vui lòng thử lại');
+                    }
+                } else {
+                    $model->video_url = $video_old;
+                }
+
                 if($model->status == News::STATUS_ACTIVE){
                     $model->published_at = time();
                 }else{

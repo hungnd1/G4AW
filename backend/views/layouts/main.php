@@ -162,6 +162,7 @@ $menuItems = [
             ],
         ]
     ],
+
     [
         'label' => 'Nhà nông nên biết',
         'url' => 'javascript:;',
@@ -179,6 +180,12 @@ $menuItems = [
                 'url' => ['news/index', 'type' => \common\models\News::TYPE_KNOW],
             ],
         ]
+    ],
+    [
+        'label' => 'QL Video hướng dẫn',
+        'url' => ['news/index', 'type' => \common\models\News::TYPE_VIDEO],
+        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
+        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
     ],
 //        [
 //            'label' => 'Thống kê',

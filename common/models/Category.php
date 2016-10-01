@@ -34,7 +34,7 @@ class Category extends \yii\db\ActiveRecord
     const STATUS_DELETED = 2;
 
     const TYPE_KNOW = 1;
-    const TYPE_MARKET = 2;
+    const TYPE_VIDEO = 2;
     const TYPE_HEALTH = 3;
     const TYPE_NEW = 5;
 
@@ -98,8 +98,8 @@ class Category extends \yii\db\ActiveRecord
 
         if($type == self::TYPE_NEW){
             return UserHelper::multilanguage('Tin tức','News');
-        }else if($type == self::TYPE_MARKET){
-            return 'Chợ nhà nông';
+        }else if($type == self::TYPE_VIDEO){
+            return UserHelper::multilanguage('Video hướng dẫn','Video support');
         }else if($type == self::TYPE_HEALTH){
             return 'Sức khỏe đời sống';
         }else if($type == self::TYPE_KNOW){

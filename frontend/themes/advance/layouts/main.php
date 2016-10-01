@@ -26,6 +26,71 @@ AppAsset::register($this);
 <?php $this->endBody() ?>
 </body>
 <script type="text/javascript">
+    function loadPlayer(url, subUrl, image) {
+
+//        if (null == url || '' == url) {
+//            //$('#price').css('display','none');
+//            return;
+//        }
+        var device = browserDectect1();
+        //load player
+            jwplayer("player").setup({
+                playlist: [{
+                    image: image,
+                    sources: [{
+                        file: url
+                    }]
+                }],
+                type: 'flash',
+                display: {
+                    icons: 'true'
+                },
+                dock: 'false',
+                width: '100%',
+                height: '400px',
+                androidhls: 'true',
+                autostart: 'true',
+                value: "netstreambasepath",
+                quality: 'false',
+                stretching: "exactfit",
+                'http.startparam': 'start',
+                controlbar: 'over',
+                screencolor: "000000",
+                flashplayer: "<?= Yii::$app->request->baseUrl; ?>/advance/js/jwplayer/player.swf",
+                provider: 'http',
+                plugins: {
+                    "<?= Yii::$app->request->baseUrl; ?>/advance/js/jwplayer/captions.js": {
+                        file: subUrl,
+                        fontSize: 15,
+                        pluginmode: "HYBRID"
+                    },
+
+                    "ova-jw": {
+                        "player": {
+                            "modes": {
+                                "linear": {
+                                    "controls": {
+                                        "enableFullscreen": true,
+                                        "enablePlay": true,
+                                        "enablePause": true,
+                                        "enableMute": true,
+                                        "enableVolume": true
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    '<?= Yii::$app->request->baseUrl; ?>/advance/js/overlay.js': {
+                        text: null//'<img src="<?php //echo Yii::app()->theme->baseUrl; ?>/images/logo2.png"/>'
+                    }
+                },
+                captions: {
+                    color: '#FF0000',
+                    fontSize: 20,
+                    backgroundOpacity: 50
+                }
+            });
+    }
 
     $(document).ready(function(){
         slider3 = $('.bxslider3').bxSlider({

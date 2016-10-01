@@ -72,7 +72,7 @@ use yii\widgets\ActiveForm;
                     <a href="<?= Url::toRoute(['news/index', 'type' => News::TYPE_KNOW]) ?>"><?= UserHelper::multilanguage('Nhà nông nên biết', 'Farmers Know') ?></a>
                 </li>
                 <li><a href=""><?= UserHelper::multilanguage('Dịch vụ khuyến mãi', 'Service Free') ?></a></li>
-                <li><a href=""><?= UserHelper::multilanguage('Video hướng dẫn', 'Video Support') ?></a></li>
+                <li><a href="<?= Url::toRoute(['news/index', 'type' => News::TYPE_VIDEO]) ?>"><?= UserHelper::multilanguage('Video hướng dẫn', 'Video Support') ?></a></li>
             </ul>
 
             <?php
@@ -129,7 +129,7 @@ use yii\widgets\ActiveForm;
                 <a href="<?= Url::toRoute(['news/index', 'type' => News::TYPE_KNOW]) ?>"><?= UserHelper::multilanguage('Nhà nông nên biết', 'Farmers Know') ?></a>
             </li>
             <li><a href=""><?= UserHelper::multilanguage('Dịch vụ khuyến mãi', 'Service Free') ?></a></li>
-            <li><a href=""><?= UserHelper::multilanguage('Video hướng dẫn', 'Video Support') ?></a></li>
+            <li><a href="<?= Url::toRoute(['news/index', 'type' => News::TYPE_VIDEO]) ?>"><?= UserHelper::multilanguage('Video hướng dẫn', 'Video Support') ?></a></li>
             <div class="right-nav hidden-sm hidden-xs">
 
                 <div class="f-search">

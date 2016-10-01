@@ -53,7 +53,7 @@ class News extends \yii\db\ActiveRecord
     const LIST_EXTENSION = '.jpg,.png';
 
     const TYPE_KNOW = 1;
-    const TYPE_MARKET = 2;
+    const TYPE_VIDEO = 2;
     const TYPE_HEALTH = 3;
     const TYPE_NEW = 5;
 
@@ -101,6 +101,7 @@ class News extends \yii\db\ActiveRecord
             [['thumbnail'], 'image', 'extensions' => 'png,jpg,jpeg,gif',
                 'maxSize' => 1024 * 1024 * 10, 'tooBig' => 'Ảnh upload vượt quá dung lượng cho phép!'
             ],
+            [['video_url'], 'file', 'extensions' => ['mp4', 'avi'], 'maxSize' => 1024 * 1024 * 100, 'tooBig' => 'Video giới thiệu vượt quá dung lượng cho phép!'],
         ];
     }
 
@@ -123,14 +124,14 @@ class News extends \yii\db\ActiveRecord
             'short_description' => Yii::t('app', 'Mô tả ngắn'),
             'short_description_en' => Yii::t('app', 'Mô tả ngắn tiếng anh'),
             'description' => Yii::t('app', 'Mô tả'),
-            'video_url' => Yii::t('app', 'Video Url'),
+            'video_url' => Yii::t('app', 'File video'),
             'view_count' => Yii::t('app', 'View Count'),
             'like_count' => Yii::t('app', 'Like Count'),
             'comment_count' => Yii::t('app', 'Comment Count'),
             'favorite_count' => Yii::t('app', 'Favorite Count'),
             'honor' => Yii::t('app', 'Honor'),
             'source_name' => Yii::t('app', 'Source Name'),
-            'source_url' => Yii::t('app', 'Source Url'),
+            'source_url' => Yii::t('app', 'Link video'),
             'status' => Yii::t('app', 'Trạng thái'),
             'created_user_id' => Yii::t('app', 'Created User ID'),
             'created_at' => Yii::t('app', 'Created At'),
@@ -202,7 +203,7 @@ class News extends \yii\db\ActiveRecord
         $lst = [
             self::TYPE_NEW => 'Tin tức',
             self::TYPE_HEALTH => 'Sức khỏe đời sống',
-            self::TYPE_MARKET => 'Chợ nhà nông',
+            self::TYPE_VIDEO => 'Video hướng dẫn',
             self::TYPE_KNOW => 'Nhà nông nên biết',
         ];
         return $lst;
@@ -277,4 +278,19 @@ class News extends \yii\db\ActiveRecord
 
         return $lst;
     }
+
+    public function getVideoUrl()
+    {
+        $pathLink = Yii::getAlias('@web') . '/' . Yii::getAlias('@news_video') . '/';
+        $filename = null;
+
+        if ($this->video_url) {
+            $filename = $this->video_url;
+
+        }
+        return Url::to($pathLink . $filename, true);
+
+    }
 }
+
+
