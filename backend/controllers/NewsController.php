@@ -182,9 +182,9 @@ class NewsController extends Controller
                 if ($video) {
                     $file_name = uniqid() . time() . '.' . $video->extension;
                     if ($video->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@news_video') . "/" . $file_name)) {
-                        $model->video = $file_name;
+                        $model->video_url = $file_name;
                     } else {
-                        $model->video = $video_old;
+                        $model->video_url = $video_old;
 //                    Yii::$app->getSession()->setFlash('error', 'Lỗi hệ thống, vui lòng thử lại');
                     }
                 } else {
