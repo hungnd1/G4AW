@@ -5,7 +5,7 @@
  * Date: 17/12/2015
  * Time: 3:38 PM
  */
-use yii\helpers\Html;
+use frontend\helpers\UserHelper;
 ?>
 <!-- Testimonials block BEGIN -->
 <div class="footer-block content-center">
@@ -13,10 +13,10 @@ use yii\helpers\Html;
         <div class="container">
 
             <div class="copy-right">
-                <h5>CHƯƠNG TRÌNH KH&CN TRỌNG ĐIỂM CẤP NHÀ NƯỚC. KC.01/11-15</h5>
-                Mọi tin, bài, thắc mắc xin gửi về thư điện tử: <br> Email: thongtinnongthon@vnpt.vn<br><br>
-                Hoặc theo địa chỉ Website: Ban Quản trị nội dung  Học viện Công nghệ Bưu chính Viễn thông<br>
-                Địa chỉ: 122 Hoàng Quốc Việt, Cầu Giấy, Hà Nội<br> ĐT: (04) 04.37544837<br>
+                <h5><?= UserHelper::multilanguage('CHƯƠNG TRÌNH PHÁT TRIỂN DỰ ÁN CAFE','Information services for sustainable coffee farm managemen') ?></h5>
+                <?=UserHelper::multilanguage('Mọi tin, bài, thắc mắc xin gửi về thư điện tử: ','All news, articles, inquiries should be sent to e-mail:') ?><br> Email: eriptcoffee@gmail.com<br><br>
+                <?= UserHelper::multilanguage('Hoặc theo địa chỉ Website: Ban Quản trị nội dung  Học viện Công nghệ Bưu chính Viễn thông','By address or Website: Content Management Board Posts and Telecommunications Institute of Technology') ?><br>
+                <?= UserHelper::multilanguage("Địa chỉ: 122 Hoàng Quốc Việt, Cầu Giấy, Hà Nội<br> ĐT: (04) 04.37544837",'Address: 122 Hoang Quoc Vietnam, Cau Giay, Ha Noi <br> Telephone: (04) 04.37544837') ?><br>
 
             </div>
             <div class="social">
