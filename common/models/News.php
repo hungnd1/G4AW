@@ -100,7 +100,7 @@ class News extends \yii\db\ActiveRecord
             [['thumbnail'], 'image', 'extensions' => 'png,jpg,jpeg,gif',
                 'maxSize' => 1024 * 1024 * 10, 'tooBig' => 'Ảnh upload vượt quá dung lượng cho phép!'
             ],
-            [['video_url'], 'file', 'extensions' => ['mp4', 'avi'], 'maxSize' => 1024 * 1024 * 100, 'tooBig' => 'Video giới thiệu vượt quá dung lượng cho phép!'],
+            [['video_url'], 'file', 'extensions' => ['mp4', 'avi'], 'maxSize' => 1024 * 1024 * 200, 'tooBig' => 'Video giới thiệu vượt quá dung lượng cho phép!'],
         ];
     }
 
