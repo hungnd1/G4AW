@@ -182,24 +182,6 @@ $menuItems = [
         ]
     ],
     [
-        'label' => 'Nhà nông nên biết',
-        'url' => 'javascript:;',
-        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
-        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
-        'items' => [
-            [
-                'encode' => false,
-                'label' => 'Danh mục nhà nông',
-                'url' => ['category/index','type' => \common\models\News::TYPE_VIDEO],
-            ],
-            [
-                'encode' => false,
-                'label' => 'Tin tức nhà nông',
-                'url' => ['news/index', 'type' => \common\models\News::TYPE_VIDEO],
-            ],
-        ]
-    ],
-    [
         'label' => 'QL Video hướng dẫn',
         'url' => ['news/index', 'type' => \common\models\News::TYPE_VIDEO],
         'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],

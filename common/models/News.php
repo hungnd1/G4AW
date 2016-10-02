@@ -27,7 +27,6 @@ use yii\helpers\Url;
  * @property integer $honor
  * @property string $title_en
  * @property string $content_en
- * @property integer $area_id
  * @property string $short_description_en
  * @property string $source_name
  * @property string $source_url
@@ -91,7 +90,7 @@ class News extends \yii\db\ActiveRecord
     {
         return [
             [[ 'type', 'view_count', 'like_count', 'comment_count', 'favorite_count', 'honor',
-                'status', 'created_user_id', 'created_at', 'updated_at', 'user_id','area_id', 'category_id', 'published_at'], 'integer'],
+                'status', 'created_user_id', 'created_at', 'updated_at', 'user_id', 'category_id', 'published_at'], 'integer'],
             [['title','title_en', 'user_id'], 'required'],
             [['thumbnail'], 'required', 'on' => 'create'],
             [['content','content_en', 'description'], 'string'],
@@ -119,7 +118,6 @@ class News extends \yii\db\ActiveRecord
             'content_en' => Yii::t('app', 'Nội dung tiếng anh'),
             'thumbnail' => Yii::t('app', 'Ảnh đại diện'),
             'type' => Yii::t('app', 'Loại bài viết'),
-            'area_id' => Yii::t('app', 'Vùng'),
             'tags' => Yii::t('app', 'Tags'),
             'short_description' => Yii::t('app', 'Mô tả ngắn'),
             'short_description_en' => Yii::t('app', 'Mô tả ngắn tiếng anh'),
