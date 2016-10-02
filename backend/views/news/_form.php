@@ -114,7 +114,7 @@ Yii::$app->session->set('KCFINDER', $kcfOptions);
         ->andWhere(['status' => Category::STATUS_ACTIVE])->andWhere(['type'=>$type])->all(), 'id', 'display_name')) ?>
     <?php }else{ ?>
         <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::find()
-            ->andWhere(['status' => Category::STATUS_ACTIVE])->andWhere(['type'=>$type])->all(), 'id', 'display_name'))->hiddenInput() ?>
+            ->andWhere(['status' => Category::STATUS_ACTIVE])->andWhere(['type'=>$type])->all(), 'id', 'display_name'))g) ?>
     <?php }?>
     <?= $form->field($model, 'content')->widget(\common\widgets\CKEditor::className(), [
         'options' => [
