@@ -205,7 +205,7 @@ if (!Yii::$app->user->isGuest) {
                             </div>
                             <div class="if-cm-2">
                                 <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>"><h3
-                                        class="name-1"><?= UserHelper::multilanguage($item->title,$item->title_en) ?></h3><br></a>
+                                        class="name-1"><?= str_replace(mb_substr(UserHelper::multilanguage($item->title,$item->title_en), 40, strlen(UserHelper::multilanguage($item->title,$item->title_en)), 'utf-8'), '...', UserHelper::multilanguage($item->title,$item->title_en)) ?></h3><br></a>
                                 <span
                                     class="des-cm-1"><?= str_replace(mb_substr(UserHelper::multilanguage($item->short_description,$item->short_description_en), 100, strlen(UserHelper::multilanguage($item->short_description,$item->short_description_en)), 'utf-8'), '...', UserHelper::multilanguage($item->short_description,$item->short_description_en)) ?>
                                     <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>" class="read-more"><?= UserHelper::multilanguage('Đọc thêm','Read more') ?></a></span>
@@ -259,7 +259,7 @@ if (!Yii::$app->user->isGuest) {
                             </div>
                             <div class="if-cm-2">
                                 <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>"><h3
-                                        class="name-1"><?= UserHelper::multilanguage($item->title,$item->title_en) ?></h3><br></a>
+                                        class="name-1"><?= str_replace(mb_substr(UserHelper::multilanguage($item->title,$item->title_en), 40, strlen(UserHelper::multilanguage($item->title,$item->title_en)), 'utf-8'), '...', UserHelper::multilanguage($item->title,$item->title_en)) ?></h3><br></a>
                                 <span
                                     class="des-cm-1"><?= str_replace(mb_substr(UserHelper::multilanguage($item->short_description,$item->short_description_en), 100, strlen(UserHelper::multilanguage($item->short_description,$item->short_description_en)), 'utf-8'), '...', UserHelper::multilanguage($item->short_description,$item->short_description_en)) ?>
                                     <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>" class="read-more"><?= UserHelper::multilanguage('Đọc thêm','Read

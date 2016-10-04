@@ -151,13 +151,13 @@ class SiteController extends BaseController
         $listArea = Area::find()->andWhere(['status'=>Area::STATUS_ACTIVE])->all();
 
         $listNew  = News::find()->andWhere(['status'=>News::STATUS_ACTIVE])->andWhere(['type'=>News::TYPE_NEW])
-            ->orderBy(['created_at'=>SORT_DESC])->limit(8)->all();
+            ->orderBy(['created_at'=>SORT_DESC])->limit(6)->all();
 
         $listNewCategory = Category::find()->andWhere(['status'=>Category::STATUS_ACTIVE])->andWhere(['type'=>Category::TYPE_NEW])
             ->orderBy(['order_number'=>SORT_ASC])->all();
 
         $listKnow  = News::find()->andWhere(['status'=>News::STATUS_ACTIVE])->andWhere(['type'=>News::TYPE_KNOW])
-            ->orderBy(['created_at'=>SORT_DESC])->limit(8)->all();
+            ->orderBy(['created_at'=>SORT_DESC])->limit(6)->all();
 
         $listKnowCategory = Category::find()->andWhere(['status'=>Category::STATUS_ACTIVE])->andWhere(['type'=>Category::TYPE_KNOW])
             ->orderBy(['order_number'=>SORT_ASC])->all();

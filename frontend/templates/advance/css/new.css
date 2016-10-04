@@ -1061,7 +1061,7 @@ h2.title-cm p{
 .partner-block .container ul li img{
   box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
     margin: 4px;
-    width: 400px;
+    width: 180px;
     height: 180px;
     border: 1px solid #ccc;
 }
@@ -2996,7 +2996,7 @@ table.tab-pac-course tr:first-child td:last-child{
 }
 .list-item .news {
   float: left;
-  width: 19%;
+  width: 29%;
   height:350px;
   position: relative;
   display: inline-block;
