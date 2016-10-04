@@ -41,13 +41,13 @@ Yii::$app->session->set('KCFINDER', $kcfOptions);
         'options' => [
             'rows' => 10,
         ],
-        'preset' => 'basic'
+        'preset' => 'full'
     ]) ?>
     <?= $form->field($model, 'content_en')->widget(\common\widgets\CKEditor::className(), [
         'options' => [
             'rows' => 10,
         ],
-        'preset' => 'basic'
+        'preset' => 'full'
     ]) ?>
 
     <div class="form-group">

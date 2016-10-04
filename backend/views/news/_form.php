@@ -126,7 +126,7 @@ Yii::$app->session->set('KCFINDER', $kcfOptions);
         'options' => [
             'rows' => 10,
         ],
-        'preset' => 'basic'
+        'preset' => 'full'
     ]) ?>
 
     <div class="form-group">
