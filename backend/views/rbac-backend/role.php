@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     /**
                      * @var $model \common\models\AuthItem
                      */
-                    $res = Html::a($model->description, ['rbac-backend/update-role', 'name' => $model->name]);
+                    $res = Html::a($model->name, ['rbac-backend/update-role', 'name' => $model->name]);
                     $res .= " [". sizeof($model->children) . "]";
                     return $res;
                 },
