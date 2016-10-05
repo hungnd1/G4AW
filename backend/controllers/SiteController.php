@@ -1,12 +1,16 @@
 <?php
 namespace backend\controllers;
 
+use common\models\User;
+use kartik\form\ActiveForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use common\models\LoginForm;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 /**
@@ -32,12 +36,18 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['change-password', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'change-password'=>['post'],
                 ],
             ],
         ];
@@ -125,5 +135,43 @@ class SiteController extends Controller
         $funcNum = $_GET['CKEditorFuncNum'] ;
         echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>";
 
+    }
+
+    public function actionChangePassword(){
+        $id = Yii::$app->user->id;
+        $model = User::findOne($id);
+
+        if (!$model) {
+            throw  new BadRequestHttpException('Người dùng không tồn tại');
+        }
+
+        $model->setScenario('user-setting');
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
+        $pass1 = $model->pass1;
+        $pass2 = $model->pass2;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+//            $model->password_reset_token = $model->setting_new_password;
+            $model->setPassword($model->setting_new_password);
+
+            $model->pass1=$model->password_hash;
+            $model->pass2 = $pass1;
+            $model->pass3 = $pass2;
+            if ($model->save(false)) {
+                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Đổi mật khẩu thành công'));
+                return $this->redirect(['index']);
+            } else {
+                Yii::warning($model->getErrors());
+                Yii::$app->getSession()->setFlash('danger', Yii::t('app', 'Đổi mật khẩu không thành công'));
+                return $this->redirect(['index']);
+            }
+        }
+        return $this->render('change-my-password',[
+            'model'=>$model,
+        ]);
     }
 }

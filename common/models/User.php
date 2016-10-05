@@ -3,8 +3,10 @@
 namespace common\models;
 
 use common\helpers\CommonUtils;
+use common\helpers\CUtils;
 use frontend\helpers\UserHelper;
 use Yii;
+use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
@@ -28,6 +30,9 @@ use yii\web\IdentityInterface;
  * @property string $other_profile
  * @property integer $individual
  * @property string $auth_key
+ * @property string $pass1
+ * @property string $pass2
+ * @property string $pass3
  * @property string $password_hash
  * @property string $password_reset_token
  * @property integer $role
@@ -171,7 +176,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['other_profile'], 'string'],
             [['birthday'], 'safe'],
             [['individual', 'role', 'status', 'created_at', 'updated_at', 'gender', 'type'], 'integer'],
-            [['avatar', 'cover_photo', 'address', 'password_hash', 'password_reset_token', 'access_login_token', 'fb_email', 'fb_id'], 'string', 'max' => 255],
+            [['avatar', 'cover_photo', 'address','pass1','pass2','pass3', 'password_hash', 'password_reset_token', 'access_login_token', 'fb_email', 'fb_id'], 'string', 'max' => 255],
             [['fullname'], 'string', 'max' => 512],
             [['user_code'], 'string', 'max' => 20],
 //            [['phone_number'], 'integer', 'message'=>'Vui lòng nhập kiểu số'],
@@ -216,7 +221,8 @@ class User extends ActiveRecord implements IdentityInterface
             [['setting_new_password'], 'string', 'min' => 6, 'message' => UserHelper::multilanguage('Mật khẩu mới không được để trống.','New password not empty'), 'on' => 'user-setting'],
             [['old_password'], 'required', 'message' => UserHelper::multilanguage('Mật khẩu cũ không được để trống.','Old password not empty'), 'on' => 'user-setting'],
             ['old_password', 'validator_password', 'on' => 'user-setting'],
-            ['setting_new_password', 'checkPassword', 'on' => 'user-setting'],
+            ['setting_new_password','checkNewPassword','on' => 'user-setting'],
+            ['setting_new_password','validate_new','on' => 'user-setting'],
             ['new_password', 'checkPassword', 'on' => 'user-setting'],
             [['confirm_password'], 'required', 'message' => UserHelper::multilanguage('Xác nhận mật khẩu không được để trống.','Confirm password not empty'), 'on' => 'user-setting'],
             [
@@ -269,6 +275,45 @@ class User extends ActiveRecord implements IdentityInterface
             'birthday' => Yii::t('app', 'Ngày sinh'),
         ];
     }
+
+
+    public function validate_new($attribute, $params){
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $pass1 = $model->pass1;
+        $pass2 = $model->pass2;
+        $pass3 = $model->pass3;
+        if($pass1 != null) {
+            if (Yii::$app->security->validatePassword($this->setting_new_password, $pass1)) {
+                $this->addError('setting_new_password', 'Mật khẩu mới không được trùng với mật khẩu ba lần gần nhất');
+            }else {
+                if ($pass2 != null) {
+                    if (Yii::$app->security->validatePassword($this->setting_new_password, $pass2)) {
+                        $this->addError('setting_new_password', 'Mật khẩu mới không được trùng với mật khẩu ba lần gần nhất');
+                    }else {
+                        if ($pass3 != null) {
+                            if (Yii::$app->security->validatePassword($this->setting_new_password, $pass3)) {
+                                $this->addError('setting_new_password', 'Mật khẩu mới không được trùng với mật khẩu ba lần gần nhất');
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public function checkNewPassword($attribute)
+    {
+        if (strlen($this->setting_new_password) < '6') {
+            $this->addError('setting_new_password', 'Mật khẩu phải chứa tối thiểu 6 ký tự.');
+        }
+        elseif(!preg_match("@[0-9]@",$this->setting_new_password)) {
+            $this->addError('setting_new_password', 'Mật khẩu phải chứa ít nhất 1 số.');
+        } elseif(!preg_match("@[A-Z]@",$this->setting_new_password)) {
+            $this->addError('setting_new_password', 'Mật khẩu phải chứa ít nhất 1 chữ viết hoa.');
+        }
+    }
+
 
     public function validator_password($attribute, $params)
     {

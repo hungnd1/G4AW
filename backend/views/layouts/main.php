@@ -69,7 +69,12 @@ AppAsset::register($this);
             ],
             'url' => 'javascript:;',
             'items' => [
-
+                [
+                    'encode' => false,
+                    'label' => '<i class="icon-change"></i> Đổi mật khẩu',
+                    'url' => ['/site/change-password'],
+                    'linkOptions' => ['data-method' => 'post'],
+                ],
                 [
                     'encode' => false,
                     'label' => '<i class="icon-key"></i> Đăng xuất',
