@@ -9,8 +9,14 @@ use yii\widgets\ActiveForm;
 <div class="top-nav header">
     <div class="container">
         <a class="navbar-brand logo" href="<?= Url::toRoute(['site/index']) ?>"><img
-                src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/unnamed.png" height="70" style="padding-top: 10px;"></a>
-        <?php if(UserHelper::isMobile()){ ?>
+                src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/unnamed.png" height="70"
+                style="padding-top: 10px;"></a>
+        <?php if (!UserHelper::isMobile()) { ?>
+            <b class="navbar-brand title-header" style=""
+               href="<?= Url::toRoute(['site/index']) ?>"><?= UserHelper::multilanguage('VIỆN KINH TẾ BƯU ĐIỆN - HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG', 'Economic Research Institute of Posts and Telecommunications') ?></b>
+        <?php } ?>
+        <!--        <b style="font-size: 18px;margin: 0 0 0 30px;padding: 40px 0 0 0;">VIỆN KINH TẾ BƯU ĐIỆN</b>-->
+        <?php if (UserHelper::isMobile()) { ?>
             <a href="<?= Url::toRoute(['site/session', 'vi' => 'vi']) ?>" class="navbar-brand logo"
                style="margin: 40px 0px 0px 40px;padding: 5px 9px;">VI</a>
             <a href="<?= Url::toRoute(['site/session', 'vi' => 'en']) ?>" class="navbar-brand logo"
@@ -72,7 +78,9 @@ use yii\widgets\ActiveForm;
                     <a href="<?= Url::toRoute(['news/index', 'type' => News::TYPE_KNOW]) ?>"><?= UserHelper::multilanguage('Nhà nông nên biết', 'Farmers Know') ?></a>
                 </li>
                 <li><a href=""><?= UserHelper::multilanguage('Dịch vụ', 'Service') ?></a></li>
-                <li><a href="<?= Url::toRoute(['news/index', 'type' => News::TYPE_VIDEO]) ?>"><?= UserHelper::multilanguage('Video hướng dẫn', 'Video Support') ?></a></li>
+                <li>
+                    <a href="<?= Url::toRoute(['news/index', 'type' => News::TYPE_VIDEO]) ?>"><?= UserHelper::multilanguage('Video hướng dẫn', 'Video Support') ?></a>
+                </li>
             </ul>
 
             <?php
@@ -129,7 +137,9 @@ use yii\widgets\ActiveForm;
                 <a href="<?= Url::toRoute(['news/index', 'type' => News::TYPE_KNOW]) ?>"><?= UserHelper::multilanguage('Nhà nông nên biết', 'Farmers Know') ?></a>
             </li>
             <li><a href=""><?= UserHelper::multilanguage('Dịch vụ', 'Service') ?></a></li>
-            <li><a href="<?= Url::toRoute(['news/index', 'type' => News::TYPE_VIDEO]) ?>"><?= UserHelper::multilanguage('Video hướng dẫn', 'Video Support') ?></a></li>
+            <li>
+                <a href="<?= Url::toRoute(['news/index', 'type' => News::TYPE_VIDEO]) ?>"><?= UserHelper::multilanguage('Video hướng dẫn', 'Video Support') ?></a>
+            </li>
             <div class="right-nav hidden-sm hidden-xs">
 
                 <div class="f-search">
