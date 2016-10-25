@@ -147,23 +147,28 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                                 /** @var $model \common\models\News */
                                 return $model->getTypeName();
                             },
-//                            'filterType' => GridView::FILTER_SELECT2,
-//                            'filter' => \common\models\News::listType(),
-//                            'filterWidgetOptions' => [
-//                                'pluginOptions' => ['allowClear' => true],
-//                            ],
-//                            'filterInputOptions' => ['placeholder' => "Tất cả"],
 
                         ],
                         [
                             'class' => '\kartik\grid\DataColumn',
-                            'attribute' => 'short_description',
+//                            'attribute' => 'type',
+                            'header' => 'Slide',
                             'format' => 'html',
                             'value' => function ($model, $key, $index, $widget) {
                                 /** @var $model \common\models\News */
-                                return \common\helpers\CUtils::subString($model->short_description, 20);
+                                return $model->getSlide();
                             },
+
                         ],
+//                        [
+//                            'class' => '\kartik\grid\DataColumn',
+//                            'attribute' => 'short_description',
+//                            'format' => 'html',
+//                            'value' => function ($model, $key, $index, $widget) {
+//                                /** @var $model \common\models\News */
+//                                return \common\helpers\CUtils::subString($model->short_description, 20);
+//                            },
+//                        ],
                         [
                             'class' => '\kartik\grid\DataColumn',
                             'attribute' => 'status',

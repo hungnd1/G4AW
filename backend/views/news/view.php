@@ -49,6 +49,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => $model->getCategory()
                         ],
                         [
+                            'label' => 'Slide',
+                            'value' => $model->getSlide()
+                        ],
+                        [
                             'attribute' => 'status',
                             'value' => $model->getStatusName(),
                         ],

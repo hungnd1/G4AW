@@ -49,7 +49,7 @@ Yii::$app->session->set('KCFINDER', $kcfOptions);
     <?= $form->field($model, 'type')->hiddenInput(['id' => 'type'])->label(false) ?>
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'title_en')->textInput(['maxlength' => true]) ?>
-
+    <?= $form->field($model,'is_slide')->checkbox() ?>
 
     <?= $form->field($model, 'status')->dropDownList(\common\models\News::listStatus()) ?>
 

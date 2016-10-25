@@ -146,6 +146,7 @@ class SiteController extends BaseController
 
 
         $listSlide  = News::find()->andWhere(['status'=>News::STATUS_ACTIVE])
+            ->andWhere(['is_slide'=>News::SLIDE])
             ->orderBy(['created_at'=>SORT_DESC])->limit(6)->all();
 
         $listArea = Area::find()->andWhere(['status'=>Area::STATUS_ACTIVE])->all();

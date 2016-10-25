@@ -37,6 +37,7 @@ use yii\helpers\Url;
  * @property integer $published_at
  * @property integer $user_id
  * @property integer $category_id
+ * @property integer $is_slide
  *
  * @property User $user
  * @property Category $category
@@ -55,6 +56,9 @@ class News extends \yii\db\ActiveRecord
     const TYPE_VIDEO = 2;
     const TYPE_HEALTH = 3;
     const TYPE_NEW = 5;
+
+    const SLIDE = 1;
+    const NO_SLIDE = 0;
 
     public $village_array;
     public $category_id;
@@ -90,7 +94,7 @@ class News extends \yii\db\ActiveRecord
     {
         return [
             [[ 'type', 'view_count', 'like_count', 'comment_count', 'favorite_count', 'honor',
-                'status', 'created_user_id', 'created_at', 'updated_at', 'user_id', 'category_id', 'published_at'], 'integer'],
+                'status', 'created_user_id', 'created_at', 'updated_at', 'user_id', 'category_id', 'published_at','is_slide'], 'integer'],
             [['title','title_en', 'user_id'], 'required'],
             [['thumbnail'], 'required', 'on' => 'create'],
             [['content','content_en', 'description'], 'string'],
@@ -136,6 +140,7 @@ class News extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('app', 'Updated At'),
             'user_id' => Yii::t('app', 'User ID'),
             'category_id' => Yii::t('app', 'Danh mục'),
+            'is_slide'=> Yii::t('app','Slide')
         ];
     }
 
@@ -214,6 +219,13 @@ class News extends \yii\db\ActiveRecord
             return $lst[$this->type];
         }
         return $this->type;
+    }
+
+    public function getSlide(){
+        if($this->is_slide){
+            return 'Slide';
+        }
+        return 'Không phải slide';
     }
 
     public static function getNameByType($type)
