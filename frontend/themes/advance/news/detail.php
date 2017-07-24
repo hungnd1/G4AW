@@ -18,7 +18,7 @@ use yii\helpers\Url;
     <script src="<?= Yii::$app->request->baseUrl ?>/js/ng_player.js"></script>
     <script src="<?= Yii::$app->request->baseUrl ?>/js/ng_swfobject.js"></script>
     <script src="<?= Yii::$app->request->baseUrl ?>/js/ParsedQueryString.js"></script>
-<script>jwplayer.key = "tOf3A+hW+N76uJtefCw6XMUSRejNvQozOQIaBw==";</script>
+    <script>jwplayer.key = "tOf3A+hW+N76uJtefCw6XMUSRejNvQozOQIaBw==";</script>
 <div class="content">
     <div class="main-cm-2">
         <div class="container">

@@ -17,9 +17,9 @@ use yii\widgets\ActiveForm;
         <?php } ?>
         <!--        <b style="font-size: 18px;margin: 0 0 0 30px;padding: 40px 0 0 0;">VIỆN KINH TẾ BƯU ĐIỆN</b>-->
         <?php if (UserHelper::isMobile()) { ?>
-            <a href="<?= Url::toRoute(['site/session', 'vi' => 'vi']) ?>" class="navbar-brand logo"
+            <a href="<?= Url::toRoute(['site/index', 'lang' => 'vi']) ?>" class="navbar-brand logo"
                style="margin: 40px 0px 0px 40px;padding: 5px 9px;">VI</a>
-            <a href="<?= Url::toRoute(['site/session', 'vi' => 'en']) ?>" class="navbar-brand logo"
+            <a href="<?= Url::toRoute(['site/index', 'lang' => 'en']) ?>" class="navbar-brand logo"
                style="margin: 40px 0px 0px 10px;padding: 5px 7px;">EN</a>
         <?php } ?>
         <a class="ic-mn-mb hidden-mn" data-toggle="collapse" href="#collapseExample" aria-expanded="false"
@@ -27,9 +27,9 @@ use yii\widgets\ActiveForm;
             <i class="fa fa-bars" aria-hidden="true"></i>
         </a>
         <div class="top-lead hidden-xs hidden-sm">
-            <a href="<?= Url::toRoute(['site/session', 'vi' => 'vi']) ?>" class="sign-in"
+            <a href="<?= Url::toRoute(['site/index', 'lang' => 'vi']) ?>" class="sign-in"
                style="margin-left: 5px;    padding: 5px 9px;">VI</a>
-            <a href="<?= Url::toRoute(['site/session', 'vi' => 'en']) ?>" class="sign-up"
+            <a href="<?= Url::toRoute(['site/index', 'lang' => 'en']) ?>" class="sign-up"
                style="margin-left: 10px;    padding: 5px 7px;">EN</a>
             <a href="" class="logo-cp"><img
                     src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/face.jpg"></a>
