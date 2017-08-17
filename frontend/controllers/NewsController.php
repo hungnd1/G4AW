@@ -85,7 +85,7 @@ class NewsController extends BaseController
 
         $query = Comment::find()
             ->andWhere(['id_new'=>$id])
-            ->andWhere(['type'=>Comment::TYPE_NEW])
+//            ->andWhere(['type'=>Comment::TYPE_NEW])
             ->andWhere(['status'=>Comment::STATUS_ACTIVE])
             ->orderBy(['updated_at'=>SORT_DESC]);
         $countQuery = clone  $query;
@@ -103,20 +103,20 @@ class NewsController extends BaseController
             $j++;
         }
 
-        $title = Category::listType($model->type);
+//        $title = Category::listType($model->type);
 
-        $otherModels = News::find()->innerJoin('news_category_asm', 'news_category_asm.news_id = news.id')
-            ->innerJoin('category', 'category.id = news_category_asm.category_id')
-            ->andWhere(['news.status' => News::STATUS_ACTIVE])
-            ->andWhere(['category.status' => Category::STATUS_ACTIVE])
-            ->andWhere('category.type = :type', [':type' => $model->type])
-            ->andWhere(['news.type' => $model->type])
-            ->andWhere('news.id <> :id', [':id' => $model->id])
-            ->orderBy(['news.created_at' => SORT_DESC])->limit(6)->all();
+//        $otherModels = News::find()->innerJoin('news_category_asm', 'news_category_asm.news_id = news.id')
+//            ->innerJoin('category', 'category.id = news_category_asm.category_id')
+//            ->andWhere(['news.status' => News::STATUS_ACTIVE])
+//            ->andWhere(['category.status' => Category::STATUS_ACTIVE])
+////            ->andWhere('category.type = :type', [':type' => $model->type])
+////            ->andWhere(['news.type' => $model->type])
+//            ->andWhere('news.id <> :id', [':id' => $model->id])
+//            ->orderBy(['news.created_at' => SORT_DESC])->limit(6)->all();
 
 
-        return $this->render('detail', ['model' => $model, 'title' => $title,
-            'otherModels' => $otherModels, 'listComment'=>$listComment,
+        return $this->render('detail', ['model' => $model, 'title' => 'aaa',
+            'otherModels' =>null, 'listComment'=>$listComment,
             'pages'=>$pages]);
     }
 

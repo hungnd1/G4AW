@@ -97,48 +97,36 @@ class SiteController extends BaseController
      *
      * @return mixed
      */
-    public function actionIndex($lang = 'vi')
+    public function actionIndex()
     {
-        if($lang == 'vi'){
-            Yii::$app->language = 'vi';
-        }else{
-            Yii::$app->language = 'en';
-        }
 
         $listSlide  = News::find()->andWhere(['status'=>News::STATUS_ACTIVE])
             ->andWhere(['is_slide'=>News::SLIDE])
             ->orderBy(['created_at'=>SORT_DESC])->limit(6)->all();
 
-        $listArea = Area::find()->andWhere(['status'=>Area::STATUS_ACTIVE])->all();
+//        $listArea = Area::find()->andWhere(['status'=>Area::STATUS_ACTIVE])->all();
 
-        $listNew  = News::find()->andWhere(['status'=>News::STATUS_ACTIVE])->andWhere(['type'=>News::TYPE_NEW])
-            ->orderBy(['created_at'=>SORT_DESC])->limit(3)->all();
 
-        $listNewCategory = Category::find()->andWhere(['status'=>Category::STATUS_ACTIVE])->andWhere(['type'=>Category::TYPE_NEW])
+        $listNewCategory = Category::find()->andWhere(['status'=>Category::STATUS_ACTIVE])
             ->orderBy(['order_number'=>SORT_ASC])->all();
 
-        $listKnow  = News::find()->andWhere(['status'=>News::STATUS_ACTIVE])->andWhere(['type'=>News::TYPE_KNOW])
-            ->orderBy(['created_at'=>SORT_DESC])->limit(3)->all();
-
-        $listKnowCategory = Category::find()->andWhere(['status'=>Category::STATUS_ACTIVE])->andWhere(['type'=>Category::TYPE_KNOW])
-            ->orderBy(['order_number'=>SORT_ASC])->all();
 
         $listUnit = UnitLink::findAll(['status'=>UnitLink::STATUS_ACTIVE]);
 
-        $newsQuery = Village::find()
-            ->andWhere(['status' => Village::STATUS_ACTIVE])
-            ->orderBy('name')->limit(10);
-        $countQuery = clone $newsQuery;
-        $pages = new Pagination(['totalCount' => $countQuery->count()]);
-        $listVillage = $newsQuery->all();
+//        $newsQuery = Village::find()
+//            ->andWhere(['status' => Village::STATUS_ACTIVE])
+//            ->orderBy('name')->limit(10);
+//        $countQuery = clone $newsQuery;
+//        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+//        $listVillage = $newsQuery->all();
+//
+//        $listProvince = Province::find()->andWhere(['status' => Province::STATUS_ACTIVE])->orderBy(['name'=>SORT_ASC])->all();
 
-        $listProvince = Province::find()->andWhere(['status' => Province::STATUS_ACTIVE])->orderBy(['name'=>SORT_ASC])->all();
 
-
-        return $this->render('index',['listNew'=>$listNew,'listSlide'=>$listSlide,'listArea'=>$listArea,
-        'listNewCategory'=>$listNewCategory,'listKnow'=>$listKnow,'listKnowCategory'=>$listKnowCategory,
-            'pages'=>$pages,'listProvince' => $listProvince,
-        'listUnit'=>$listUnit,'listVillage'=>$listVillage]);
+        return $this->render('index',['listSlide'=>$listSlide,'listArea'=>null,
+        'listNewCategory'=>$listNewCategory,
+            'pages'=>0,'listProvince' => null,
+        'listUnit'=>$listUnit,'listVillage'=>null]);
     }
 
     public function actionRules()

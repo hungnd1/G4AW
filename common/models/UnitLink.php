@@ -81,7 +81,7 @@ class UnitLink extends \yii\db\ActiveRecord
 
     public function getThumbnailLink()
     {
-        $pathLink = Yii::getAlias('@web') . '/' . Yii::getAlias('@file_upload') . '/';
+        $pathLink = Yii::getAlias('@web') . '/' . Yii::getAlias('@unit_link') . '/';
         $filename = null;
 
         if ($this->image) {

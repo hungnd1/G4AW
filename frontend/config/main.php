@@ -13,7 +13,7 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'language' => 'vi-VN',
     'aliases' => [
-        '@cat_image' => 'cat_image',
+        '@news_image' => 'static/news',
         '@uploads' => 'uploads',
         '@area_image' => 'area_image',
         '@images' => 'images',
@@ -21,6 +21,7 @@ return [
         '@village_image'=>'village_image',
         '@avatar'=>'avatar',
         '@news_video'=>'news_video',
+        '@unit_link'=>'static/unit_link'
     ],
     'components' => [
         'user' => [
