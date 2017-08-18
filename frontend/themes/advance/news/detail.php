@@ -25,7 +25,7 @@ use yii\helpers\Url;
                 <div class="cr-page-link">
                     <a href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
                     <span>/</span>
-                    <a href="<?= Url::toRoute(['news/index']) ?>"><?= $title ?></a>
+                    <a href="<?= Url::toRoute(['news/index','id'=>$model->category_id]) ?>"><?= $title ?></a>
                     <span>/</span>
                     <a href=""><?= $model->title ?></a>
                 </div>
@@ -34,7 +34,7 @@ use yii\helpers\Url;
                     <p class="des-dt"><?= $model->short_description ?></p>
                     <!--                    --><?php //if($model->type == \common\models\News::TYPE_VIDEO){?>
                     <!--                    <a id="player" onclick="playVideo();"><img-->
-                    <!--                            src="--><? //= $model->getThumbnailLink() ?><!--"-->
+                    <!--                            src="--><!--"-->
                     <!--                            width="100%"></a>-->
                     <!--                    <p style="text-align: center;font-size: 18px;">-->
                     <? //= UserHelper::multilanguage('Click ảnh trên để xem video','Click image to watch video') ?><!--</p>-->
@@ -65,7 +65,7 @@ use yii\helpers\Url;
                                     ?>
                                     <div class="comment-box-item">
                                         <img
-                                            src="<?= $item->user->getAvatar() ? $item->user->getAvatar() : Yii::$app->request->baseUrl . '/img/avt_df.png' ?>">
+                                            src="<?= $item->user->getImageLink() ? $item->user->getImageLink() : Yii::$app->request->baseUrl . '/img/avt_df.png' ?>">
                                         <div class="left-comment">
                                             <h5 class=""><?= str_replace(substr($item->user->username, 8), '***', $item->user->username) ?>
                                                 <span
@@ -250,7 +250,8 @@ use yii\helpers\Url;
                                 return;
                             },
                             error: function (result) {
-                                alert("<?= UserHelper::multilanguage('Không thành công. Quý khách vui lòng thử lại sau ít phút.', 'Unsuccessful. Please try again in a few minutes.') ?>");
+                                alerrt(result);
+                                alert("<?= UserHelper::multilanguage('aaaaaa thành công. Quý khách vui lòng thử lại sau ít phút.', 'Unsuccessful. Please try again in a few minutes.') ?>");
                                 return;
                             }
                         });//end jQuery.ajax
@@ -271,7 +272,7 @@ use yii\helpers\Url;
     }
     function playVideo() {
         var url = '<?= $model->getVideoUrl() ? $model->getVideoUrl() : $model->source_url ?>';
-        loadPlayer(url, '', '<?= $model->getThumbnailLink() ?>');
+        loadPlayer(url, '', '<?= $model->getImageLink() ?>');
 //        tag.attr('data-dismiss', 'modal');
     }
 </script>

@@ -19,13 +19,13 @@ return [
         '@images' => 'images',
         '@file_upload'=>'file_upload',
         '@village_image'=>'village_image',
-        '@avatar'=>'avatar',
+        '@avatar'=>'static/avatar',
         '@news_video'=>'news_video',
         '@unit_link'=>'static/unit_link'
     ],
     'components' => [
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'common\models\Subscriber',
             'enableAutoLogin' => true,
         ],
         'log' => [

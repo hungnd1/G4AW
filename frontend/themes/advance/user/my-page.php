@@ -27,14 +27,14 @@ use yii\helpers\Url;
             <div class="left-cn hidden-xs hidden-sm">
                 <div class="block-cm-left top-cn-left">
                     <a href="<?= Url::toRoute(['user/update','id'=>$model->id])?>" class="bt-edit"><i class="fa fa-pencil"></i></a>
-                    <?php $image = $model->getAvatar() ?>
+                    <?php $image = $model->getImageLink() ? $model->getImageLink() : Yii::$app->request->baseUrl . '/img/avt_df.png'; ?>
                     <img src="<?= $image ?>"><br>
-                    <h4><?= $model->fullname ?></h4>
+                    <h4><?= $model->full_name ?></h4>
                     <p><?= $model->address ?></p>
                 </div>
                 <div class="block-cm-left">
                     <span class="t-span"><?= UserHelper::multilanguage('Số điện thoại','Phone number') ?></span><br>
-                    <span class="b-span"><?= $model->phone_number ?></span>
+                    <span class="b-span"><?= $model->username ?></span>
                 </div>
                 <div class="block-cm-left">
                     <span class="t-span">Email</span><br>
@@ -43,7 +43,7 @@ use yii\helpers\Url;
                 <div class="block-cm-left">
                     <span class="t-span"><?= UserHelper::multilanguage('Giới tính','Gender') ?></span><br>
                     <span class="b-span">
-                        <?= User::getGenderName($model->gender)?>
+                        <?= \common\models\Subscriber::getGenderName($model->sex)?>
                     </span>
                 </div>
                 <div class="block-cm-left">

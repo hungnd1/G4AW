@@ -1,6 +1,7 @@
 <?php
 namespace frontend\models;
 
+use common\models\Subscriber;
 use common\models\User;
 use frontend\helpers\UserHelper;
 use Yii;
@@ -8,7 +9,7 @@ use Yii;
 /**
  * Signup form
  */
-class Muser extends User
+class Muser extends Subscriber
 {
     /**
      * @inheritdoc
@@ -24,8 +25,8 @@ class Muser extends User
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['birthday', 'default', 'value' => null],
-            [['gender'], 'integer'],
-            [['fullname'], 'string', 'max' => 512],
+            [['sex'], 'integer'],
+            [['full_name'], 'string', 'max' => 512],
             [['address'], 'string', 'max' => 255],
             ['email', 'email', 'message' => UserHelper::multilanguage('Email không được để trống','Email not empty')],
             ['email', 'unique', 'message' => UserHelper::multilanguage('Tài khoản email của bạn đã được đăng ký trên hệ thống!','Your email account is registered on the system!')],

@@ -1,6 +1,7 @@
 <?php
 namespace frontend\models;
 
+use common\models\Subscriber;
 use common\models\User;
 use frontend\helpers\UserHelper;
 use Yii;
@@ -73,7 +74,7 @@ class LoginForm extends Model
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = User::findByUsernameFE($this->username);
+            $this->_user = Subscriber::findByUsernameFE($this->username);
         }
         Yii::warning($this->_user);
 

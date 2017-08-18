@@ -14,7 +14,7 @@
         /** @var $item \common\models\Comment */ ?>
         <div class="comment-box-item">
             <img
-                src="<?= $item->user->getAvatar() ? $item->user->getAvatar() : Yii::$app->request->baseUrl . '/img/avt_df.png' ?>">
+                src="<?= $item->user->getImageLink() ? $item->user->getImageLink() : Yii::$app->request->baseUrl . '/img/avt_df.png' ?>">
             <div class="left-comment">
                 <h5 class=""><?= str_replace(substr($item->user->username,8),'***',$item->user->username) ?> <span
                         class="time-up"><?= date('d/m/Y H:i:s', $item->updated_at) ?></span></h5>

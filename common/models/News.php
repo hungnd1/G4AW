@@ -13,16 +13,16 @@ use yii\helpers\Url;
  * @property string $short_description
  * @property string $description
  * @property string $content
+ * @property string $video_url
+ * @property string $image
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $status
- * @property string $image
- * @property integer $category_id
- * @property string $video_url
  * @property integer $view_count
  * @property integer $like_count
  * @property integer $comment_count
  * @property integer $is_slide
+ * @property integer $category_id
  */
 class News extends \yii\db\ActiveRecord
 {
@@ -36,7 +36,9 @@ class News extends \yii\db\ActiveRecord
 
     const STATUS_ACTIVE = 10;
     const STATUS_INACTIVE = 0;
+
     const SLIDE = 1;
+
 
     /**
      * @inheritdoc
@@ -44,10 +46,11 @@ class News extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title'], 'required'],
-            [['description', 'content'], 'string'],
-            [['created_at', 'updated_at', 'status', 'category_id', 'view_count', 'like_count', 'comment_count', 'is_slide'], 'integer'],
-            [['title', 'short_description', 'image', 'video_url'], 'string', 'max' => 500],
+            [['title', 'short_description', 'category_id'], 'required'],
+            [['image'], 'required', 'on' => 'admin_create_update'],
+            [['description', 'image', 'content'], 'string'],
+            [['created_at', 'updated_at', 'status', 'category_id', 'is_slide', 'comment_count', 'like_count', 'view_count'], 'integer'],
+            [['title', 'video_url', 'short_description'], 'string', 'max' => 500],
         ];
     }
 
@@ -58,21 +61,44 @@ class News extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'short_description' => 'Short Description',
-            'description' => 'Description',
-            'content' => 'Content',
-            'created_at' => 'Created At',
+            'title' => 'Tiêu đề',
+            'image' => 'Ảnh đại diện',
+            'short_description' => 'Mô tả ngắn',
+            'description' => 'Mô tả',
+            'content' => 'Nội dung',
+            'created_at' => 'Ngày tạo',
             'updated_at' => 'Updated At',
-            'status' => 'Status',
-            'image' => 'Image',
-            'category_id' => 'Category ID',
-            'video_url' => 'Video Url',
-            'view_count' => 'View Count',
-            'like_count' => 'Like Count',
-            'comment_count' => 'Comment Count',
-            'is_slide' => 'Is Slide',
+            'status' => 'Trạng thái',
+            'category_id' => 'Danh mục',
+            'is_slide' => 'Là slide',
         ];
+    }
+
+    public static function listStatus()
+    {
+        $lst = [
+            self::STATUS_ACTIVE => \Yii::t('app', 'Kích hoạt'),
+            self::STATUS_INACTIVE => \Yii::t('app', 'Tạm dừng'),
+        ];
+        return $lst;
+    }
+
+    public function getStatusName()
+    {
+        $lst = self::listStatus();
+        if (array_key_exists($this->status, $lst)) {
+            return $lst[$this->status];
+        }
+        return $this->status;
+    }
+
+    public static function getListStatusNameByStatus($status)
+    {
+        $lst = self::listStatus();
+        if (array_key_exists($status, $lst)) {
+            return $lst[$status];
+        }
+        return $status;
     }
 
     public function getImageLink()
@@ -91,17 +117,4 @@ class News extends \yii\db\ActiveRecord
         return Url::to($pathLink . $filename, true);
     }
 
-    public function getThumbnailLink()
-    {
-        $pathLink = Yii::getAlias('@web') . '/' . Yii::getAlias('@uploads') . '/';
-        $filename = null;
-        if ($this->image) {
-            $filename = $this->image;
-        }
-        if ($filename == null) {
-            $pathLink = Yii::getAlias("@web/img/");
-            $filename = 'bg_df.png';
-        }
-        return Url::to($pathLink . $filename, true);
-    }
 }

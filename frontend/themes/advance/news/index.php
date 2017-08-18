@@ -27,12 +27,12 @@ use yii\helpers\Url;
                                 <div class="list-new-1">
                                     <div class="thumb-common">
                                         <img class="blank-img" src="../img/blank.gif">
-                                        <a href="<?= Url::toRoute(['news/detail','id'=>$item->id]) ?>"><img class="thumb-cm" src="<?= $item->getThumbnailLink() ?>"></a>
+                                        <a href="<?= Url::toRoute(['news/detail','id'=>$item->id]) ?>"><img class="thumb-cm" src="<?= $item->getImageLink() ?>"></a>
                                     </div>
                                     <div class="left-list">
-                                        <h3><a href="<?= Url::toRoute(['news/detail','id'=>$item->id]) ?>"><?= UserHelper::multilanguage($item->title,$item->title_en) ?></a></h3>
+                                        <h3><a href="<?= Url::toRoute(['news/detail','id'=>$item->id]) ?>"><?= $item->title ?></a></h3>
                                         <span class="time-up"><?= date('d/m/Y',$item->created_at) ?></span>
-                                        <p><?= str_replace(mb_substr(UserHelper::multilanguage($item->short_description,$item->short_description_en), 150, strlen(UserHelper::multilanguage($item->short_description,$item->short_description_en)), 'utf-8'), '...', UserHelper::multilanguage($item->short_description,$item->short_description_en)) ?></p>
+                                        <p><?= str_replace(mb_substr($item->short_description, 150, strlen($item->short_description), 'utf-8'), '...', $item->short_description) ?></p>
                                     </div>
                                 </div>
                             <?php }

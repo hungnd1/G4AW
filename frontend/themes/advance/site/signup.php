@@ -28,8 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'username')->textInput(['autofocus' => true,'maxlength'=>11,'minlength'=>9])->label(UserHelper::multilanguage('Tên đăng nhập (*)','Username (*)')) ?>
 
-                <?= $form->field($model, 'email')->textInput(['autofocus' => true])->label(UserHelper::multilanguage('Email (*)','Email (*)')) ?>
-
                 <?= $form->field($model, 'password')->passwordInput()->label(UserHelper::multilanguage('Mật khẩu (*)','Password (*)')) ?>
 
                 <?= $form->field($model, 'confirm_password')->passwordInput()->label(UserHelper::multilanguage('Xác nhận mật khẩu (*)','Confirm password (*)')) ?>

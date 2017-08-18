@@ -9,8 +9,7 @@ use common\models\Comment;
 use common\models\DonationItem;
 use common\models\DonationRequest;
 use common\models\News;
-use common\models\User;
-use common\models\Village;
+use common\models\Subscriber;
 use Yii;
 use yii\data\Pagination;
 use yii\web\NotFoundHttpException;
@@ -27,52 +26,31 @@ class NewsController extends BaseController
      * @param integer $id
      * @return mixed
      */
-    public function actionIndex($type = Category::TYPE_NEW, $id = null)
+    public function actionIndex($id)
     {
-        $title = Category::listType($type);
-        if($type == News::TYPE_VIDEO){
-            $listNews = News::find()
-                ->andWhere(['news.status' => News::STATUS_ACTIVE])
-                ->andWhere(['news.type' => News::TYPE_VIDEO]);
-        }else {
+        $category = Category::findOne(['id' => $id]);
+        if ($category) {
+            $title = Category::findOne(['id' => $id])->display_name;
 
             $listNews = News::find()
-                ->innerJoin('news_category_asm', 'news_category_asm.news_id = news.id')
-                ->innerJoin('category', 'category.id = news_category_asm.category_id')
                 ->andWhere(['news.status' => News::STATUS_ACTIVE])
-                ->andWhere(['category.status' => Category::STATUS_ACTIVE]);
-            if ($id) {
-                $listNews->andWhere(['news.area_id' => $id]);
-            } else {
-                $listNews->andWhere('category.type = :type', [':type' => $type]);
-            }
-        }
-        $listNews->orderBy(['news.created_at' => SORT_DESC]);
-        $countQuery = clone $listNews;
-        $pages = new Pagination(['totalCount' => $countQuery->count()]);
-        $pageSize = Yii::$app->params['page_size'];
-        $pages->setPageSize($pageSize);
-        $models = $listNews->offset($pages->offset)
-            ->limit(10)->all();
-        if ($id) {
+                ->andWhere(['news.category_id' => $id]);
+            $listNews->orderBy(['news.created_at' => SORT_DESC]);
+            $countQuery = clone $listNews;
+            $pages = new Pagination(['totalCount' => $countQuery->count()]);
+            $pageSize = Yii::$app->params['page_size'];
+            $pages->setPageSize($pageSize);
+            $models = $listNews->offset($pages->offset)
+                ->limit(10)->all();
             $listNewRelated = News::find()
-                ->innerJoin('news_category_asm', 'news_category_asm.news_id = news.id')
-                ->innerJoin('category', 'category.id = news_category_asm.category_id')
                 ->andWhere(['news.status' => News::STATUS_ACTIVE])
-                ->andWhere(['category.status' => Category::STATUS_ACTIVE])
-                ->andWhere('news.area_id != :area_id', [':area_id' => $id])
+                ->andWhere('news.category_id != :id', [':id' => $id])
                 ->orderBy(['news.created_at' => SORT_DESC])->limit(5)->all();
-        }else{
-            $listNewRelated = News::find()
-                ->innerJoin('news_category_asm', 'news_category_asm.news_id = news.id')
-                ->innerJoin('category', 'category.id = news_category_asm.category_id')
-                ->andWhere(['news.status' => News::STATUS_ACTIVE])
-                ->andWhere(['category.status' => Category::STATUS_ACTIVE])
-                ->andWhere('category.type != :type', [':type' => $type])
-                ->orderBy(['news.created_at' => SORT_DESC])->limit(5)->all();
-        }
 
-        return $this->render('index', ['title' => $title, 'listNews' => $models, 'pages' => $pages, 'listNewRelated' => $listNewRelated]);
+            return $this->render('index', ['title' => $title, 'listNews' => $models, 'pages' => $pages, 'listNewRelated' => $listNewRelated]);
+        } else {
+            throw new NotFoundHttpException('Nội dung không tồn tại.');
+        }
     }
 
 
@@ -80,44 +58,40 @@ class NewsController extends BaseController
     {
 
         $model = $this->findModel($id);
-
+        /** @var  $model News */
         $listComment = null;
 
         $query = Comment::find()
-            ->andWhere(['id_new'=>$id])
+            ->andWhere(['id_new' => $id])
 //            ->andWhere(['type'=>Comment::TYPE_NEW])
-            ->andWhere(['status'=>Comment::STATUS_ACTIVE])
-            ->orderBy(['updated_at'=>SORT_DESC]);
+            ->andWhere(['status' => Comment::STATUS_ACTIVE])
+            ->orderBy(['updated_at' => SORT_DESC]);
         $countQuery = clone  $query;
-        $pages = new Pagination(['totalCount'=>$countQuery->count()]);
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
         $pageSize = Yii::$app->params['page_size'];
         $pages->setPageSize($pageSize);
         $comment = $query->offset($pages->offset)->limit(10)->all();
 
-        $j =0 ;
-        foreach($comment as $item ){
+        $j = 0;
+        foreach ($comment as $item) {
             $listComment[$j] = new \stdClass();
-            $listComment[$j]->content  = $item->content;
-            $listComment[$j]->user = User::findOne(['id'=>$item->user_id]);
+            $listComment[$j]->content = $item->content;
+            $listComment[$j]->user = Subscriber::findOne(['id' => $item->user_id]);
             $listComment[$j]->updated_at = $item->updated_at;
             $j++;
         }
 
-//        $title = Category::listType($model->type);
+        $title = Category::findOne(['id' => $model->category_id])->display_name;
 
-//        $otherModels = News::find()->innerJoin('news_category_asm', 'news_category_asm.news_id = news.id')
-//            ->innerJoin('category', 'category.id = news_category_asm.category_id')
-//            ->andWhere(['news.status' => News::STATUS_ACTIVE])
-//            ->andWhere(['category.status' => Category::STATUS_ACTIVE])
-////            ->andWhere('category.type = :type', [':type' => $model->type])
-////            ->andWhere(['news.type' => $model->type])
-//            ->andWhere('news.id <> :id', [':id' => $model->id])
-//            ->orderBy(['news.created_at' => SORT_DESC])->limit(6)->all();
+        $otherModels = News::find()
+            ->andWhere(['category_id' => $model->category_id])
+            ->andWhere('news.id <> :id', [':id' => $model->id])
+            ->orderBy(['news.created_at' => SORT_DESC])->limit(6)->all();
 
 
-        return $this->render('detail', ['model' => $model, 'title' => 'aaa',
-            'otherModels' =>null, 'listComment'=>$listComment,
-            'pages'=>$pages]);
+        return $this->render('detail', ['model' => $model, 'title' => $title,
+            'otherModels' => $otherModels, 'listComment' => $listComment,
+            'pages' => $pages]);
     }
 
     public function actionView($id)

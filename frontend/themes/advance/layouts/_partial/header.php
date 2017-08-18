@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 ?>
 <div class="top-nav header">
     <div class="container">
-        <a class="navbar-brand logo" href="<?= Url::toRoute(['site/index']) ?>"><img
+        <a class="navbar-brand logo" style="padding: 4px 15px;" href="<?= Url::toRoute(['site/index']) ?>"><img
                 src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/unnamed.png" height="70"
                 style="padding-top: 10px;"></a>
         <?php if (!UserHelper::isMobile()) { ?>

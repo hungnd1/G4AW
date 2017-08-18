@@ -74,8 +74,8 @@ class User extends ActiveRecord implements IdentityInterface
     public static function listGender()
     {
         $lst = [
-            self::GENDER_MALE => UserHelper::multilanguage('Nam','Male'),
-            self::GENDER_FEMALE => UserHelper::multilanguage('Nữ','Female'),
+            self::GENDER_MALE => 'Nam',
+            self::GENDER_FEMALE => 'Nữ',
         ];
         return $lst;
     }
@@ -91,6 +91,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public static function getOld($birthday)
     {
+        $birthday = date("d-m-Y",$birthday);
         if ($birthday != null) {
             $y = date('Y', strtotime($birthday));
             $ynow = date('Y');

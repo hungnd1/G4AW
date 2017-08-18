@@ -87,24 +87,12 @@ if (!Yii::$app->user->isGuest) {
         <div class="container">
             <div class="news-block cm-block">
                 <h2><?= strtoupper($item->display_name) ?><a
-                        href="<?= Url::toRoute(['news/index']) ?>"><span>Tất cả</span><i
+                        href="<?= Url::toRoute(['news/index', 'id' => $item->id]) ?>"><span>Tất cả</span><i
                             class="fa fa-chevron-right"></i></a></h2>
-                <!--                <div class="cate-news">-->
-                <!--                    <ul>-->
-                <!--                            <li><a href="">Chính sách phát triển</a></li>-->
-                <!--                            <li><a href="">Chính sách phát triển</a></li>-->
-                <!--                            <li><a href="">Chính sách phát triển</a></li>-->
-                <!--                            <li><a href="">Chính sách phát triển</a></li>-->
-                <!--                            <li><a href="">Chính sách phát triển</a></li>-->
-                <!--                            <li><a href="">Chính sách phát triển của bộ KHDT</a></li>-->
-                <!--                            <li><a href="">Chính sách phát triển</a></li>-->
-                <!--                            <li><a href="">Chính sách phát triển</a></li>-->
-                <!--                    </ul>-->
-                <!--                </div>-->
                 <div class="list-item">
                     <?php
                     $listNew = News::find()->andWhere(['status' => News::STATUS_ACTIVE])
-                        ->andWhere(['category_id'=>$item->id])
+                        ->andWhere(['category_id' => $item->id])
                         ->orderBy(['created_at' => SORT_DESC])->limit(3)->all();
                     if (isset($listNew) && !empty($listNew)) {
                         /** @var \common\models\News $new */
@@ -141,11 +129,11 @@ if (!Yii::$app->user->isGuest) {
 
     <!-- List NEW block-->
 
-<!--    <div class="container">-->
-<!--        <div class="news-block cm-block">-->
-<!--            -->
-<!--        </div>-->
-<!--    </div>-->
+    <!--    <div class="container">-->
+    <!--        <div class="news-block cm-block">-->
+    <!--            -->
+    <!--        </div>-->
+    <!--    </div>-->
 
     <!--end list CT block-->
 

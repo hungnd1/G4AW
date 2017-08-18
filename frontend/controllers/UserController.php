@@ -1,22 +1,17 @@
 <?php
 namespace frontend\controllers;
 
-use common\helpers\Brandname;
 use common\models\Campaign;
 use common\models\CampaignDonationItemAsm;
 use common\models\DonationItem;
 use common\models\DonationRequest;
 use common\models\LeadDonor;
-use common\models\LoginForm;
+use common\models\Subscriber;
 use common\models\User;
 use DateTime;
 use frontend\helpers\UserHelper;
 use frontend\models\Muser;
-use yii\db\mssql\PDO;
-use frontend\models\SignupForm;
-use kartik\alert\Alert;
 use Yii;
-
 use yii\bootstrap\ActiveForm;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -61,7 +56,9 @@ class UserController extends Controller
         }
         return $this->render('setting', ['model' => $model, 'active' => $active]);
     }
-    public function actionChangeMyPassword(){
+
+    public function actionChangeMyPassword()
+    {
         $id = Yii::$app->user->identity->id;
         /** @var User $model */
         $model = User::findOne($id);
@@ -83,16 +80,16 @@ class UserController extends Controller
             $model->setPassword($model->setting_new_password);
             $model->password_reset_token = $model->setting_new_password;
             if ($model->save(false)) {
-                Yii::$app->getSession()->setFlash('success',UserHelper::multilanguage('Đổi mật khẩu thành công','Change password success'));
-                return $this->redirect(['my-page','id'=>$id]);
+                Yii::$app->getSession()->setFlash('success', UserHelper::multilanguage('Đổi mật khẩu thành công', 'Change password success'));
+                return $this->redirect(['my-page', 'id' => $id]);
             } else {
                 Yii::warning($model->getErrors());
-                Yii::$app->getSession()->setFlash('danger', UserHelper::multilanguage('Đổi mật khẩu không thành công','Change password unsuccess'));
-                return $this->redirect(['my-page','id'=>$id]);
+                Yii::$app->getSession()->setFlash('danger', UserHelper::multilanguage('Đổi mật khẩu không thành công', 'Change password unsuccess'));
+                return $this->redirect(['my-page', 'id' => $id]);
             }
         }
-        return $this->render('change-my-password',[
-            'model'=>$model,
+        return $this->render('change-my-password', [
+            'model' => $model,
         ]);
     }
 
@@ -116,7 +113,7 @@ class UserController extends Controller
             $model->setPassword($model->setting_new_password);
             $model->password_reset_token = $model->setting_new_password;
 
-            $model->pass1=$model->password_hash;
+            $model->pass1 = $model->password_hash;
             $model->pass2 = $pass1;
             $model->pass3 = $pass2;
             if ($model->save(false)) {
@@ -154,10 +151,10 @@ class UserController extends Controller
         }
     }
 
-    public function actionDetail($id,$active = 1)
+    public function actionDetail($id, $active = 1)
     {
-        $currentUser=null;
-        if(!Yii::$app->user->isGuest){
+        $currentUser = null;
+        if (!Yii::$app->user->isGuest) {
             $currentUser = $this->findModel(Yii::$app->user->id);
         }
 
@@ -166,22 +163,25 @@ class UserController extends Controller
 
         $view = 'partner_view';
 
-        return $this->render($view, ['model' => $model,'currentModel'=>$currentUser, 'active' => $active]);
+        return $this->render($view, ['model' => $model, 'currentModel' => $currentUser, 'active' => $active]);
     }
 
     // add by TuanPham 20160810
 
-    public function actionMyPage($id){
-        $model = User::findOne(['id'=>$id]);
-        return $this->render('my-page',[
-            'model'=>$model,
+    public function actionMyPage($id)
+    {
+        $model = Subscriber::findOne(['id' => $id]);
+        return $this->render('my-page', [
+            'model' => $model,
         ]);
     }
 
 
-    public function actionUpdate($id){
-        $model = Muser::findOne(['id'=>$id, 'status' => User::STATUS_ACTIVE]);
-        if(!$model){
+    public function actionUpdate($id)
+    {
+        $model = Muser::findOne(['id' => $id, 'status' => User::STATUS_ACTIVE]);
+        /** @var $model Subscriber */
+        if (!$model) {
             throw  new BadRequestHttpException('Người dùng không tồn tại');
         }
 //        $model->setScenario('update');
@@ -190,19 +190,18 @@ class UserController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
-
-        $avatar_old = $model->avatar;
+        $model->birthday = date("d-m-Y",$model->birthday);
+        $avatar_old = $model->avatar_url;
 
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->birthday = $model->birthday?date('d/m/Y',strtotime($model->birthday)):'';
-            $avatar  = UploadedFile::getInstance($model, 'avatar');
+
+            $avatar = UploadedFile::getInstance($model, 'avatar_url');
             if ($avatar) {
                 $avatar_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $avatar->extension;
                 if ($avatar->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@avatar') . "/" . $avatar_name)) {
-                    $model->avatar = $avatar_name;
-                    $model->birthday = $model->birthday?date('Y-m-d H:i:s',strtotime(DateTime::createFromFormat("d/m/Y", $model->birthday)->setTime(0,0)->format('Y-m-d H:i:s'))):'';
-
+                    $model->avatar_url = $avatar_name;
+                    $model->birthday = $model->birthday ? strtotime(DateTime::createFromFormat("d/m/Y", str_replace('-','/',$model->birthday))->setTime(0, 0)->format('Y-m-d H:i:s')) : 0;
                     if ($model->save()) {
                         Yii::$app->session->setFlash('success', 'Cập nhật thành công thông tin người dùng!');
                         return $this->redirect(['my-page', 'id' => $model->id]);
@@ -213,9 +212,9 @@ class UserController extends Controller
                 } else {
                     Yii::$app->getSession()->setFlash('error', 'Lỗi hệ thống, vui lòng thử lại');
                 }
-            }else {
-                $model->avatar = $avatar_old;
-                $model->birthday = $model->birthday?date('Y-m-d H:i:s',strtotime(DateTime::createFromFormat("d/m/Y", $model->birthday)->setTime(0,0)->format('Y-m-d H:i:s'))):'';
+            } else {
+                $model->avatar_url = $avatar_old;
+                $model->birthday = $model->birthday ? strtotime(DateTime::createFromFormat("d/m/Y", str_replace('-','/',$model->birthday))->setTime(0, 0)->format('Y-m-d H:i:s')) : 0;
                 $model->save();
                 Yii::$app->getSession()->setFlash('success', 'Cập nhật thành công thông tin người dùng');
                 return $this->redirect(['my-page', 'id' => $model->id]);

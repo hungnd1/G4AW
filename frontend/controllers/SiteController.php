@@ -1,22 +1,19 @@
 <?php
 namespace frontend\controllers;
 
-use common\helpers\Brandname;
-use common\models\Area;
 use common\models\Campaign;
 use common\models\Category;
 use common\models\Comment;
 use common\models\Introduction;
 use common\models\LeadDonor;
 use common\models\News;
-use common\models\Province;
+use common\models\Subscriber;
 use common\models\Transaction;
 use common\models\UnitLink;
 use common\models\User;
 use common\models\Village;
 use frontend\helpers\FormatNumber;
 use frontend\helpers\UserHelper;
-use frontend\models\ContactForm;
 use frontend\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
@@ -29,7 +26,6 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
-use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
@@ -69,7 +65,8 @@ class SiteController extends BaseController
         ];
     }
 
-    public function actionForum(){
+    public function actionForum()
+    {
         $this->layout = 'mainempty';
         return $this->render('forum');
     }
@@ -100,33 +97,22 @@ class SiteController extends BaseController
     public function actionIndex()
     {
 
-        $listSlide  = News::find()->andWhere(['status'=>News::STATUS_ACTIVE])
-            ->andWhere(['is_slide'=>News::SLIDE])
-            ->orderBy(['created_at'=>SORT_DESC])->limit(6)->all();
+        $listSlide = News::find()->andWhere(['status' => News::STATUS_ACTIVE])
+            ->andWhere(['is_slide' => News::SLIDE])
+            ->orderBy(['created_at' => SORT_DESC])->limit(6)->all();
 
-//        $listArea = Area::find()->andWhere(['status'=>Area::STATUS_ACTIVE])->all();
-
-
-        $listNewCategory = Category::find()->andWhere(['status'=>Category::STATUS_ACTIVE])
-            ->orderBy(['order_number'=>SORT_ASC])->all();
+        $listNewCategory = Category::find()->andWhere(['status' => Category::STATUS_ACTIVE])
+            ->orderBy(['order_number' => SORT_ASC])->all();
 
 
-        $listUnit = UnitLink::findAll(['status'=>UnitLink::STATUS_ACTIVE]);
-
-//        $newsQuery = Village::find()
-//            ->andWhere(['status' => Village::STATUS_ACTIVE])
-//            ->orderBy('name')->limit(10);
-//        $countQuery = clone $newsQuery;
-//        $pages = new Pagination(['totalCount' => $countQuery->count()]);
-//        $listVillage = $newsQuery->all();
-//
-//        $listProvince = Province::find()->andWhere(['status' => Province::STATUS_ACTIVE])->orderBy(['name'=>SORT_ASC])->all();
+        $listUnit = UnitLink::findAll(['status' => UnitLink::STATUS_ACTIVE]);
 
 
-        return $this->render('index',['listSlide'=>$listSlide,'listArea'=>null,
-        'listNewCategory'=>$listNewCategory,
-            'pages'=>0,'listProvince' => null,
-        'listUnit'=>$listUnit,'listVillage'=>null]);
+
+        return $this->render('index', ['listSlide' => $listSlide, 'listArea' => null,
+            'listNewCategory' => $listNewCategory,
+            'pages' => 0, 'listProvince' => null,
+            'listUnit' => $listUnit, 'listVillage' => null]);
     }
 
     public function actionRules()
@@ -161,7 +147,7 @@ class SiteController extends BaseController
             $listVillage = $newsQuery->all();
         } else if ($id > 0) {
             $newsQuery = Village::find()->andWhere(['status' => Village::STATUS_ACTIVE])
-                ->andWhere(['id_province'=>$id])
+                ->andWhere(['id_province' => $id])
                 ->orderBy(['name' => SORT_ASC])->limit(10);
             $countQuery = clone $newsQuery;
             $pages = new Pagination(['totalCount' => $countQuery->count()]);
@@ -176,9 +162,8 @@ class SiteController extends BaseController
             $pages = new Pagination(['totalCount' => $countQuery->count()]);
             $listVillage = $newsQuery->all();
         }
-        return $this->renderPartial('_listVillage', ['listVillage' => $listVillage,'pages'=>$pages]);
+        return $this->renderPartial('_listVillage', ['listVillage' => $listVillage, 'pages' => $pages]);
     }
-
 
 
     /**
@@ -219,7 +204,7 @@ class SiteController extends BaseController
                 ->orderBy(['name' => SORT_ASC])->limit(10)->offset($page)->all();
         } else if ($id > 0) {
             $listVillage = Village::find()->andWhere(['status' => Village::STATUS_ACTIVE])
-                ->andWhere(['id_province'=>$id])
+                ->andWhere(['id_province' => $id])
                 ->orderBy(['name' => SORT_ASC])->limit(10)->offset($page)->all();
         } else {
             $listVillage = Village::find()
@@ -245,22 +230,22 @@ class SiteController extends BaseController
         $check = false;
 //        $comment = Comment::findOne(['village_id' => $id, 'user_id' => Yii::$app->user->id]);
         $feedback = new Comment();
-            $feedback->id_new = $id;
-            $feedback->content = $content;
-            $feedback->type = $type;
-            $feedback->status = Comment::STATUS_DRAFT;
-            $feedback->user_id = Yii::$app->user->id;
-            $feedback->created_at = time();
-            $feedback->updated_at = time();
-            if($feedback->save(false)){
-                $check = true;
-            }
-        if ( $check) {
+        $feedback->id_new = $id;
+        $feedback->content = $content;
+        $feedback->type = $type;
+        $feedback->status = Comment::STATUS_INACTIVE;
+        $feedback->user_id = Yii::$app->user->id;
+        $feedback->created_at = time();
+        $feedback->updated_at = time();
+        if ($feedback->save(false)) {
+            $check = true;
+        }
+        if ($check) {
             $message = 'Bình luận thành công.';
             return Json::encode(['success' => true, 'message' => $message]);
         } else {
             $message = 'Bình luận không thành công.';
-            return Json::encode(['success' => false, 'message' => $message]);
+            return Json::encode(['success' => true, 'message' => $message]);
         }
 
     }
@@ -274,31 +259,31 @@ class SiteController extends BaseController
         $number = $this->getParameter('number');
 
         $query = Comment::find()
-            ->andWhere(['id_new'=>$contentId])
-            ->andWhere(['type'=>$type_new])
-            ->andWhere(['status'=>Comment::STATUS_ACTIVE])
-            ->orderBy(['updated_at'=>SORT_DESC]);
+            ->andWhere(['id_new' => $contentId])
+            ->andWhere(['type' => $type_new])
+            ->andWhere(['status' => Comment::STATUS_ACTIVE])
+            ->orderBy(['updated_at' => SORT_DESC]);
         $countQuery = clone  $query;
-        $pages = new Pagination(['totalCount'=>$countQuery->count()]);
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
         $pageSize = Yii::$app->params['page_size'];
         $pages->setPageSize($pageSize);
 
         $listComment = null;
-            $comment = Comment::find()
-                ->andWhere(['id_new'=>$contentId])
-                ->andWhere(['type'=>$type_new])
-                ->andWhere(['status'=>Comment::STATUS_ACTIVE])
-                ->orderBy(['updated_at'=>SORT_DESC])->limit(10)->offset($page)->all();
+        $comment = Comment::find()
+            ->andWhere(['id_new' => $contentId])
+            ->andWhere(['type' => $type_new])
+            ->andWhere(['status' => Comment::STATUS_ACTIVE])
+            ->orderBy(['updated_at' => SORT_DESC])->limit(10)->offset($page)->all();
         $numberCheck = $number + sizeof($listComment);
-        $j =0 ;
-        foreach($comment as $item ){
+        $j = 0;
+        foreach ($comment as $item) {
             $listComment[$j] = new \stdClass();
-            $listComment[$j]->content  = $item->content;
-            $listComment[$j]->user = User::findOne(['id'=>$item->user_id]);
+            $listComment[$j]->content = $item->content;
+            $listComment[$j]->user = Subscriber::findOne(['id' => $item->user_id]);
             $listComment[$j]->updated_at = $item->updated_at;
             $j++;
         }
-                return $this->renderPartial('_listComment', ['listComments' => $listComment,'pages'=>$pages, 'type' => $type,'numberCheck'=>$numberCheck]);
+        return $this->renderPartial('_listComment', ['listComments' => $listComment, 'pages' => $pages, 'type' => $type, 'numberCheck' => $numberCheck]);
     }
 
     public function actionListComment()
@@ -313,31 +298,31 @@ class SiteController extends BaseController
 
 
         $query = Comment::find()
-            ->andWhere(['id_new'=>$contentId])
-            ->andWhere(['type'=>$type_new])
-            ->andWhere(['status'=>Comment::STATUS_ACTIVE])
-            ->orderBy(['updated_at'=>SORT_DESC]);
+            ->andWhere(['id_new' => $contentId])
+            ->andWhere(['type' => $type_new])
+            ->andWhere(['status' => Comment::STATUS_ACTIVE])
+            ->orderBy(['updated_at' => SORT_DESC]);
         $countQuery = clone  $query;
-        $pages = new Pagination(['totalCount'=>$countQuery->count()]);
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
         $pageSize = Yii::$app->params['page_size'];
         $pages->setPageSize($pageSize);
 
         $listComment = null;
         $comment = Comment::find()
-            ->andWhere(['id_new'=>$contentId])
-            ->andWhere(['type'=>$type_new])
-            ->andWhere(['status'=>Comment::STATUS_ACTIVE])
-            ->orderBy(['updated_at'=>SORT_DESC])->limit(10)->all();
+            ->andWhere(['id_new' => $contentId])
+            ->andWhere(['type' => $type_new])
+            ->andWhere(['status' => Comment::STATUS_ACTIVE])
+            ->orderBy(['updated_at' => SORT_DESC])->limit(10)->all();
         $numberCheck = $number + sizeof($listComment);
-        $j =0 ;
-        foreach($comment as $item ){
+        $j = 0;
+        foreach ($comment as $item) {
             $listComment[$j] = new \stdClass();
-            $listComment[$j]->content  = $item->content;
-            $listComment[$j]->user = User::findOne(['id'=>$item->user_id]);
+            $listComment[$j]->content = $item->content;
+            $listComment[$j]->user = Subscriber::findOne(['id' => $item->user_id]);
             $listComment[$j]->updated_at = $item->updated_at;
             $j++;
         }
-        return $this->renderPartial('_listComment', ['listComments' => $listComment,'pages'=>$pages, 'type' => $type,'numberCheck'=>$numberCheck]);
+        return $this->renderPartial('_listComment', ['listComments' => $listComment, 'pages' => $pages, 'type' => $type, 'numberCheck' => $numberCheck]);
     }
 
 
@@ -370,8 +355,8 @@ class SiteController extends BaseController
      */
     public function actionAbout()
     {
-        $model = Introduction::findOne(['status'=>News::STATUS_ACTIVE]);
-        return $this->render('about',['model'=>$model]);
+        $model = Introduction::findOne(['status' => News::STATUS_ACTIVE]);
+        return $this->render('about', ['model' => $model]);
     }
 
     public function actionNews()

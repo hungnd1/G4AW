@@ -28,14 +28,14 @@ $avatarPreview = $model->isNewRecord;
         <div class="main-cm-1">
             <div class="left-cn hidden-xs hidden-sm">
                 <div class="block-cm-left top-cn-left">
-                    <?php $image = $model->getAvatar() ?>
+                    <?php $image = $model->getImageLink() ? $model->getImageLink() : Yii::$app->request->baseUrl . '/img/avt_df.png'; ?>
                     <img src="<?= $image ?>"><br>
-                    <h4><?= $model->fullname ?></h4>
+                    <h4><?= $model->full_name ?></h4>
                     <p><?= $model->address ?></p>
                 </div>
                 <div class="block-cm-left">
                     <span class="t-span"><?= UserHelper::multilanguage('Số điện thoại','Phone number') ?></span><br>
-                    <span class="b-span"><?= $model->phone_number ?></span>
+                    <span class="b-span"><?= $model->username ?></span>
                 </div>
                 <div class="block-cm-left">
                     <span class="t-span">Email</span><br>
@@ -44,12 +44,12 @@ $avatarPreview = $model->isNewRecord;
                 <div class="block-cm-left">
                     <span class="t-span"><?= UserHelper::multilanguage('Giới tính','Gender') ?></span><br>
                     <span class="b-span">
-                        <?= User::getGenderName($model->gender)?>
+                        <?= \common\models\Subscriber::getGenderName($model->sex)?>
                     </span>
                 </div>
                 <div class="block-cm-left">
                     <span class="t-span"><?=  UserHelper::multilanguage('Tuổi','Old') ?></span><br>
-                    <span class="b-span"><?= User::getOld($model->birthday) ?></span>
+                    <span class="b-span"><?= \common\models\Subscriber::getOld($model->birthday) ?></span>
                 </div>
             </div>
             <div class="right-cn">
@@ -64,14 +64,14 @@ $avatarPreview = $model->isNewRecord;
                     ]); ?>
                     <div class="block-edit top-bl-edit">
                         <a class="change-avt">
-                            <img src="<?= $model->getAvatar() ?>"><br>
+                            <img src="<?= $model->getImageLink() ? $model->getImageLink() : Yii::$app->request->baseUrl . '/img/avt_df.png' ?>"><br>
                         </a>
                     </div>
                     <div class="block-edit">
                         <?= $form->field($model, 'username')->textInput(['readonly' => true])->label(UserHelper::multilanguage('Tên đăng nhập (*)','Username (*)')) ?>
                     </div>
                     <div class="block-edit">
-                        <?= $form->field($model, 'fullname')->textInput(['class'=>'t-span', 'maxlength' => 100])->label(UserHelper::multilanguage('Họ và tên','Fullname')) ?>
+                        <?= $form->field($model, 'full_name')->textInput(['class'=>'t-span', 'maxlength' => 100])->label(UserHelper::multilanguage('Họ và tên','Fullname')) ?>
                     </div>
                     <div class="block-edit">
                         <?= $form->field($model, 'address')->textInput(['class'=>'t-span', 'maxlength' => 100])->label(UserHelper::multilanguage('Địa chỉ','Address')) ?>
@@ -81,7 +81,7 @@ $avatarPreview = $model->isNewRecord;
                     </div>
                     <div class="block-edit">
                         <?=
-                            $form->field($model, 'gender')->dropDownList([
+                            $form->field($model, 'sex')->dropDownList([
                                     'Chọn giới tính' => User::listGender(),
                                 ])
                                 ->label(UserHelper::multilanguage('Giới tính','Gender'))
@@ -101,7 +101,7 @@ $avatarPreview = $model->isNewRecord;
                     </div>
                     <div class="block-edit">
                         <?=
-                        $form->field($model, 'avatar')->widget(\kartik\file\FileInput::classname(), [
+                        $form->field($model, 'avatar_url')->widget(\kartik\file\FileInput::classname(), [
                             'pluginOptions' => [
 
                                 'showCaption' => false,
