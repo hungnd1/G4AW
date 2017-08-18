@@ -10,7 +10,6 @@ use common\models\News;
 use common\models\Subscriber;
 use common\models\Transaction;
 use common\models\UnitLink;
-use common\models\User;
 use common\models\Village;
 use frontend\helpers\FormatNumber;
 use frontend\helpers\UserHelper;
@@ -20,6 +19,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use Yii;
 use yii\base\InvalidParamException;
+use yii\base\InvalidValueException;
 use yii\data\Pagination;
 use yii\db\mssql\PDO;
 use yii\filters\AccessControl;
@@ -106,7 +106,6 @@ class SiteController extends BaseController
 
 
         $listUnit = UnitLink::findAll(['status' => UnitLink::STATUS_ACTIVE]);
-
 
 
         return $this->render('index', ['listSlide' => $listSlide, 'listArea' => null,
@@ -325,6 +324,31 @@ class SiteController extends BaseController
         return $this->renderPartial('_listComment', ['listComments' => $listComment, 'pages' => $pages, 'type' => $type, 'numberCheck' => $numberCheck]);
     }
 
+    public function actionGetWeatherDetail()
+    {
+        $station_id = $this->getParameter('station_id', '');
+        if (!$station_id) {
+            throw new InvalidValueException('Station ID ');
+        }
+        $url = Yii::$app->params['apiUrl'] . "weather/get-weather-detail?station_id=" . $station_id;
+        $response = $this->callCurl($url);
+        $weather = $response['data']['items'];
+        return $this->renderPartial('weatherDetail', ['weather' => (object)$weather]);
+    }
+
+
+    private function callCurl($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/xml;charset=UTF-8', 'X-Api-Key: xjunvhntdjcews3bftmvep6wu3hs62qc'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $ch_result = curl_exec($ch);
+        curl_close($ch);
+        $arr_detail = json_decode($ch_result, true);
+        return $arr_detail;
+    }
 
     /**
      * Logs out the current user.

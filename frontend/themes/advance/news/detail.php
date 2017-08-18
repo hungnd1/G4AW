@@ -251,7 +251,7 @@ use yii\helpers\Url;
                             },
                             error: function (result) {
                                 alerrt(result);
-                                alert("<?= UserHelper::multilanguage('aaaaaa thành công. Quý khách vui lòng thử lại sau ít phút.', 'Unsuccessful. Please try again in a few minutes.') ?>");
+                                alert("'Không thành công. Quý khách vui lòng thử lại sau ít phút.");
                                 return;
                             }
                         });//end jQuery.ajax

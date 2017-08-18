@@ -78,6 +78,16 @@ if (!Yii::$app->user->isGuest) {
 
     <!--end list CT block-->
 
+    <!-- List NEW block-->
+
+    <div class="container">
+        <div class="google-map">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <!--end list CT block-->
+
 
     <!-- List NEW block-->
 
@@ -124,16 +134,6 @@ if (!Yii::$app->user->isGuest) {
 
     <?php } ?>
 
-
-    <!--end list CT block-->
-
-    <!-- List NEW block-->
-
-    <!--    <div class="container">-->
-    <!--        <div class="news-block cm-block">-->
-    <!--            -->
-    <!--        </div>-->
-    <!--    </div>-->
 
     <!--end list CT block-->
 
@@ -246,39 +246,4 @@ if (!Yii::$app->user->isGuest) {
         });//end jQuery.ajax
     }
 
-    function loadVillage(id, name, filter) {
-        $(".dropdown-menu li").on("click", function () {
-            $(".dropdown-menu li").removeClass("active");
-            $(this).addClass("active");
-        });
-
-        $(".tab-key li").on("click", function () {
-            $(".tab-key li").removeClass("active");
-            $(this).addClass("active");
-        });
-        var url = '<?= Url::toRoute(['site/get-village'])?>';
-        var page = parseInt($('#page').val()) + 1;
-        $.ajax({
-            url: url,
-            data: {
-                'id': id,
-                'filter': filter
-            },
-            type: "GET",
-            crossDomain: true,
-            dataType: "text",
-            success: function (result) {
-                document.getElementById("id").value = id;
-                document.getElementById("filter").value = filter;
-                $('div .listVillage').html(result);
-                $('div .active-prv').html(name);
-                return;
-            },
-            error: function (result) {
-                alert("<?= Yii::t('app', 'fail_message') ?>");
-                $('#last-comment').html('');
-                return;
-            }
-        });//end jQuery.ajax
-    }
 </script>
