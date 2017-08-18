@@ -236,7 +236,7 @@ use yii\helpers\Url;
                             crossDomain: true,
                             dataType: "text",
                             success: function (result) {
-                                alert("<?= UserHelper::multilanguage('Bình luận của quý khách sẽ được duyệt trong thời gian sớm nhất. Cám ơn quý khách!', 'Your comment will be reviewed as soon as possible. Thank you!') ?>");
+                                alert("Cám ơn quý khách đã phản hồi thông tin!");
                                 if (null != result && '' != result) {
                                     $('div .list-comments').html(result);
                                     document.getElementById("page").value = page + 9;

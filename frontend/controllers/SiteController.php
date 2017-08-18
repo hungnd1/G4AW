@@ -233,7 +233,7 @@ class SiteController extends BaseController
         $feedback->id_new = $id;
         $feedback->content = $content;
         $feedback->type = $type;
-        $feedback->status = Comment::STATUS_INACTIVE;
+        $feedback->status = Comment::STATUS_ACTIVE;
         $feedback->user_id = Yii::$app->user->id;
         $feedback->created_at = time();
         $feedback->updated_at = time();
