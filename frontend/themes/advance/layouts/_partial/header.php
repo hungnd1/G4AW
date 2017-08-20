@@ -66,13 +66,13 @@ use yii\widgets\ActiveForm;
 
             <ul class="menu-web">
                 <li class="active"><a
-                        href="<?= Url::toRoute(['site/index']) ?>"><?= UserHelper::multilanguage('Trang chủ', 'Home') ?></a>
+                        href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
                 </li>
                 <li>
-                    <a href="<?= Url::toRoute(['site/about']) ?>"><?= UserHelper::multilanguage('Giới thiệu', 'Introduction') ?></a>
+                    <a href="<?= Url::toRoute(['site/about']) ?>">Giới thiệu</a>
                 </li>
                 <li>
-                    <a href=""><?= UserHelper::multilanguage('Tin tức', 'News') ?></a>
+                    <a href="<?= Url::toRoute(['news/index']) ?>">Tin tức</a>
                 </li>
                 <li>
                     <a href=""><?= UserHelper::multilanguage('Nhà nông nên biết', 'Farmers Know') ?></a>
@@ -128,10 +128,10 @@ use yii\widgets\ActiveForm;
                         class="fa fa-home hidden-md"></i><?= UserHelper::multilanguage('Trang chủ', 'Home') ?></a>
             </li>
             <li>
-                <a href="<?= Url::toRoute(['site/about']) ?>"><?= UserHelper::multilanguage('Giới thiệu', 'Introduction') ?></a>
+                <a href="<?= Url::toRoute(['site/about']) ?>">Giới thiệu</a>
             </li>
             <li>
-                <a href=""><?= UserHelper::multilanguage('Tin tức', 'News') ?></a>
+                <a href="<?= Url::toRoute(['news/index']) ?>">Tin tức</a>
             </li>
             <li>
                 <a href=""><?= UserHelper::multilanguage('Nhà nông nên biết', 'Farmers Know') ?></a>

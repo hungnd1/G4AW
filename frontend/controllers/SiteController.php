@@ -8,6 +8,7 @@ use common\models\Introduction;
 use common\models\LeadDonor;
 use common\models\News;
 use common\models\Subscriber;
+use common\models\Term;
 use common\models\Transaction;
 use common\models\UnitLink;
 use common\models\Village;
@@ -379,7 +380,7 @@ class SiteController extends BaseController
      */
     public function actionAbout()
     {
-        $model = Introduction::findOne(['status' => News::STATUS_ACTIVE]);
+        $model = Term::find()->orderBy(['created_at'=>SORT_DESC])->one();
         return $this->render('about', ['model' => $model]);
     }
 
