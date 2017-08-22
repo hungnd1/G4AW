@@ -168,12 +168,17 @@ class UserController extends Controller
 
     // add by TuanPham 20160810
 
-    public function actionMyPage($id)
+    public function actionMyPage()
     {
-        $model = Subscriber::findOne(['id' => $id]);
-        return $this->render('my-page', [
-            'model' => $model,
-        ]);
+        $id = Yii::$app->user->id;
+        if($id){
+            $model = Subscriber::findOne(['id' => $id]);
+            return $this->render('my-page', [
+                'model' => $model,
+            ]);
+        }else{
+            return Yii::$app->response->redirect(['site/login']);
+        }
     }
 
 

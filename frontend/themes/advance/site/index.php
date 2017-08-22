@@ -183,6 +183,7 @@ if (!Yii::$app->user->isGuest) {
 
 </script>
 <script type="text/javascript">
+    google.maps.event.addDomListener(window, "load", initMap);
     function loadMore() {
         var url = '<?= Url::toRoute(['site/get-villages'])?>';
         var page = parseInt($('#page').val()) + 1;

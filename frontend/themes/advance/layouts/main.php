@@ -11,7 +11,7 @@ use yii\helpers\Url;
 AppAsset::register($this);
 ?>
 <?= $this->render('_partial/head'); ?>
-<body onload="initMap()">
+<body>
 <script type="text/javascript">
     let url = "<?= Yii::$app->params['apiUrl'] ?>log-data/get-list-station";
     var locations = [];
@@ -91,8 +91,6 @@ AppAsset::register($this);
 
 
     }
-
-    google.maps.event.addDomListener(window, "load", initMap);
 </script>
 <script type="text/javascript"
         src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>

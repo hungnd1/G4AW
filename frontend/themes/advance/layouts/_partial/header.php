@@ -75,7 +75,7 @@ use yii\widgets\ActiveForm;
                     <a href="<?= Url::toRoute(['news/index']) ?>">Tin tức</a>
                 </li>
                 <li>
-                    <a href=""><?= UserHelper::multilanguage('Nhà nông nên biết', 'Farmers Know') ?></a>
+                    <a href="<?= Url::toRoute(['user/my-page']) ?>">Mua và bán</a>
                 </li>
                 <li><a href=""><?= UserHelper::multilanguage('Dịch vụ', 'Service') ?></a></li>
                 <li>
@@ -134,7 +134,7 @@ use yii\widgets\ActiveForm;
                 <a href="<?= Url::toRoute(['news/index']) ?>">Tin tức</a>
             </li>
             <li>
-                <a href=""><?= UserHelper::multilanguage('Nhà nông nên biết', 'Farmers Know') ?></a>
+                <a href="<?= Url::toRoute(['user/my-page']) ?>">Mua và bán</a>
             </li>
             <li><a href=""><?= UserHelper::multilanguage('Dịch vụ', 'Service') ?></a></li>
             <li>
