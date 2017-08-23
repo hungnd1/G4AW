@@ -15,7 +15,7 @@ if (isset($listExchangeBuy) && !empty($listExchangeBuy)) {
         ?>
         <div class="comment-box-item">
             <img
-                src="<?= \common\models\Subscriber::findOne($item->subscriber_id) ? \common\models\Subscriber::findOne($item->subscriber_id)->getImageLink() : Yii::$app->request->baseUrl . '/img/avt_df.png' ?>"
+                src="<?= \common\models\Subscriber::findOne($item->subscriber_id)->getImageLink() ? \common\models\Subscriber::findOne($item->subscriber_id)->getImageLink() : Yii::$app->request->baseUrl . '/img/avt_df.png' ?>"
                 style="width: 140px;height: 140px;margin-right: 50px;">
             <div class="left-comment">
                 <h5 class=""><?= \common\models\Subscriber::findOne($item->subscriber_id)->username ?>
