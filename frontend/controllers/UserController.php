@@ -5,6 +5,8 @@ use common\models\Campaign;
 use common\models\CampaignDonationItemAsm;
 use common\models\DonationItem;
 use common\models\DonationRequest;
+use common\models\Exchange;
+use common\models\ExchangeBuy;
 use common\models\LeadDonor;
 use common\models\Subscriber;
 use common\models\User;
@@ -13,6 +15,7 @@ use frontend\helpers\UserHelper;
 use frontend\models\Muser;
 use Yii;
 use yii\bootstrap\ActiveForm;
+use yii\data\Pagination;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -171,14 +174,66 @@ class UserController extends Controller
     public function actionMyPage()
     {
         $id = Yii::$app->user->id;
+        $listExchangeSold = null;
+        $query = Exchange::find()->orderBy(['created_at'=>SORT_DESC]);
+        $countQuery = clone  $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $pageSize = Yii::$app->params['page_size'];
+        $pages->setPageSize($pageSize);
+        $listExchangeSold = $query->offset($pages->offset)->limit(10)->all();
+
+        $listExchangeBuy = null;
+        $query = ExchangeBuy::find()->orderBy(['created_at'=>SORT_DESC]);
+        $countQuery = clone  $query;
+        $pages_buy = new Pagination(['totalCount' => $countQuery->count()]);
+        $pageSize = Yii::$app->params['page_size'];
+        $pages_buy->setPageSize($pageSize);
+        $listExchangeBuy = $query->offset($pages->offset)->limit(10)->all();
+
         if($id){
             $model = Subscriber::findOne(['id' => $id]);
             return $this->render('my-page', [
                 'model' => $model,
+                'listExchangeSold'=>$listExchangeSold,
+                'listExchangeBuy'=>$listExchangeBuy,
+                'pages'=>$pages,
+                'pages_buy'=>$pages_buy
             ]);
         }else{
             return Yii::$app->response->redirect(['site/login']);
         }
+    }
+
+    public function actionListExchange($page,$number)
+    {
+
+        $query = Exchange::find()
+            ->orderBy(['created_at' => SORT_DESC]);
+        $countQuery = clone  $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $pageSize = Yii::$app->params['page_size'];
+        $pages->setPageSize($pageSize);
+
+        $listExchange = Exchange::find()
+            ->orderBy(['created_at' => SORT_DESC])->limit(10)->offset($page)->all();
+        $numberCheck = $number + sizeof($listExchange);
+        return $this->renderPartial('_listExchange', ['listExchangeSold' => $listExchange, 'pages' => $pages,'numberCheck' => $numberCheck]);
+    }
+
+    public function actionListExchangeBuy($page,$number)
+    {
+
+        $query = ExchangeBuy::find()
+            ->orderBy(['created_at' => SORT_DESC]);
+        $countQuery = clone  $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $pageSize = Yii::$app->params['page_size'];
+        $pages->setPageSize($pageSize);
+
+        $listExchangeBuy = ExchangeBuy::find()
+            ->orderBy(['created_at' => SORT_DESC])->limit(10)->offset($page)->all();
+        $numberCheck = $number + sizeof($listExchangeBuy);
+        return $this->renderPartial('_listExchangeBuy', ['listExchangeBuy' => $listExchangeBuy, 'pages_buy' => $pages,'numberCheckBuy' => $numberCheck]);
     }
 
 
