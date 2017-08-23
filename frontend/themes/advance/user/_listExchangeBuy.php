@@ -21,9 +21,8 @@ if (isset($listExchangeBuy) && !empty($listExchangeBuy)) {
                 <h5 class=""><?= \common\models\Subscriber::findOne($item->subscriber_id)->username ?>
                 </h5>
                 <p>Tổng sản
-                    lượng: <?php $total = \common\models\TotalQuality::findOne($item->total_quantity);
-                    /** @var $total \common\models\TotalQuality */
-                    echo $total->min_total_quality . "-" . $total->max_total_quality . " tấn"; ?>
+                    lượng: <?php
+                    echo $item->total_quantity . " tấn"; ?>
                     <br>
                     Loại cà
                     phê: <?php $typeCoffee = \common\models\TypeCoffee::findOne($item->type_coffee_id);
