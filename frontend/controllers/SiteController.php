@@ -4,7 +4,6 @@ namespace frontend\controllers;
 use common\models\Campaign;
 use common\models\Category;
 use common\models\Comment;
-use common\models\Introduction;
 use common\models\LeadDonor;
 use common\models\News;
 use common\models\Subscriber;
@@ -224,14 +223,16 @@ class SiteController extends BaseController
 
     public function actionFeedback()
     {
-        $id = $this->getParameter('contentId');
-        $content = $this->getParameter('content');
+        $id = $this->getParameter('contentId', '');
+        $content = $this->getParameter('content', '');
         $type = $this->getParameter('type');
+        $diseaseId = $this->getParameter('diseaseId', '');
         $check = false;
 //        $comment = Comment::findOne(['village_id' => $id, 'user_id' => Yii::$app->user->id]);
         $feedback = new Comment();
         $feedback->id_new = $id;
         $feedback->content = $content;
+        $feedback->id_disease = $diseaseId;
         $feedback->type = $type;
         $feedback->status = Comment::STATUS_ACTIVE;
         $feedback->user_id = Yii::$app->user->id;
@@ -253,14 +254,20 @@ class SiteController extends BaseController
     public function actionListComments()
     {
         $contentId = $this->getParameter('contentId');
+        $diseaseId = $this->getParameter('diseaseId');
         $type = $this->getParameter('type');
         $page = $this->getParameter('page');
         $type_new = $this->getParameter('type_new');
         $number = $this->getParameter('number');
 
-        $query = Comment::find()
-            ->andWhere(['id_new' => $contentId])
-            ->andWhere(['type' => $type_new])
+        if ($contentId) {
+            $query = Comment::find()
+                ->andWhere(['id_new' => $contentId]);
+        } else {
+            $query = Comment::find()
+                ->andWhere(['id_disease' => $diseaseId]);
+        }
+        $query->andWhere(['type' => $type_new])
             ->andWhere(['status' => Comment::STATUS_ACTIVE])
             ->orderBy(['updated_at' => SORT_DESC]);
         $countQuery = clone  $query;
@@ -269,14 +276,20 @@ class SiteController extends BaseController
         $pages->setPageSize($pageSize);
 
         $listComment = null;
-        $comment = Comment::find()
-            ->andWhere(['id_new' => $contentId])
-            ->andWhere(['type' => $type_new])
+        if ($contentId) {
+            $comment = Comment::find()
+                ->andWhere(['id_new' => $contentId]);
+        } else {
+            $comment = Comment::find()
+                ->andWhere(['id_disease' => $diseaseId]);
+        }
+        $query->andWhere(['type' => $type_new])
             ->andWhere(['status' => Comment::STATUS_ACTIVE])
-            ->orderBy(['updated_at' => SORT_DESC])->limit(10)->offset($page)->all();
+            ->orderBy(['updated_at' => SORT_DESC])->limit(10)->offset($page);
+
         $numberCheck = $number + sizeof($listComment);
         $j = 0;
-        foreach ($comment as $item) {
+        foreach ($comment->all() as $item) {
             $listComment[$j] = new \stdClass();
             $listComment[$j]->content = $item->content;
             $listComment[$j]->user = Subscriber::findOne(['id' => $item->user_id]);
@@ -291,15 +304,20 @@ class SiteController extends BaseController
 
 
         $contentId = $this->getParameter('contentId');
+        $diseaseId = $this->getParameter('diseaseId');
         $type = $this->getParameter('type');
         $type_new = $this->getParameter('type_new');
         $page = $this->getParameter('page');
         $number = $this->getParameter('number');
 
-
-        $query = Comment::find()
-            ->andWhere(['id_new' => $contentId])
-            ->andWhere(['type' => $type_new])
+        if ($contentId) {
+            $query = Comment::find()
+                ->andWhere(['id_new' => $contentId]);
+        } else {
+            $query = Comment::find()
+                ->andWhere(['id_disease' => $diseaseId]);
+        }
+        $query->andWhere(['type' => $type_new])
             ->andWhere(['status' => Comment::STATUS_ACTIVE])
             ->orderBy(['updated_at' => SORT_DESC]);
         $countQuery = clone  $query;
@@ -308,14 +326,20 @@ class SiteController extends BaseController
         $pages->setPageSize($pageSize);
 
         $listComment = null;
-        $comment = Comment::find()
-            ->andWhere(['id_new' => $contentId])
-            ->andWhere(['type' => $type_new])
+        if ($contentId) {
+            $comment = Comment::find()
+                ->andWhere(['id_new' => $contentId]);
+        } else {
+            $comment = Comment::find()
+                ->andWhere(['id_disease' => $diseaseId]);
+        }
+
+        $query->andWhere(['type' => $type_new])
             ->andWhere(['status' => Comment::STATUS_ACTIVE])
-            ->orderBy(['updated_at' => SORT_DESC])->limit(10)->all();
+            ->orderBy(['updated_at' => SORT_DESC])->limit(10);
         $numberCheck = $number + sizeof($listComment);
         $j = 0;
-        foreach ($comment as $item) {
+        foreach ($comment->all() as $item) {
             $listComment[$j] = new \stdClass();
             $listComment[$j]->content = $item->content;
             $listComment[$j]->user = Subscriber::findOne(['id' => $item->user_id]);
@@ -380,7 +404,7 @@ class SiteController extends BaseController
      */
     public function actionAbout()
     {
-        $model = Term::find()->orderBy(['created_at'=>SORT_DESC])->one();
+        $model = Term::find()->orderBy(['created_at' => SORT_DESC])->one();
         return $this->render('about', ['model' => $model]);
     }
 

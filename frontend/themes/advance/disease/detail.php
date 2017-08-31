@@ -9,7 +9,7 @@ use frontend\helpers\UserHelper;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
-/** @var $model  \common\models\News */
+/** @var $model  \common\models\GapGeneral */
 ?>
 
 <!-- content -->
@@ -25,13 +25,10 @@ use yii\helpers\Url;
                 <div class="cr-page-link">
                     <a href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
                     <span>/</span>
-                    <a href="<?= Url::toRoute(['news/index','id'=>$model->category_id]) ?>"><?= $title ?></a>
-                    <span>/</span>
                     <a href=""><?= $model->title ?></a>
                 </div>
                 <div class="m-content">
                     <h1><?= $model->title ?></h1>
-                    <p class="des-dt"><?= $model->short_description ?></p>
                     <!--                    --><?php //if($model->type == \common\models\News::TYPE_VIDEO){?>
                     <!--                    <a id="player" onclick="playVideo();"><img-->
                     <!--                            src="--><!--"-->
@@ -40,7 +37,7 @@ use yii\helpers\Url;
                     <? //= UserHelper::multilanguage('Click ảnh trên để xem video','Click image to watch video') ?><!--</p>-->
                     <!--                    --><?php //} ?>
                     <div class="content-dt">
-                        <?= preg_replace('/(\<img[^>]+)(style\=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', $model->content) ?>
+                        <?= preg_replace('/(\<img[^>]+)(style\=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', $model->gap) ?>
                     </div>
                     <div class="post-related">
                         <h2>Bình luận</h2>
@@ -64,7 +61,7 @@ use yii\helpers\Url;
                                 foreach ($listComment as $item) {
                                     ?>
                                     <div class="comment-box-item">
-                                        <img style="width: 90px;height: 70px;"
+                                        <img
                                             src="<?= $item->user->getImageLink() ? $item->user->getImageLink() : Yii::$app->request->baseUrl . '/img/avt_df.png' ?>">
                                         <div class="left-comment">
                                             <h5 class=""><?= str_replace(substr($item->user->username, 8), '***', $item->user->username) ?>
@@ -101,7 +98,7 @@ use yii\helpers\Url;
                     <div class="list-related">
                         <?php if (isset($otherModels) && !empty($otherModels)) {
                             foreach ($otherModels as $item) { ?>
-                                <?= \frontend\widgets\NewsWidget::widget(['content' => $item]) ?>
+                                <?= \frontend\widgets\DiseaseWidget::widget(['content' => $item]) ?>
                             <?php }
                         } ?>
                     </div>
@@ -151,7 +148,7 @@ use yii\helpers\Url;
         $.ajax({
             url: url,
             data: {
-                'contentId': <?= $model->id?>,
+                'diseaseId': <?= $model->id?>,
                 'type': 'comment',
                 'page': page,
                 'type_new':<?= \common\models\Comment::TYPE_NEW ?>,
@@ -207,7 +204,7 @@ use yii\helpers\Url;
             $.ajax({
                 url: url,
                 data: {
-                    'contentId': <?= $model->id?>,
+                    'diseaseId': <?= $model->id?>,
                     'content': text,
                     'type':<?= \common\models\Comment::TYPE_NEW ?>
                 },
@@ -226,7 +223,7 @@ use yii\helpers\Url;
                         $.ajax({
                             url: url,
                             data: {
-                                'contentId': <?= $model->id?>,
+                                'diseaseId': <?= $model->id?>,
                                 'type': 1,//load lai comments
                                 'page': 1,
                                 'type_new':<?= \common\models\Comment::TYPE_NEW ?>,
@@ -270,11 +267,7 @@ use yii\helpers\Url;
             });//end jQuery.ajax
         }
     }
-    function playVideo() {
-        var url = '<?= $model->getVideoUrl() ? $model->getVideoUrl() : $model->source_url ?>';
-        loadPlayer(url, '', '<?= $model->getImageLink() ?>');
-//        tag.attr('data-dismiss', 'modal');
-    }
+
 </script>
 
 <!-- end Modal message notice -->

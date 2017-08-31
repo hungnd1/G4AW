@@ -77,7 +77,7 @@ use yii\widgets\ActiveForm;
                 <li>
                     <a href="<?= Url::toRoute(['user/my-page']) ?>">Mua và bán</a>
                 </li>
-                <li><a href=""><?= UserHelper::multilanguage('Dịch vụ', 'Service') ?></a></li>
+                <li><a href="<?= Url::toRoute(['disease/index']) ?>">Sâu bệnh</a></li>
                 <li>
                     <a href=""><?= UserHelper::multilanguage('Video hướng dẫn', 'Video Support') ?></a>
                 </li>
@@ -136,7 +136,7 @@ use yii\widgets\ActiveForm;
             <li>
                 <a href="<?= Url::toRoute(['user/my-page']) ?>">Mua và bán</a>
             </li>
-            <li><a href=""><?= UserHelper::multilanguage('Dịch vụ', 'Service') ?></a></li>
+            <li><a href="<?= Url::toRoute(['disease/index']) ?>">Sâu bệnh</a></li>
             <li>
                 <a href=""><?= UserHelper::multilanguage('Video hướng dẫn', 'Video Support') ?></a>
             </li>

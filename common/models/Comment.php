@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property integer $id_new
+ * @property integer $id_disease
  * @property string $content
  * @property integer $status
  * @property integer $type
@@ -78,7 +79,7 @@ class Comment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_new', 'status', 'type', 'user_id', 'created_at', 'updated_at'], 'integer'],
+            [['id_new', 'status', 'type', 'user_id', 'created_at', 'updated_at','id_disease'], 'integer'],
             [['content'], 'string', 'max' => 500],
         ];
     }
