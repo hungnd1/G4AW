@@ -77,7 +77,7 @@ AppAsset::register($this);
                 }
             },
             error: function (result) {
-                alert('Không thành công. Quý khách vui lòng thử lại sau ít phút.');
+//                alert('Không thành công. Quý khách vui lòng thử lại sau ít phút.');
                 return;
             }
         });//end jQuery.ajax

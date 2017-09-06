@@ -4632,3 +4632,30 @@ video {
     width: 100%;
     padding-top: 30px;
 }
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.quotes-table {
+    width: 100%;
+    margin-top: 15px;
+}
+.quotes-table thead th {
+    color: #666;
+    text-align: left;
+    font-weight: bold;
+    padding: 8px;
+}
+.quotes-table tbody td.district {
+    padding-left: 18px;
+    font-size: 14px;
+}
+.quotes-table tbody td {
+    padding: 8px;
+}
+.quotes-table tbody td.value {
+    text-align: right;
+    color: #333;
+    font: bold 15px Arial, Helvetica, sans-serif;
+    padding-right: 15px;
+}

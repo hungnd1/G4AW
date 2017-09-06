@@ -91,19 +91,15 @@ if (!Yii::$app->user->isGuest) {
 
     <!-- List NEW block-->
 
-    <?php foreach ($listNewCategory as $item) {
-        /** var $item Category  */
-        ?>
         <div class="container">
             <div class="news-block cm-block">
-                <h2><?= strtoupper($item->display_name) ?><a
-                        href="<?= Url::toRoute(['news/index', 'id' => $item->id]) ?>"><span>Tất cả</span><i
+                <h2>GAPs<a
+                        href="<?= Url::toRoute(['news/index']) ?>"><span>Tất cả</span><i
                             class="fa fa-chevron-right"></i></a></h2>
                 <div class="list-item">
                     <?php
                     $listNew = News::find()->andWhere(['status' => News::STATUS_ACTIVE])
-                        ->andWhere(['category_id' => $item->id])
-                        ->orderBy(['created_at' => SORT_DESC])->limit(3)->all();
+                        ->orderBy(['created_at' => SORT_DESC])->limit(6)->all();
                     if (isset($listNew) && !empty($listNew)) {
                         /** @var \common\models\News $new */
                         foreach ($listNew as $new) {
@@ -132,7 +128,6 @@ if (!Yii::$app->user->isGuest) {
             </div>
         </div>
 
-    <?php } ?>
 
 
     <!--end list CT block-->

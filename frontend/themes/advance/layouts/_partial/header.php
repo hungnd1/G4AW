@@ -72,14 +72,14 @@ use yii\widgets\ActiveForm;
                     <a href="<?= Url::toRoute(['site/about']) ?>">Giới thiệu</a>
                 </li>
                 <li>
-                    <a href="<?= Url::toRoute(['news/index']) ?>">Tin tức</a>
+                    <a href="<?= Url::toRoute(['news/index']) ?>">GAPs</a>
                 </li>
                 <li>
                     <a href="<?= Url::toRoute(['user/my-page']) ?>">Mua và bán</a>
                 </li>
                 <li><a href="<?= Url::toRoute(['disease/index']) ?>">Sâu bệnh</a></li>
                 <li>
-                    <a href=""><?= UserHelper::multilanguage('Video hướng dẫn', 'Video Support') ?></a>
+                    <a href="<?= Url::toRoute(['price/index']) ?>">Giá</a>
                 </li>
             </ul>
 
@@ -131,14 +131,14 @@ use yii\widgets\ActiveForm;
                 <a href="<?= Url::toRoute(['site/about']) ?>">Giới thiệu</a>
             </li>
             <li>
-                <a href="<?= Url::toRoute(['news/index']) ?>">Tin tức</a>
+                <a href="<?= Url::toRoute(['news/index']) ?>">GAPs</a>
             </li>
             <li>
                 <a href="<?= Url::toRoute(['user/my-page']) ?>">Mua và bán</a>
             </li>
             <li><a href="<?= Url::toRoute(['disease/index']) ?>">Sâu bệnh</a></li>
             <li>
-                <a href=""><?= UserHelper::multilanguage('Video hướng dẫn', 'Video Support') ?></a>
+                <a href="<?= Url::toRoute(['price/index']) ?>">Giá</a>
             </li>
             <div class="right-nav hidden-sm hidden-xs">
 

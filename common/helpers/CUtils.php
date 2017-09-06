@@ -481,23 +481,23 @@ class CUtils {
         #print_r($matrix2);die;
         #print_r(count($matrix1));
         #print_r(count($matrix1[0]));
-        
+
         #print_r(count($matrix2));
         #print_r(count($matrix2[0]));
         #die;
         foreach($matrix1 as $row => $current_row) {
             foreach($current_row as $col => $current_item){
-                if(count($except_col) > 0){ 
+                if(count($except_col) > 0){
                     if(!in_array($col, $except_col)){
                         $matrix1[$row][$col] = intval($matrix1[$row][$col]) - intval($matrix2[$row][$col]);
-                    }   
+                    }
                 }else{
                     $matrix1[$row][$col] = intval($matrix1[$row][$col]) - intval($matrix2[$row][$col]);
-                }   
-            }   
-        }   
+                }
+            }
+        }
         return $matrix1;
-    }     
+    }
 
     public static function change_date_format($input_str_date){
         $date_array = explode('-', $input_str_date);
@@ -534,7 +534,7 @@ class CUtils {
             $num_part = $input_item;
             array_shift($num_part);
             $key_arr[$input_item[0]] = $num_part;
-        } 
+        }
 
         /*Fill empty array to not exist key*/
         foreach($input_range as $range_item){
@@ -552,15 +552,15 @@ class CUtils {
             }else{
                 /*Date not exists*/
                 $key_result_arr[$range_item] = $empty_row;
-            }   
-        }   
+            }
+        }
         /*Recover key array to original type array*/
         foreach($key_result_arr as $key => $value){
             $item = $value;
             array_unshift($item, $key);
             $result_arr[] = $item;
-        }   
-        return $result_arr;  
+        }
+        return $result_arr;
     }
 
     public static function rotate_array($input_arr, $list_label, $get_total=true){
@@ -575,9 +575,9 @@ class CUtils {
         /*Reverse index*/
         for($i = 0; $i < $old_row_count ; $i++){
             for($j = 0; $j < $old_column_count; $j++){
-                $result_arr[$j][$i] = $input_arr[$i][$j];   
-            }   
-        }   
+                $result_arr[$j][$i] = $input_arr[$i][$j];
+            }
+        }
         unset($result_arr[0]);
         array_unshift($result_arr, $result_arr[count($result_arr)]);
         unset($result_arr[count($result_arr)-1]);
@@ -587,7 +587,7 @@ class CUtils {
         }
         if(!$get_total){
             array_shift($result_arr);
-        }  
+        }
         return $result_arr;
     }
 

@@ -26,10 +26,9 @@ class NewsController extends BaseController
      * @param integer $id
      * @return mixed
      */
-    public function actionIndex($id = null)
+    public function actionIndex()
     {
-        if (!$id) {
-            $title = "Tin tức";
+            $title = "GAPs";
             $listNews = News::find()
                 ->andWhere(['news.status' => News::STATUS_ACTIVE]);
             $listNews->orderBy(['news.created_at' => SORT_DESC]);
@@ -43,32 +42,6 @@ class NewsController extends BaseController
                 ->andWhere(['news.status' => News::STATUS_ACTIVE])
                 ->orderBy(['news.created_at' => SORT_DESC])->offset($pages->offset  + 10)->limit(5)->all();
             return $this->render('index', ['title' => $title, 'listNews' => $models, 'pages' => $pages, 'listNewRelated' => $listNewRelated]);
-        } else {
-            $category = Category::findOne(['id' => $id]);
-            if ($category) {
-                $title = Category::findOne(['id' => $id])->display_name;
-
-                $listNews = News::find()
-                    ->andWhere(['news.status' => News::STATUS_ACTIVE])
-                    ->andWhere(['news.category_id' => $id]);
-                $listNews->orderBy(['news.created_at' => SORT_DESC]);
-                $countQuery = clone $listNews;
-                $pages = new Pagination(['totalCount' => $countQuery->count()]);
-                $pageSize = Yii::$app->params['page_size'];
-                $pages->setPageSize($pageSize);
-                $models = $listNews->offset($pages->offset)
-                    ->limit(10)->all();
-                $listNewRelated = News::find()
-                    ->andWhere(['news.status' => News::STATUS_ACTIVE])
-                    ->andWhere('news.category_id != :id', [':id' => $id])
-                    ->orderBy(['news.created_at' => SORT_DESC])->limit(5)->all();
-
-                return $this->render('index', ['title' => $title, 'listNews' => $models, 'pages' => $pages, 'listNewRelated' => $listNewRelated]);
-            } else {
-                throw new NotFoundHttpException('Nội dung không tồn tại.');
-            }
-        }
-
     }
 
 
@@ -99,15 +72,13 @@ class NewsController extends BaseController
             $j++;
         }
 
-        $title = Category::findOne(['id' => $model->category_id])->display_name;
 
         $otherModels = News::find()
-            ->andWhere(['category_id' => $model->category_id])
             ->andWhere('news.id <> :id', [':id' => $model->id])
-            ->orderBy(['news.created_at' => SORT_DESC])->limit(6)->all();
+            ->orderBy(['news.created_at' => SORT_DESC])->limit(10)->all();
 
 
-        return $this->render('detail', ['model' => $model, 'title' => $title,
+        return $this->render('detail', ['model' => $model,
             'otherModels' => $otherModels, 'listComment' => $listComment,
             'pages' => $pages]);
     }

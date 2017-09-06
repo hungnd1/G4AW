@@ -25,8 +25,6 @@ use yii\helpers\Url;
                 <div class="cr-page-link">
                     <a href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
                     <span>/</span>
-                    <a href="<?= Url::toRoute(['news/index','id'=>$model->category_id]) ?>"><?= $title ?></a>
-                    <span>/</span>
                     <a href=""><?= $model->title ?></a>
                 </div>
                 <div class="m-content">
