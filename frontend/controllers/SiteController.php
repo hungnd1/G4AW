@@ -375,6 +375,17 @@ class SiteController extends BaseController
         return $arr_detail;
     }
 
+    public function actionDetail($temp =0,$pre=0,$wind = 0)
+    {
+
+        $url = Yii::$app->params['apiUrl'] . "app/gap-advice?tem=" . $temp."&pre=".$pre."&wind=".$wind;
+        $response = $this->callCurl($url);
+        $advice = $response['data'];
+        /** @var  $model News */
+        return $this->render('detail', ['model' => (object)$advice]);
+
+    }
+
     /**
      * Logs out the current user.
      *
