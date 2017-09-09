@@ -8,12 +8,12 @@ use yii\widgets\ActiveForm;
 ?>
 <div class="top-nav header">
     <div class="container">
-        <a class="navbar-brand logo" style="padding: 4px 15px;" href="<?= Url::toRoute(['site/index']) ?>"><img
-                src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/unnamed.png" height="70"
+        <a class="navbar-brand logo" style="padding: 4px 0px;" href="<?= Url::toRoute(['site/index']) ?>"><img
+                src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/logogreen.png" height="70"
                 style="padding-top: 10px;"></a>
         <?php if (!UserHelper::isMobile()) { ?>
             <b class="navbar-brand title-header" style=""
-               href="<?= Url::toRoute(['site/index']) ?>"><?= UserHelper::multilanguage('VIỆN KINH TẾ BƯU ĐIỆN - HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG', 'Economic Research Institute of Posts and Telecommunications') ?></b>
+               href="<?= Url::toRoute(['site/index']) ?>"><?= UserHelper::multilanguage('DỊCH VỤ THÔNG TIN GREENCOFFEE', 'Economic Research Institute of Posts and Telecommunications') ?></b>
         <?php } ?>
         <!--        <b style="font-size: 18px;margin: 0 0 0 30px;padding: 40px 0 0 0;">VIỆN KINH TẾ BƯU ĐIỆN</b>-->
         <?php if (UserHelper::isMobile()) { ?>
@@ -72,15 +72,15 @@ use yii\widgets\ActiveForm;
                     <a href="<?= Url::toRoute(['site/about']) ?>">Giới thiệu</a>
                 </li>
                 <li>
-                    <a href="<?= Url::toRoute(['news/index']) ?>">GAPs</a>
+                    <a href="<?= Url::toRoute(['price/index']) ?>">Giá trực tuyến</a>
                 </li>
                 <li>
-                    <a href="<?= Url::toRoute(['user/my-page']) ?>">Mua và bán</a>
+                    <a href="<?= Url::toRoute(['news/index']) ?>">Thông tin GAPs</a>
                 </li>
-                <li><a href="<?= Url::toRoute(['disease/index']) ?>">Sâu bệnh</a></li>
                 <li>
-                    <a href="<?= Url::toRoute(['price/index']) ?>">Giá</a>
+                    <a href="<?= Url::toRoute(['user/my-page']) ?>">Giao dịch</a>
                 </li>
+                <li><a href="<?= Url::toRoute(['disease/index']) ?>">Thông tin sâu bệnh</a></li>
             </ul>
 
             <?php
@@ -124,22 +124,22 @@ use yii\widgets\ActiveForm;
 <nav class="bottom-nav hidden-xs hidden-sm">
     <div class="container">
         <ul class="menu-web">
-            <li class="active"><a href="<?= Url::toRoute(['site/index']) ?>"><i
-                        class="fa fa-home hidden-md"></i><?= UserHelper::multilanguage('Trang chủ', 'Home') ?></a>
+            <li class="active"><a
+                    href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
             </li>
             <li>
                 <a href="<?= Url::toRoute(['site/about']) ?>">Giới thiệu</a>
             </li>
             <li>
-                <a href="<?= Url::toRoute(['news/index']) ?>">GAPs</a>
+                <a href="<?= Url::toRoute(['price/index']) ?>">Giá trực tuyến</a>
             </li>
             <li>
-                <a href="<?= Url::toRoute(['user/my-page']) ?>">Mua và bán</a>
+                <a href="<?= Url::toRoute(['news/index']) ?>">Thông tin GAPs</a>
             </li>
-            <li><a href="<?= Url::toRoute(['disease/index']) ?>">Sâu bệnh</a></li>
             <li>
-                <a href="<?= Url::toRoute(['price/index']) ?>">Giá</a>
+                <a href="<?= Url::toRoute(['user/my-page']) ?>">Giao dịch</a>
             </li>
+            <li><a href="<?= Url::toRoute(['disease/index']) ?>">Thông tin sâu bệnh</a></li>
             <div class="right-nav hidden-sm hidden-xs">
 
                 <div class="f-search">

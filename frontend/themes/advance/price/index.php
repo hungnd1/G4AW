@@ -27,7 +27,7 @@ use yii\helpers\Url;
                         <div id="xem-gia-ca-phe"
                              style="display:block; text-align:center; line-height:25px; margin:8px 0; border:1px solid #FFD8D9; border-radius:2px; background:#FFF6DD; font-size:16px; padding:8px;">
                             Soạn tin nhắn <strong style="color:#0005FF">CAFE</strong> và gửi tới <strong
-                                style="color:#0005FF">8888</strong> <br>để biết giá chính xác nhất ở khu vực của bạn
+                                style="color:#0005FF">(+84) 901 775 939 </strong> <br>để biết giá chính xác nhất ở khu vực của bạn
                         </div>
                         <div class="view-by-day">
                             <?php $form = ActiveForm::begin([

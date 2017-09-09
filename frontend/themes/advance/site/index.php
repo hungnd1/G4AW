@@ -14,75 +14,16 @@ if (!Yii::$app->user->isGuest) {
 }
 ?>
 <div class="content">
-    <!-- slide -->
-    <div class="container slider">
-        <div id="slide-main" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <?php if (isset($listSlide) && !empty($listSlide)) {
-                    $i = 0;
-                    foreach ($listSlide as $item) {
-                        /** @var $item \common\models\News */
-                        ?>
-                        <li data-target="#slide-main" data-slide-to="<?= $i ?>"
-                            class="<?= $i == 0 ? 'active' : '' ?>"></li>
-                        <?php $i++;
-                    }
-                } ?>
-            </ol>
 
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-                <?php if (isset($listSlide) && !empty($listSlide)) {
-                    $i = 0;
-                    foreach ($listSlide as $item) {
-                        /** @var $item \common\models\News */
-                        ?>
-
-                        <div class="item <?php if ($i == 0) { ?> active <?php } ?>">
-                            <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>">
-                                <img style="width: 778px;height: 300px;" src="<?= $item->getImageLink() ?>"
-                                     alt="..."></a>
-                            <div class="carousel-caption">
-                                <div>
-                                    <h3>
-                                        <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>"><?= $item->title ?></a>
-                                    </h3>
-                                    <?= str_replace(mb_substr($item->short_description, 200, strlen($item->short_description), 'utf-8'), '...', $item->short_description) ?>
-                                    <br>
-                                    <a href="<?= Url::toRoute(['news/detail', 'id' => $item->id]) ?>" class="bt-more-1">
-                                        <?= 'Xem thêm' ?></a>
-                                </div>
-                            </div>
-                        </div>
-                        <?php $i++;
-                    }
-                } else { ?>
-                    <div class="item active">
-                        <img src="../img/banner.jpg" alt="...">
-                        <div class="carousel-caption">
-                            <div>
-                                <h3>Dự án xây dựng cầu treo dân sinh tỉnh Hòa Bình</h3>
-                                Trường học tại xã X có quy mô 2 tầng, 7 phòng, bao gồm phòng học, phòng cho giáo viên,
-                                thư viện. Được sự ủng hộ và hỗ trợ của các doanh nghiệp hảo tâm...<br>
-                                <a href="" class="bt-more-1">Xem thêm</a>
-                            </div>
-                        </div>
-                    </div>
-                <?php } ?>
-
-            </div>
-        </div> <!-- Carousel -->
-    </div>
-    <!-- end slide -->
-
-    <!--end list CT block-->
 
     <!-- List NEW block-->
 
     <div class="container">
-        <div class="google-map">
-            <div id="map"></div>
+        <div class="news-block cm-block">
+            <h2>Thông tin thời tiết</h2>
+            <div class="google-map">
+                <div id="map"></div>
+            </div>
         </div>
     </div>
 
@@ -91,52 +32,51 @@ if (!Yii::$app->user->isGuest) {
 
     <!-- List NEW block-->
 
-        <div class="container">
-            <div class="news-block cm-block">
-                <h2>GAPs<a
-                        href="<?= Url::toRoute(['news/index']) ?>"><span>Tất cả</span><i
-                            class="fa fa-chevron-right"></i></a></h2>
-                <div class="list-item">
-                    <?php
-                    $listNew = News::find()->andWhere(['status' => News::STATUS_ACTIVE])
-                        ->orderBy(['created_at' => SORT_DESC])->limit(6)->all();
-                    if (isset($listNew) && !empty($listNew)) {
-                        /** @var \common\models\News $new */
-                        foreach ($listNew as $new) {
-                            $thumbnail = $new->getImageLink();
-                            ?>
-                            <div class="news">
-                                <div class="thumb-common">
-                                    <img src="../img/blank.gif">
-                                    <a href="<?= Url::toRoute(['news/detail', 'id' => $new->id]) ?>"><img
-                                            class="thumb-cm"
-                                            src="<?= $thumbnail ?>"><br></a>
-                                </div>
-                                <div class="if-cm-2">
-                                    <a href="<?= Url::toRoute(['news/detail', 'id' => $new->id]) ?>"><h3
-                                            class="name-1"><?= str_replace(mb_substr($new->title, 40, strlen($new->title), 'utf-8'), '...', $new->title) ?></h3>
-                                        <br></a>
+    <div class="container">
+        <div class="news-block cm-block">
+            <h2>Thông tin GAPs<a
+                    href="<?= Url::toRoute(['news/index']) ?>"><span>Tất cả</span><i
+                        class="fa fa-chevron-right"></i></a></h2>
+            <div class="list-item">
+                <?php
+                $listNew = News::find()->andWhere(['status' => News::STATUS_ACTIVE])
+                    ->orderBy(['created_at' => SORT_DESC])->limit(6)->all();
+                if (isset($listNew) && !empty($listNew)) {
+                    /** @var \common\models\News $new */
+                    foreach ($listNew as $new) {
+                        $thumbnail = $new->getImageLink();
+                        ?>
+                        <div class="news">
+                            <div class="thumb-common">
+                                <img src="../img/blank.gif">
+                                <a href="<?= Url::toRoute(['news/detail', 'id' => $new->id]) ?>"><img
+                                        class="thumb-cm"
+                                        src="<?= $thumbnail ?>"><br></a>
+                            </div>
+                            <div class="if-cm-2">
+                                <a href="<?= Url::toRoute(['news/detail', 'id' => $new->id]) ?>"><h3
+                                        class="name-1"><?= str_replace(mb_substr($new->title, 40, strlen($new->title), 'utf-8'), '...', $new->title) ?></h3>
+                                    <br></a>
                                 <span
                                     class="des-cm-1"><?= str_replace(mb_substr($new->short_description, 100, strlen($new->short_description), 'utf-8'), '...', $new->short_description) ?>
                                     <a href="<?= Url::toRoute(['news/detail', 'id' => $new->id]) ?>" class="read-more">Đọc
                                         thêm</a></span>
-                                </div>
                             </div>
-                        <?php }
-                    } ?>
-                </div>
+                        </div>
+                    <?php }
+                } ?>
             </div>
         </div>
-
+    </div>
 
 
     <!--end list CT block-->
 
-    <div class="container">
-        <div class="banner-block clearfix">
-            <img src="../img/banners.jpg">
-        </div>
-    </div>
+    <!--    <div class="container">-->
+    <!--        <div class="banner-block clearfix">-->
+    <!--            <img src="../img/banners.jpg">-->
+    <!--        </div>-->
+    <!--    </div>-->
 
     <!--end banner block-->
 

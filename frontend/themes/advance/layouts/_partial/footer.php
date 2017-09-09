@@ -13,7 +13,7 @@ use frontend\helpers\UserHelper;
         <div class="container">
 
             <div class="copy-right">
-                <h5><?= UserHelper::multilanguage('CHƯƠNG TRÌNH PHÁT TRIỂN DỰ ÁN CAFE','Information services for sustainable coffee farm managemen') ?></h5>
+                <h5><?= UserHelper::multilanguage('DỊCH VỤ THÔNG TIN GREENCOFFEE','Information services for sustainable coffee farm managemen') ?></h5>
                 <?=UserHelper::multilanguage('Mọi tin, bài, thắc mắc xin gửi về thư điện tử: ','All news, articles, inquiries should be sent to e-mail:') ?><br> Email: icco.greencoffee@gmail.com<br><br>
                 <?= UserHelper::multilanguage('Hoặc theo địa chỉ Website: Ban Quản trị nội dung - Viện Kinh tế BƯu điện','By address or Website: Content Management Board Posts and Telecommunications Institute of Technology') ?><br>
                 <?= UserHelper::multilanguage("Địa chỉ: 122 Hoàng Quốc Việt, Cầu Giấy, Hà Nội<br> ĐT: (024) 35746792",'Address: 122 Hoang Quoc Vietnam, Cau Giay, Ha Noi <br> Telephone: (024) 35746792') ?><br>
