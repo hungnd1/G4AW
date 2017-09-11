@@ -58,7 +58,6 @@ AppAsset::register($this);
                                 }
                                 ,
                                 error: function (result) {
-                                    alert(result);
                                     alert("Không thành công. Quý khách vui lòng thử lại sau ít phút.");
                                     return;
                                 }
