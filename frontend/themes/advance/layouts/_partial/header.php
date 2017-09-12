@@ -72,7 +72,7 @@ use yii\widgets\ActiveForm;
                     <a href="<?= Url::toRoute(['site/about']) ?>">Giới thiệu</a>
                 </li>
                 <li>
-                    <a href="<?= Url::toRoute(['price/index']) ?>">Giá trực tuyến</a>
+                    <a href="<?= Url::toRoute(['price/index']) ?>">Thông tin thị trường</a>
                 </li>
                 <li>
                     <a href="<?= Url::toRoute(['news/index']) ?>">Thông tin GAPs</a>
@@ -131,7 +131,7 @@ use yii\widgets\ActiveForm;
                 <a href="<?= Url::toRoute(['site/about']) ?>">Giới thiệu</a>
             </li>
             <li>
-                <a href="<?= Url::toRoute(['price/index']) ?>">Giá trực tuyến</a>
+                <a href="<?= Url::toRoute(['price/index']) ?>">Thông tin thị trường</a>
             </li>
             <li>
                 <a href="<?= Url::toRoute(['news/index']) ?>">Thông tin GAPs</a>
