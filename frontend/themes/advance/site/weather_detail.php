@@ -29,8 +29,8 @@
                             <table width="100%" cellpadding="0" cellspacing="0" border="0">
                                 <tbody>
                                 <tr>
-                                    <td width="100"><img src="http://static.24h.com.vn/images/2014/large-icon/270.png"
-                                                         alt="" width="80" height="80"><br>
+                                    <td width="100"><img src="<?= $weather_current->image ?>"
+                                                         alt="" width="90" height="70"><br>
                                         <b style="text-align: center;font-size: 25px;"><?= $weather_current->t_average ?></b>
                                     </td>
                                     <td width="400" style="padding-left: 30px;"><span class="nhietdo-big">
