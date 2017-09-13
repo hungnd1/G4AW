@@ -4658,3 +4658,37 @@ table {
     font: bold 15px Arial, Helvetica, sans-serif;
     padding-right: 15px;
 }
+.tb-top td {
+    background: #436072;
+    height: 41px;
+    overflow: hidden;
+    padding: 3px 0 3px 10px;
+    color: #fff;
+}
+.thoitiet-cell-line {
+    padding: 5px 5px;
+    border-bottom: #a7d8f4 solid 1px;
+    border-right: #e7e7e7 solid 1px;
+    padding: 10px;
+}
+.tinh-tp {
+    color: #666666;
+    padding: 5px 0px;
+    font-size: 11px;
+}
+.colCenter img {
+    max-width: 400px;
+}
+.thoitiet-cell {
+    padding: 5px 5px;
+    border-bottom: #a7d8f4 solid 1px;
+    padding: 10px;
+}
+
+.nhietdo-small {
+    font-size: 14px;
+    font-weight: bold;
+}
+.nhietdo-big {
+
+}

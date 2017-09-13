@@ -23,7 +23,7 @@
                 <li>Tốc độ gió: <span><?= $weather->wndspd_km_h ?></span></li>
                 <li>Hướng gió: <span><?= $weather->wnddir ?></span></li>
                 <li>
-                    <a href="">Xem chi tiết</a>
+                    <a href="<?= \yii\helpers\Url::toRoute(['site/weather-detail','station_id'=>$weather->station_id]) ?>">Xem chi tiết</a>
                     <a href="<?= \yii\helpers\Url::toRoute(['site/detail','temp'=>floor(($weather->tmax + $weather->tmin) / 2),'pre'=>$weather->precipitation,'wind'=>$weather->wndspd]) ?>">Khuyến cáo</a>
                 </li>
             </ul>

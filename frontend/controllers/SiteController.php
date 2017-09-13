@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\helpers\CUtils;
 use common\models\Campaign;
 use common\models\Category;
 use common\models\Comment;
@@ -375,10 +376,10 @@ class SiteController extends BaseController
         return $arr_detail;
     }
 
-    public function actionDetail($temp =0,$pre=0,$wind = 0)
+    public function actionDetail($temp = 0, $pre = 0, $wind = 0)
     {
 
-        $url = Yii::$app->params['apiUrl'] . "app/gap-advice?tem=" . $temp."&pre=".$pre."&wind=".$wind;
+        $url = Yii::$app->params['apiUrl'] . "app/gap-advice?tem=" . $temp . "&pre=" . $pre . "&wind=" . $wind;
         $response = $this->callCurl($url);
         $advice = $response['data'];
         /** @var  $model News */
@@ -538,6 +539,18 @@ class SiteController extends BaseController
         $command->bindValue(":keyword", "%$keyword%", PDO::PARAM_STR);
         $rowCount = $command->execute();
         return $rowCount;
+    }
+
+    public function actionWeatherDetail($station_id)
+    {
+        $url = Yii::$app->params['apiUrl'] . "weather/get-weather-detail?station_id=" . $station_id;
+        $response = $this->callCurl($url);
+        $weather = $response['data'];
+        $weather_current = $response['data']['items'];
+        $weather_next_week = $response['data']['events'];
+        $weather_week_ago = $response['data']['weather_week_ago'];
+        return $this->render('weather_detail',
+            ['weather_current' => (object)$weather_current, 'weather_next_week' => $weather_next_week, 'weather_week_ago' => (object)$weather_week_ago]);
     }
 
 }

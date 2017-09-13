@@ -24,6 +24,16 @@ class WeatherDetail extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+
+    public $station_name;
+    public $wndspd_km_h;
+    public $content;
+    public $t_average;
+    public $province_name;
+    public $precipitation_unit;
+    public $image;
+
+
     public static function tableName()
     {
         return 'weather_detail';
