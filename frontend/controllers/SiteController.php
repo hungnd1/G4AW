@@ -1,15 +1,11 @@
 <?php
 namespace frontend\controllers;
 
-use common\helpers\CUtils;
-use common\models\Campaign;
 use common\models\Category;
 use common\models\Comment;
-use common\models\LeadDonor;
 use common\models\News;
 use common\models\Subscriber;
 use common\models\Term;
-use common\models\Transaction;
 use common\models\UnitLink;
 use common\models\Village;
 use frontend\helpers\FormatNumber;
@@ -549,8 +545,40 @@ class SiteController extends BaseController
         $weather_current = $response['data']['items'];
         $weather_next_week = $response['data']['events'];
         $weather_week_ago = $response['data']['weather_week_ago'];
+        $dataCharts = $this->getData((object)$weather_week_ago);
+        $dataPrecipitation = $this->getDataPrecipitation((object)$weather_week_ago);
+
         return $this->render('weather_detail',
-            ['weather_current' => (object)$weather_current, 'weather_next_week' => $weather_next_week, 'weather_week_ago' => (object)$weather_week_ago]);
+            ['weather_current' => (object)$weather_current, 'weather_next_week' => $weather_next_week, 'weather_week_ago' => $weather_week_ago, 'dataCharts' => $dataCharts, 'dataPrecipitation' => $dataPrecipitation]);
     }
 
+
+    private function getData($listData)
+    {
+        $report_date = [];
+        $arr_total_revenues = [];
+        $arr_renew_revenues = [];
+        foreach ($listData as $item) {
+            array_splice($report_date, 0, 0, date('d/m/Y H:i', $item['timestamp']));
+            array_splice($arr_total_revenues, 0, 0, $item['tmin']);
+            array_splice($arr_renew_revenues, 0, 0, $item['tmax']);
+        }
+        $data[0] = array_reverse($report_date);
+        $data[1] = array_reverse($arr_total_revenues);
+        $data[2] = array_reverse($arr_renew_revenues);
+        return $data;
+    }
+
+    private function getDataPrecipitation($listData)
+    {
+        $report_date = [];
+        $arr_renew_revenues = [];
+        foreach ($listData as $item) {
+            array_splice($report_date, 0, 0, date('d/m/Y H:i', $item['timestamp']));
+            array_splice($arr_renew_revenues, 0, 0, $item['precipitation']);
+        }
+        $data[0] = array_reverse($report_date);
+        $data[1] = array_reverse($arr_renew_revenues);
+        return $data;
+    }
 }
