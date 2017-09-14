@@ -69,12 +69,12 @@ if (!Yii::$app->user->isGuest) {
         </div>
     </div>
 
-
-    <!--end list CT block-->
-
+<!---->
+    <!--    <!--end list CT block-->-->
+    <!---->
     <!--    <div class="container">-->
     <!--        <div class="banner-block clearfix">-->
-    <!--            <img src="../img/banners.jpg">-->
+    <!--            <img src="../img/green-coffee-vietnam-partners-logo-all.jpg">-->
     <!--        </div>-->
     <!--    </div>-->
 
@@ -86,28 +86,7 @@ if (!Yii::$app->user->isGuest) {
             <h2><?= UserHelper::multilanguage('Các đơn vị liên kết', 'Unit Link') ?><a
                     href="<?= Url::toRoute(['site/linked']) ?>"><span><?= UserHelper::multilanguage('Tất cả', 'All') ?></span><i
                         class="fa fa-chevron-right"></i></a></h2>
-            <ul class="bxslider3">
-                <?php if (isset($listUnit) && !empty($listUnit)) {
-                    foreach ($listUnit as $item) {
-                        /** @var $item \common\models\UnitLink */ ?>
-                        <li style="width: 400px;"><a target="_blank" href="<?= $item->link ?>"><img
-                                    src="<?= $item->getThumbnailLink() ?>">
-                                <h3><?= UserHelper::multilanguage($item->name, $item->name) ?></h3>
-                            </a></li>
-                    <?php }
-                } else { ?>
-                    <li><a href=""><img src="../img/p1.png"></a></li>
-                    <li><a href=""><img src="../img/p2.png"></a></li>
-                    <li><a href=""><img src="../img/p3.png"></a></li>
-                    <li><a href=""><img src="../img/p4.png"></a></li>
-                    <li><a href=""><img src="../img/p5.png"></a></li>
-                    <li><a href=""><img src="../img/p1.png"></a></li>
-                    <li><a href=""><img src="../img/p2.png"></a></li>
-                    <li><a href=""><img src="../img/p3.png"></a></li>
-                    <li><a href=""><img src="../img/p4.png"></a></li>
-                    <li><a href=""><img src="../img/p5.png"></a></li>
-                <?php } ?>
-            </ul>
+            <a href=""><img src="../img/green-coffee-vietnam-partners-logo-all.jpg"></a></li>
         </div>
     </div>
     <!--end partner-->
