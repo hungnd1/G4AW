@@ -1,7 +1,9 @@
 <?php
 namespace frontend\models;
 
+use common\helpers\CUtils;
 use common\models\Subscriber;
+use common\models\SubscriberToken;
 use common\models\User;
 use frontend\helpers\UserHelper;
 use Yii;
@@ -27,11 +29,11 @@ class LoginForm extends Model
         return [
             // username and password are both required
             [['username'], 'required','message'=>UserHelper::multilanguage('Tên đăng nhập không được để trống','Username not empty')],
-            [[ 'password'], 'required','message'=>UserHelper::multilanguage('Mật khẩu không được để trống','Password not empty')],
+//            [[ 'password'], 'required','message'=>UserHelper::multilanguage('Mật khẩu không được để trống','Password not empty')],
             // rememberMe must be a boolean value
-            ['rememberMe', 'boolean'],
+//            ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
-            ['password', 'validatePassword'],
+//            ['password', 'validatePassword'],
         ];
     }
 
@@ -59,11 +61,28 @@ class LoginForm extends Model
      */
     public function login()
     {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
-        } else {
-            return false;
+//        if ($this->validate()) {
+//            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+//        } else {
+//            return false;
+//        }
+        $subscriber = Subscriber::findOne(['username' => $this->username]);
+        $password = CUtils::generateRandomString(8);
+        if (!$subscriber) {
+            $subscriber = new Subscriber();
+            $subscriber->username = $this->username;
+            $subscriber->setPassword($password);
+            $subscriber->msisdn = $password;
+            $subscriber->verification_code = $password;
+            $subscriber->status = Subscriber::STATUS_ACTIVE;
+            $subscriber->created_at = time();
+            $subscriber->updated_at = time();
+            $subscriber->authen_type = Subscriber::AUTHEN_TYPE_NORMAL;
+            $subscriber->last_login_at = time();
+            $subscriber->save();
         }
+
+        return Yii::$app->user->login($subscriber, $this->rememberMe ? 3600 * 24 * 30 : 0);
     }
 
     /**

@@ -22,15 +22,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         'id' => 'login-form',
                     ]); ?>
 
-                    <h3><?= UserHelper::multilanguage('Đăng Nhập','Login') ?><a href="<?= Url::toRoute(['site/signup']) ?>"><?= UserHelper::multilanguage('Đăng ký','Sign-in') ?></a></h3>
+                    <h3><?= UserHelper::multilanguage('Đăng Nhập','Login') ?>
+<!--                        <a href="--><?//= Url::toRoute(['site/signup']) ?><!--">--><?//= UserHelper::multilanguage('Đăng ký','Sign-in') ?><!--</a>-->
+                    </h3>
 
                     <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
-                    <?= $form->field($model, 'password')->passwordInput() ?>
+<!--                     $form->field($model, 'password')->passwordInput() -->
 
                     <div class="re-and-log">
 
-                        <?= $form->field($model, 'rememberMe')->checkbox(['value'=>1])->label(UserHelper::multilanguage('Ghi nhớ','Remember')) ?>
+<!--                        $form->field($model, 'rememberMe')->checkbox(['value'=>1])->label(UserHelper::multilanguage('Ghi nhớ','Remember')) -->
 <!--                        <a href="--><?//= Url::toRoute(['site/request-password-reset'])?><!--" class="link-change-pass">Quên mật khẩu?</a>-->
                     </div>
 
