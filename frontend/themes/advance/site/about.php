@@ -45,7 +45,7 @@ use yii\helpers\Url;
                         ?>
 
                         <div class="item <?php if ($i == 0) { ?> active <?php } ?>">
-                                    <img style="width: 778px;height: 300px;" src="<?= $item->getImageLink() ?>"
+                                    <img style="width: 847px;height: 460px;" src="<?= $item->getImageLink() ?>"
                                          alt="...">
                         </div>
                         <?php $i++;
