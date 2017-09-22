@@ -12,7 +12,14 @@ use yii\helpers\Url;
 
 <!-- content -->
 <div class="content">
-    <h2>Giới thiệu</h2>
+    <div class="container">
+        <div class="cr-page-link">
+            <a href="<?= \yii\helpers\Url::toRoute(['site/index']) ?>">Trang chủ</a>
+            <span>/</span>
+            Giới thiệu
+        </div>
+        <h2>  Giới thiệu</h2>
+    </div>
     <div class="container slider">
         <div id="slide-main" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
