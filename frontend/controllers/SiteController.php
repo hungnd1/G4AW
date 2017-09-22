@@ -413,7 +413,7 @@ class SiteController extends BaseController
      */
     public function actionAbout()
     {
-        $listSlide = Banner::find()->limit(1)->all();
+        $listSlide = Banner::find()->all();
         return $this->render('about', ['listSlide' => $listSlide]);
     }
 

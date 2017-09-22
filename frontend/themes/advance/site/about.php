@@ -18,7 +18,7 @@ use yii\helpers\Url;
             <span>/</span>
             Giới thiệu
         </div>
-        <h2>  Giới thiệu</h2>
+        <h2>  Giới thiệu</h2><br>
     </div>
     <div class="container slider">
         <div id="slide-main" class="carousel slide" data-ride="carousel">
@@ -47,6 +47,14 @@ use yii\helpers\Url;
                         <div class="item <?php if ($i == 0) { ?> active <?php } ?>">
                                     <img style="width: 847px;height: 460px;" src="<?= $item->getImageLink() ?>"
                                          alt="...">
+                            <div class="carousel-caption">
+                                <div>
+                                    <h3>Dự án xây dựng cầu treo dân sinh tỉnh Hòa Bình</h3>
+                                    Trường học tại xã X có quy mô 2 tầng, 7 phòng, bao gồm phòng học, phòng cho giáo viên,
+                                    thư viện. Được sự ủng hộ và hỗ trợ của các doanh nghiệp hảo tâm...<br>
+                                    <a href="" class="bt-more-1">Xem thêm</a>
+                                </div>
+                            </div>
                         </div>
                         <?php $i++;
                     }
