@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Banner;
 use common\models\Category;
 use common\models\Comment;
 use common\models\News;
@@ -412,8 +413,8 @@ class SiteController extends BaseController
      */
     public function actionAbout()
     {
-        $model = Term::find()->orderBy(['created_at' => SORT_DESC])->one();
-        return $this->render('about', ['model' => $model]);
+        $listSlide = Banner::find()->all();
+        return $this->render('about', ['listSlide' => $listSlide]);
     }
 
     public function actionNews()
@@ -580,5 +581,9 @@ class SiteController extends BaseController
         $data[0] = array_reverse($report_date);
         $data[1] = array_reverse($arr_renew_revenues);
         return $data;
+    }
+
+    public function actionWeather(){
+        return $this->render('weather');
     }
 }

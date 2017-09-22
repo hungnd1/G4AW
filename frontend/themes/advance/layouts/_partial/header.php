@@ -71,7 +71,7 @@ use yii\widgets\ActiveForm;
                 <li>
                     <a href="<?= Url::toRoute(['site/about']) ?>">Giới thiệu</a>
                 </li>
-                <li><a href="">Thời tiết</a></li>
+                <li><a href="<?= Url::toRoute(['site/weather']) ?>">Thời tiết</a></li>
                 <li><a href="<?= Url::toRoute(['disease/index']) ?>">Thông tin sâu bệnh</a></li>
                 <li>
                     <a href="<?= Url::toRoute(['price/index']) ?>">Thông tin thị trường</a>
@@ -82,9 +82,9 @@ use yii\widgets\ActiveForm;
                 <li>
                     <a href="<?= Url::toRoute(['news/index']) ?>">Thông tin GAPs</a>
                 </li>
-                <li>
-                    <a href="<?= Url::toRoute(['news/index']) ?>">Hỏi đáp</a>
-                </li>
+<!--                <li>-->
+<!--                    <a href="--><?//= Url::toRoute(['news/index']) ?><!--">Hỏi đáp</a>-->
+<!--                </li>-->
             </ul>
 
             <?php
@@ -134,7 +134,7 @@ use yii\widgets\ActiveForm;
             <li>
                 <a href="<?= Url::toRoute(['site/about']) ?>">Giới thiệu</a>
             </li>
-            <li><a href="">Thời tiết</a></li>
+            <li><a href="<?= Url::toRoute(['site/weather']) ?>">Thời tiết</a></li>
             <li><a href="<?= Url::toRoute(['disease/index']) ?>">Thông tin sâu bệnh</a></li>
             <li>
                 <a href="<?= Url::toRoute(['price/index']) ?>">Thông tin thị trường</a>
@@ -145,9 +145,9 @@ use yii\widgets\ActiveForm;
             <li>
                 <a href="<?= Url::toRoute(['news/index']) ?>">Thông tin GAPs</a>
             </li>
-            <li>
-                <a href="<?= Url::toRoute(['news/index']) ?>">Hỏi đáp</a>
-            </li>
+<!--            <li>-->
+<!--                <a href="--><?//= Url::toRoute(['news/index']) ?><!--">Hỏi đáp</a>-->
+<!--            </li>-->
             <div class="right-nav hidden-sm hidden-xs">
 
                 <div class="f-search">
