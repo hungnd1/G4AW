@@ -49,10 +49,8 @@ use yii\helpers\Url;
                                          alt="...">
                             <div class="carousel-caption">
                                 <div>
-                                    <h3>Dự án xây dựng cầu treo dân sinh tỉnh Hòa Bình</h3>
-                                    Trường học tại xã X có quy mô 2 tầng, 7 phòng, bao gồm phòng học, phòng cho giáo viên,
-                                    thư viện. Được sự ủng hộ và hỗ trợ của các doanh nghiệp hảo tâm...<br>
-                                    <a href="" class="bt-more-1">Xem thêm</a>
+                                    <h3>Dự án dịch vụ thông tin Green Coffee</h3>
+                                    Cung cấp các dịch vụ thông tin coffee<br>
                                 </div>
                             </div>
                         </div>
