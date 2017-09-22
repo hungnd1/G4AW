@@ -50,7 +50,7 @@ use yii\helpers\Url;
                             <div class="carousel-caption">
                                 <div>
                                     <h3>Dự án dịch vụ thông tin Green Coffee</h3>
-                                    Cung cấp các dịch vụ thông tin coffee. Chi tiết xem video giới thiệu tại đây.https://www.youtube.com/watch?v=yhgu77BJoAY<br>
+                                    Cung cấp các dịch vụ thông tin coffee. Chi tiết xem video giới thiệu tại đây.<a href="https://www.youtube.com/watch?v=yhgu77BJoAY">Chi tiết</a><br>
                                 </div>
                             </div>
                         </div>
