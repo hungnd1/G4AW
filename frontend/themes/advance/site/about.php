@@ -40,16 +40,6 @@ use yii\helpers\Url;
                         <div class="item <?php if ($i == 0) { ?> active <?php } ?>">
                                     <img style="width: 778px;height: 300px;" src="<?= $item->getImageLink() ?>"
                                          alt="...">
-                            <div class="carousel-caption">
-                                <!-- <div>
-                                    <h3>
-                                       <?= $item->title ?>
-                                    </h3>
-                                    <?= str_replace(mb_substr($item->short_description, 200, strlen($item->short_description), 'utf-8'), '...', $item->short_description) ?>
-                                    <br>
-                                </div>
-                                -->
-                            </div>
                         </div>
                         <?php $i++;
                     }
