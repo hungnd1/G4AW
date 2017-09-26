@@ -18,7 +18,6 @@ use yii\helpers\Url;
             <span>/</span>
             Giới thiệu
         </div>
-        <h2>  Giới thiệu</h2><br>
     </div>
     <div class="container slider">
         <div id="slide-main" class="carousel slide" data-ride="carousel">
@@ -58,29 +57,7 @@ use yii\helpers\Url;
                     }
                 } else { ?>
                     <div class="item active">
-                        <img src="../img/banner.jpg" alt="...">
-                        <div class="carousel-caption">
-                            <div>
-                                <h3>Dự án xây dựng cầu treo dân sinh tỉnh Hòa Bình</h3>
-                                Trường học tại xã X có quy mô 2 tầng, 7 phòng, bao gồm phòng học, phòng cho giáo viên,
-                                thư viện. Được sự ủng hộ và hỗ trợ của các doanh nghiệp hảo tâm...<br>
-                                <a href="" class="bt-more-1">Xem thêm</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="../img/banner2.jpg" alt="...">
-                        <div class="carousel-caption">
-                            <div>
-                                <h3>Xây dựng trường học bản Lác</h3>
-                                Trường học tại xã X có quy mô 2 tầng, 7 phòng, bao gồm phòng học, phòng cho giáo viên,
-                                thư viện. Được sự ủng hộ và hỗ trợ của các doanh nghiệp hảo tâm... <br>
-                                <a href="" class="bt-more-1">Xem thêm</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="../img/banner3.jpg" alt="...">
+                        <img src="http://thongtincaphe.vn/static/news/16.59c9c42d66e891506395181.png" alt="...">
                         <div class="carousel-caption">
                             <div>
                                 <h3>Dự án xây dựng cầu treo dân sinh tỉnh Hòa Bình</h3>
