@@ -63,7 +63,7 @@ use dosamigos\highcharts\HighCharts;
                                             <b><?= \common\helpers\CUtils::sw_get_current_weekday($weather_next_week[$i]['timestamp']) ?></b><br><br>
                                             Thời tiết ngày <?= date('d/m',$weather_next_week[$i]['timestamp']) ?><br>
                                             Dự đoán từ
-                                            <i><?= date('H:i', $weather_next_week[$i]['timestamp']) ?></i><br>
+                                            <i><?= date('H:i d/m', $weather_next_week[$i]['timestamp']) ?></i><br>
                                             đến <i><?php
                                                 if ($i == sizeof($weather_next_week)-1) {
                                                     echo "00:00 ".date('d/m',$weather_next_week[$i]['timestamp'] + 24 * 3600);
