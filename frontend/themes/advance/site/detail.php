@@ -37,7 +37,7 @@ use yii\helpers\Url;
                     <? //= UserHelper::multilanguage('Click ảnh trên để xem video','Click image to watch video') ?><!--</p>-->
                     <!--                    --><?php //} ?>
                     <div class="content-dt">
-                        <?= preg_replace('/(\<img[^>]+)(style\=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', $model->gap) ?>
+                        <?=$model->gap ?>
                     </div>
                 </div>
             </div>

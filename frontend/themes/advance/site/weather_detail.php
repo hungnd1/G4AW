@@ -50,15 +50,27 @@ use dosamigos\highcharts\HighCharts;
                         </tr>
                     <?php } ?>
                     <tr>
-                        <?php if (sizeof($weather_next_week) > 0) { ?>
+                        <?php if (sizeof($weather_next_week) > 0) {
+                            $i = 0;
+                            ?>
                             <table width="100%" cellpadding="0" cellspacing="0" border="0">
                                 <tbody>
                                 <tr class="tb-top">
-                                    <?php foreach ($weather_next_week as $weather) {
+                                    <?php for ($i = 0; $i < sizeof($weather_next_week); $i++) {
                                         /** @var $weather \common\models\WeatherDetail */
                                         ?>
                                         <td width="<?= 100 / sizeof($weather_next_week) ?>%">
-                                            <b><?= \common\helpers\CUtils::sw_get_current_weekday($weather['timestamp']) ?></b><br><i><?= date('d/m H:i', $weather['timestamp']) ?></i>
+                                            <b><?= \common\helpers\CUtils::sw_get_current_weekday($weather_next_week[$i]['timestamp']) ?></b><br><br>
+                                            Thời tiết ngày <?= date('d/m',$weather_next_week[$i]['timestamp']) ?><br>
+                                            Dự đoán từ
+                                            <i><?= date('H:i', $weather_next_week[$i]['timestamp']) ?></i><br>
+                                            đến <i><?php
+                                                if ($i == sizeof($weather_next_week)-1) {
+                                                    echo "00:00 ".date('d/m',$weather_next_week[$i]['timestamp'] + 24 * 3600);
+                                                } else {
+                                                    echo date('H:i d/m', $weather_next_week[$i + 1]['timestamp']);
+                                                }
+                                                ?>
                                         </td>
                                     <?php } ?>
 
@@ -117,7 +129,7 @@ use dosamigos\highcharts\HighCharts;
                             ]
                         ]
                     ]);
-                ?>
+                    ?>
                     <br>
                     <br>
                     <br>
@@ -134,7 +146,7 @@ use dosamigos\highcharts\HighCharts;
                             'xAxis' => [
                                 'categories' => $dataPrecipitation[0]
                             ],
-                            'hAxis.direction'=>-1,
+                            'hAxis.direction' => -1,
                             'yAxis' => [
                                 'min' => 0,
                                 'allowDecimals' => false,
