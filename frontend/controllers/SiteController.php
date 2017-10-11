@@ -107,6 +107,7 @@ class SiteController extends BaseController
             $audit_log->target_id = isset($params['id']) ? $params['id'] : null;
             $audit_log->description = 'Truy cap trang';
             $audit_log->status = 'Waiting response';
+            $audit_log->channel = 7;
             $audit_log->save(false);
             Yii::$app->session->set('timeExpired', time());
         }
