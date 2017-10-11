@@ -69,8 +69,7 @@ use yii\helpers\Url;
                             <?php foreach ($listPrice as $price) {
                                 ?>
                                 <tr style="">
-                                    <td class="province"><span><?= $price['province_name'] ?></span></td>
-                                    <td class="none">&nbsp;</td>
+                                    <td class="province" colspan="4" style="background-color: #4d79ff "><span style="color: white;"><?= $price['province_name'] ?></span></td>
                                 </tr>
                                 <?php foreach ($price['price'] as $item) { ?>
                                     <tr style="border-bottom:1px solid #eee;">
