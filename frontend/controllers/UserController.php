@@ -174,8 +174,11 @@ class UserController extends Controller
     public function actionMyPage()
     {
         $id = Yii::$app->user->id;
+        $timeExpired = time() - Yii::$app->params['timeExpired'] * 24 * 60 * 60;
         $listExchangeSold = null;
-        $query = Exchange::find()->orderBy(['created_at'=>SORT_DESC]);
+        $query = Exchange::find()
+            ->andWhere(['>=','created_at',$timeExpired])
+            ->orderBy(['created_at'=>SORT_DESC]);
         $countQuery = clone  $query;
         $pages = new Pagination(['totalCount' => $countQuery->count()]);
         $pageSize = Yii::$app->params['page_size'];
@@ -183,7 +186,9 @@ class UserController extends Controller
         $listExchangeSold = $query->offset($pages->offset)->limit(10)->all();
 
         $listExchangeBuy = null;
-        $query = ExchangeBuy::find()->orderBy(['created_at'=>SORT_DESC]);
+        $query = ExchangeBuy::find()
+            ->andWhere(['>=','created_at',$timeExpired])
+            ->orderBy(['created_at'=>SORT_DESC]);
         $countQuery = clone  $query;
         $pages_buy = new Pagination(['totalCount' => $countQuery->count()]);
         $pageSize = Yii::$app->params['page_size'];

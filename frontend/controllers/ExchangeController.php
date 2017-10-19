@@ -6,6 +6,7 @@ use common\components\OwnerFilter;
 use common\models\DonationRequest;
 use common\models\Exchange;
 use common\models\ExchangeBuy;
+use common\models\PriceCoffee;
 use common\models\Province;
 use common\models\Sold;
 use common\models\Subscriber;
@@ -92,6 +93,7 @@ class ExchangeController extends BaseController
     public function actionExchangeSold()
     {
         $model = new Exchange();
+        $model_exchange = new ExchangeBuy();
         $user = Subscriber::findOne(['id' => Yii::$app->user->id]);
         if ($model->load(Yii::$app->request->post())) {
             $totalQuanlity = TotalQuality::find()
@@ -113,23 +115,50 @@ class ExchangeController extends BaseController
             $model->sold_id = $sold->id;
             $model->created_at = time();
             $model->updated_at = time();
-            if ($model->save()) {
-                Yii::$app->session->addFlash('success', 'Giao dịch thành công');
-                return $this->redirect(['/user/my-page']);
-            } else {
-                Yii::$app->session->addFlash('error', 'Giao dịch không thành công');
+
+            $today = strtotime('today midnight') ;
+            $tomorrow = strtotime('tomorrow') ;
+
+            $maxPrice = PriceCoffee::find()
+                ->andWhere(['>=', 'price_coffee.created_at', $today ])
+                ->andWhere(['<=', 'price_coffee.created_at', $tomorrow])
+                ->andWhere(['not in','price_coffee.coffee_old_id',['201029','199811','199808','199807']])
+                ->groupBy('price_coffee.coffee_old_id')
+                ->orderBy(['price_coffee.coffee_old_id' => SORT_DESC])->max('price_average');
+            $minPrice = PriceCoffee::find()
+                ->andWhere(['>=', 'price_coffee.created_at', $today ])
+                ->andWhere(['<=', 'price_coffee.created_at', $tomorrow])
+                ->andWhere(['not in','price_coffee.coffee_old_id',['201029','199811','199808','199807']])
+                ->groupBy('price_coffee.coffee_old_id')
+                ->orderBy(['price_coffee.coffee_old_id' => SORT_DESC])->min('price_average');
+            if($model->price >= $minPrice && $model->price <= $maxPrice ){
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('success', 'Giao dịch thành công');
+                    return $this->redirect(['/user/my-page']);
+                } else {
+                    Yii::$app->session->setFlash('error', 'Giao dịch không thành công');
+                }
             }
+            Yii::$app->session->setFlash('error', 'Giá nhập vào không được quá giá cao nhất và thấp nhất của ngày hôm nay');
+            return $this->render('index', [
+                'model' => $model,
+                'user' => $user,
+                'model_exchange'=>$model_exchange
+            ]);
+
         }
-        Yii::$app->session->addFlash('error', 'Giao dịch không thành công');
+        Yii::$app->session->setFlash('error', 'Giao dịch không thành công');
         return $this->render('index', [
             'model' => $model,
-            'user' => $user
+            'user' => $user,
+            'model_exchange'=>$model_exchange
         ]);
     }
 
     public function actionExchangeBuy()
     {
         $model = new ExchangeBuy();
+        $modelSold = new Exchange();
         $user = Subscriber::findOne(['id' => Yii::$app->user->id]);
         if ($model->load(Yii::$app->request->post())) {
             $totalQuantity = TotalQuality::find()
@@ -143,17 +172,45 @@ class ExchangeController extends BaseController
             $model->total_quantity = $totalQuantity->id;
             $model->created_at = time();
             $model->updated_at = time();
-            if ($model->save(false)) {
-                Yii::$app->session->addFlash('success', 'Giao dịch thành công');
-                return $this->redirect(['/user/my-page']);
-            } else {
-                Yii::$app->session->addFlash('error', 'Giao dịch không thành công');
+
+            $today = strtotime('today midnight') ;
+            $tomorrow = strtotime('tomorrow') ;
+
+            $maxPrice = PriceCoffee::find()
+                ->andWhere(['>=', 'price_coffee.created_at', $today ])
+                ->andWhere(['<=', 'price_coffee.created_at', $tomorrow])
+                ->andWhere(['not in','price_coffee.coffee_old_id',['201029','199811','199808','199807']])
+                ->groupBy('price_coffee.coffee_old_id')
+                ->orderBy(['price_coffee.coffee_old_id' => SORT_DESC])->max('price_average');
+
+
+            $minPrice = PriceCoffee::find()
+                ->andWhere(['>=', 'price_coffee.created_at', $today ])
+                ->andWhere(['<=', 'price_coffee.created_at', $tomorrow])
+                ->andWhere(['not in','price_coffee.coffee_old_id',['201029','199811','199808','199807']])
+                ->groupBy('price_coffee.coffee_old_id')
+                ->orderBy(['price_coffee.coffee_old_id' => SORT_DESC])->min('price_average');
+            if($model->price_buy >= $minPrice && $model->price_buy <= $maxPrice ){
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('success', 'Giao dịch thành công');
+                    return $this->redirect(['/user/my-page']);
+                } else {
+                    Yii::$app->session->setFlash('error', 'Giao dịch không thành công');
+                }
             }
+            Yii::$app->session->setFlash('error', 'Giá nhập vào không được quá giá cao nhất và thấp nhất của ngày hôm nay');
+            return $this->render('index', [
+                'model_exchange' => $model,
+                'user' => $user,
+                'model'=>$modelSold
+            ]);
+
         }
-        Yii::$app->session->addFlash('error', 'Giao dịch không thành công');
+        Yii::$app->session->setFlash('error', 'Giao dịch không thành công');
         return $this->render('index', [
-            'model' => $model,
-            'user' => $user
+            'model_exchange' => $model,
+            'user' => $user,
+            'model'=>$modelSold
         ]);
     }
 

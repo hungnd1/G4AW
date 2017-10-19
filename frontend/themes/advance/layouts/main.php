@@ -97,8 +97,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 <?= Header::widget([]) ?>
 <!-- Promo block BEGIN -->
-<?= Yii::$app->session->getFlash('error'); ?>
-<?= Alert::widget() ?>
+
 <?= $content ?>
 
 <?= $this->render('_partial/footer') ?>
@@ -209,6 +208,19 @@ AppAsset::register($this);
         });
     });
 
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var error = '<?= Yii::$app->session->getFlash("error") ? Yii::$app->session->getFlash("error") : ""  ?>';
+        if(error != ''){
+            alert(error);
+        }
+        var success = '<?= Yii::$app->session->getFlash("success") ? Yii::$app->session->getFlash("success") : ""  ?>';
+        if(success != ''){
+            alert(success);
+        }
+    });
 </script>
 
 </html>

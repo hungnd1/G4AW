@@ -51,7 +51,7 @@ class Exchange extends \yii\db\ActiveRecord
             'total_quality_id' => 'Tổng sản lượng',
             'sold_id' => 'Sản lượng bán',
             'type_coffee' => 'Loại coffee',
-            'price' => 'Giá Coffee',
+            'price' => 'Giá cafe',
             'location' => 'Vị trí',
             'location_name' => 'Vị trí',
             'created_at' => 'Created At',
