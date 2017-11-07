@@ -26,22 +26,25 @@ class NewsController extends BaseController
      * @param integer $id
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($active = 1)
     {
-            $title = "GAPs";
-            $listNews = News::find()
-                ->andWhere(['news.status' => News::STATUS_ACTIVE]);
-            $listNews->orderBy(['news.created_at' => SORT_DESC]);
-            $countQuery = clone $listNews;
-            $pages = new Pagination(['totalCount' => $countQuery->count()]);
-            $pageSize = Yii::$app->params['page_size'];
-            $pages->setPageSize($pageSize);
-            $models = $listNews->offset($pages->offset)
-                ->limit(10)->all();
-            $listNewRelated = News::find()
-                ->andWhere(['news.status' => News::STATUS_ACTIVE])
-                ->orderBy(['news.created_at' => SORT_DESC])->offset($pages->offset  + 10)->limit(5)->all();
-            return $this->render('index', ['title' => $title, 'listNews' => $models, 'pages' => $pages, 'listNewRelated' => $listNewRelated]);
+        $title = "GAPs";
+//            $listNews = News::find()
+//                ->andWhere(['news.status' => News::STATUS_ACTIVE]);
+//            $listNews->orderBy(['news.created_at' => SORT_DESC]);
+//            $countQuery = clone $listNews;
+//            $pages = new Pagination(['totalCount' => $countQuery->count()]);
+//            $pageSize = Yii::$app->params['page_size'];
+//            $pages->setPageSize($pageSize);
+//            $models = $listNews->offset($pages->offset)
+//                ->limit(10)->all();
+        $listNewRelated = News::find()
+            ->andWhere(['news.status' => News::STATUS_ACTIVE])
+            ->orderBy(['news.created_at' => SORT_DESC])->offset(10)->limit(5)->all();
+//            return $this->render('index', ['title' => $title, 'listNews' => $models, 'pages' => $pages, 'listNewRelated' => $listNewRelated]);
+        $listCategory = Category::find()->andWhere(['status' => Category::STATUS_ACTIVE])
+            ->orderBy(['order_number' => SORT_ASC])->all();
+        return $this->render('index', ['active'=>$active,'title' => $title, 'listCategory' => $listCategory, 'listNewRelated' => $listNewRelated]);
     }
 
 
