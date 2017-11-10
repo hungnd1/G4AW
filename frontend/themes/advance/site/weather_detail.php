@@ -39,7 +39,9 @@ use dosamigos\highcharts\HighCharts;
                                         <td width="400" style="padding-left: 30px;"><span class="nhietdo-big">
                                             Nhiệt độ: <b><?= $weather_current->tmin ?><sup>o</sup>C
                                                     - <?= $weather_current->tmax ?><sup>o</sup>C</b><br>
-                                            Tổng lượng mưa: <b><?= $weather_current->precipitation . ' ' . $weather_current->precipitation_unit ?></b><br>
+                                                 Nhiệt độ cảm nhận: <b><?= $weather_current->RFTMIN ?><sup>o</sup>C
+                                                    - <?= $weather_current->RFTMAX ?><sup>o</sup>C</b><br>
+                                            Tổng lượng mưa: <b><?= $weather_current->precipitation_average . ' ' . $weather_current->precipitation_unit ?></b><br>
                                             Tốc độ gió: <b><?= $weather_current->wndspd_km_h ?></b><br>
                                             Hướng gió: <b><?= $weather_current->wnddir ?><br>
                                         </td>
@@ -61,7 +63,7 @@ use dosamigos\highcharts\HighCharts;
                                         ?>
                                         <td width="<?= 100 / sizeof($weather_next_week) ?>%">
                                             <b><?= \common\helpers\CUtils::sw_get_current_weekday($weather_next_week[$i]['timestamp']) ?></b><br><br>
-                                            Dự báo ngày <?= date('d-m',$weather_next_week[$i]['timestamp']) ?>
+                                            Dự báo ngày <?= date('d-m', $weather_next_week[$i]['timestamp']) ?>
                                         </td>
                                     <?php } ?>
 
