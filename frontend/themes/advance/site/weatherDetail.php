@@ -12,7 +12,7 @@
                  class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="">
             <div class="temperature">
                 <p><?= $weather->t_average ?></p>
-                <p><?= $weather->wtxt ?></p>
+                <p><?= $weather->content ?></p>
                 <p><?= date('d/m/Y', $weather->timestamp) ?></p>
             </div>
         </div>
