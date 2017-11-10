@@ -12,14 +12,15 @@
                  class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="">
             <div class="temperature">
                 <p><?= $weather->t_average ?></p>
-                <p><?= $weather->content ?></p>
+                <p><?= $weather->wtxt ?></p>
                 <p><?= date('d/m/Y', $weather->timestamp) ?></p>
             </div>
         </div>
         <div class="right-content1">
             <ul>
                 <li>Nhiệt độ: <span><?= $weather->tmin ?>⁰C - <?= $weather->tmax ?>⁰C</span></li>
-                <li>Lượng mưa : <span><?= $weather->precipitation . $weather->precipitation_unit ?></span></li>
+                <li>Nhiệt độ cảm nhận: <span><?= $weather->RFTMIN ?>⁰C - <?= $weather->RFTMAX ?>⁰C</span></li>
+                <li>Lượng mưa : <span><?= $weather->precipitation_average . $weather->precipitation_unit ?></span></li>
                 <li>Tốc độ gió: <span><?= $weather->wndspd_km_h ?></span></li>
                 <li>Hướng gió: <span><?= $weather->wnddir ?></span></li>
                 <li>
