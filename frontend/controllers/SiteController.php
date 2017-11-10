@@ -394,9 +394,13 @@ class SiteController extends BaseController
 
         $url = Yii::$app->params['apiUrl'] . "app/gap-advice?tem=" . $temp . "&pre=" . $pre . "&wind=" . $wind;
         $response = $this->callCurl($url);
-        $advice = $response['data'];
-        /** @var  $model News */
-        return $this->render('detail', ['model' => (object)$advice]);
+        $advice = $response['data']['items'];
+        $content = '';
+        foreach ($advice as $item) {
+            $content .= '<h3>' . $item['tag'] . '</h3>';
+            $content .= $item['content'];
+        }
+        return $this->render('detail', ['listAdvice' => $advice, 'content' => $content]);
 
     }
 

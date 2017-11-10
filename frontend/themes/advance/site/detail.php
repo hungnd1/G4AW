@@ -10,8 +10,8 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
 /** @var $model  \common\models\GapGeneral */
+$title = 'Khuyến cáo';
 ?>
-
 <!-- content -->
 <script src="<?= Yii::$app->request->baseUrl ?>/js/jwplayer/jwplayer.js"></script>
 <script src="<?= Yii::$app->request->baseUrl ?>/js/ng_player.js"></script>
@@ -25,10 +25,10 @@ use yii\helpers\Url;
                 <div class="cr-page-link">
                     <a href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
                     <span>/</span>
-                    <a href=""><?= $model->title ?></a>
+                    <a href=""><?= $title ?></a>
                 </div>
                 <div class="m-content">
-                    <h1><?= $model->title ?></h1>
+<!--                    <h1>--><?//= $title ?><!--</h1>-->
                     <!--                    --><?php //if($model->type == \common\models\News::TYPE_VIDEO){?>
                     <!--                    <a id="player" onclick="playVideo();"><img-->
                     <!--                            src="--><!--"-->
@@ -37,7 +37,7 @@ use yii\helpers\Url;
                     <? //= UserHelper::multilanguage('Click ảnh trên để xem video','Click image to watch video') ?><!--</p>-->
                     <!--                    --><?php //} ?>
                     <div class="content-dt">
-                        <?=$model->gap ?>
+                        <?= $content ?>
                     </div>
                 </div>
             </div>
