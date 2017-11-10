@@ -122,15 +122,14 @@ class ExchangeController extends BaseController
             $maxPrice = PriceCoffee::find()
                 ->andWhere(['>=', 'price_coffee.created_at', $today ])
                 ->andWhere(['<=', 'price_coffee.created_at', $tomorrow])
-                ->andWhere(['not in','price_coffee.coffee_old_id',['201029','199811','199808','199807']])
-                ->groupBy('price_coffee.coffee_old_id')
-                ->orderBy(['price_coffee.coffee_old_id' => SORT_DESC])->max('price_average');
+                ->andWhere(['not in','price_coffee.organisation_name',['dRCL','dACN']])
+                ->max('price_average');
             $minPrice = PriceCoffee::find()
                 ->andWhere(['>=', 'price_coffee.created_at', $today ])
                 ->andWhere(['<=', 'price_coffee.created_at', $tomorrow])
-                ->andWhere(['not in','price_coffee.coffee_old_id',['201029','199811','199808','199807']])
-                ->groupBy('price_coffee.coffee_old_id')
-                ->orderBy(['price_coffee.coffee_old_id' => SORT_DESC])->min('price_average');
+                ->andWhere(['not in','price_coffee.organisation_name',['dRCL','dACN']])
+                ->min('price_average');
+
             if($model->price >= $minPrice && $model->price <= $maxPrice ){
                 if ($model->save()) {
                     Yii::$app->session->setFlash('success', 'Giao dịch thành công');
@@ -179,17 +178,16 @@ class ExchangeController extends BaseController
             $maxPrice = PriceCoffee::find()
                 ->andWhere(['>=', 'price_coffee.created_at', $today ])
                 ->andWhere(['<=', 'price_coffee.created_at', $tomorrow])
-                ->andWhere(['not in','price_coffee.coffee_old_id',['201029','199811','199808','199807']])
-                ->groupBy('price_coffee.coffee_old_id')
-                ->orderBy(['price_coffee.coffee_old_id' => SORT_DESC])->max('price_average');
+                ->andWhere(['not in','price_coffee.organisation_name',['dRCL','dACN']])
+                ->max('price_average');
 
 
             $minPrice = PriceCoffee::find()
                 ->andWhere(['>=', 'price_coffee.created_at', $today ])
                 ->andWhere(['<=', 'price_coffee.created_at', $tomorrow])
-                ->andWhere(['not in','price_coffee.coffee_old_id',['201029','199811','199808','199807']])
-                ->groupBy('price_coffee.coffee_old_id')
-                ->orderBy(['price_coffee.coffee_old_id' => SORT_DESC])->min('price_average');
+                ->andWhere(['not in','price_coffee.organisation_name',['dRCL','dACN']])
+                ->min('price_average');
+
             if($model->price_buy >= $minPrice && $model->price_buy <= $maxPrice ){
                 if ($model->save()) {
                     Yii::$app->session->setFlash('success', 'Giao dịch thành công');
