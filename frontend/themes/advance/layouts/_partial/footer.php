@@ -19,6 +19,13 @@ use frontend\helpers\UserHelper;
                 <?= UserHelper::multilanguage("Địa chỉ: 122 Hoàng Quốc Việt, Cầu Giấy, Hà Nội<br> ĐT: (+84) 901 775 939",'Address: 122 Hoang Quoc Vietnam, Cau Giay, Ha Noi <br> Telephone: (+84) 901 775 939') ?><br>
 
             </div>
+            <div class="copy-right" style="padding-left: 50px;">
+                <h5><?= UserHelper::multilanguage('THÔNG TIN ĐỐI TÁC','Partner Information') ?></h5>
+                <p>Nguồn thông tin thị trường: Viện chính sách chiến lược phát triển Nông nghiệp nông thôn (IPSARD)</p>
+               <p>Nguồn thông tin kỹ thuật canh tác: Tổ chức chứng nhận UTZ</p>
+                Nguồn thông tin thời tiết: Viện Quy hoạch và Dự báo Nông nghiệp (NIAPP)<br>
+
+            </div>
             <div class="social">
                 <a href="" class="s-fb"><i class="fa fa-facebook"></i></a>
                 <a href="" class="s-tw"><i class="fa fa-twitter"></i></a>
