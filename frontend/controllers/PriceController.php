@@ -35,11 +35,28 @@ class PriceController extends BaseController
         }
         $model->date = $date;
         $listPrice = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price?date='.$date);
+        $listPrice1 = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price?date='.$date.'&coffee=1');
+        $listPrice2 = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price?date='.$date.'&coffee=2');
+        $listPrice3 = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price?date='.$date.'&coffee=3');
+        $listPrice4 = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price?date='.$date.'&coffee=4');
         $listPrice = $listPrice['data'];
+        $listPrice1 = $listPrice1['data'];
+        $listPrice2 = $listPrice2['data'];
+        $listPrice3 = $listPrice3['data'];
+        $listPrice4 = $listPrice4['data'];
         $listNewRelated = News::find()
             ->andWhere(['news.status' => News::STATUS_ACTIVE])
             ->orderBy(['news.created_at' => SORT_DESC])->limit(10)->all();
-        return $this->render('index', ['title' => $title, 'listPrice' => $listPrice, 'listNewRelated' => $listNewRelated,'model'=>$model,'date'=>$date]);
+        return $this->render('index', ['title' => $title,
+            'listPrice' => $listPrice,
+            'listPrice1' => $listPrice1,
+            'listPrice2' => $listPrice2,
+            'listPrice3' => $listPrice3,
+            'listPrice4' => $listPrice4,
+            'listNewRelated' => $listNewRelated,
+            'model'=>$model,
+            'date'=>$date
+        ]);
     }
 
 

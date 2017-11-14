@@ -55,12 +55,14 @@ use yii\helpers\Url;
                                 href="#lam-dong">Lâm Đồng</a>, <a href="#dak-lak">Đắk Lắk</a>, <a href="#gia-lai">Gia
                                 Lai</a>, <a href="#dak-nong">Đắk Nông</a>
                         </div>
+                        <h3 class="entry-title">Giá sàn (ngày <?= $date ?>)</h3>
                         <table class="quotes-table" cellpadding="0" cellspacing="0">
                             <thead>
                             <tr>
                                 <th class="tt thleft">Tỉnh<br/><span>/huyện (khu vực khảo sát)</span></th>
                                 <th class="gia" style="text-align:left;">Loại<br/>
-                                <th class="gia" style="text-align:left;">Giá thu mua<br/><span>Đơn vị: VNĐ/kg</span>
+                                <th class="gia" style="text-align:left;">Giá thu mua<br/><span></span>
+                                <th class="gia" style="text-align:left;">Chênh lệch(24h)<br/><span></span>
                                 <th class="gia" style="text-align:left;">Đại diện<br/>
                                 </th>
                             </tr>
@@ -76,7 +78,129 @@ use yii\helpers\Url;
                                         <td class="district">&mdash; <?= $item['province_name'] ?>
                                         </td>
                                         <td class="district"><?= $item['type_coffee']['name_coffee'] ?></td>
+                                        <td class="district"><?= \common\helpers\CUtils::formatPrice($item['price_average']).$item['unit'] ?></td>
+                                        <td class="district"><?= $item['exchange'] ?></td>
+                                        <td class="district"><?= $item['type_coffee']['company'] ?></td>
+                                    </tr>
+                                <?php } ?>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+
+                        <h3 class="entry-title">Giá quả tươi vối (ngày <?= $date ?>)</h3>
+                        <table class="quotes-table" cellpadding="0" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th class="tt thleft">Tỉnh<br/><span>/huyện (khu vực khảo sát)</span></th>
+                                <th class="gia" style="text-align:left;">Giá thu mua<br/><span>Đơn vị: VNĐ/kg</span>
+                                <th class="gia" style="text-align:left;">Chênh lệch(24h)<br/><span></span>
+                                <th class="gia" style="text-align:left;">Đại diện<br/>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($listPrice1 as $price) {
+                                ?>
+                                <tr style="">
+                                    <td class="province" colspan="4" style="background-color: #4d79ff "><span style="color: white;"><?= $price['province_name'] ?></span></td>
+                                </tr>
+                                <?php foreach ($price['price'] as $item) { ?>
+                                    <tr style="border-bottom:1px solid #eee;">
+                                        <td class="district">&mdash; <?= $item['province_name'] ?>
+                                        </td>
                                         <td class="district"><?= \common\helpers\CUtils::formatPrice($item['price_average']) ?></td>
+                                        <td class="district"><?= $item['exchange'] ?></td>
+                                        <td class="district"><?= $item['type_coffee']['company'] ?></td>
+                                    </tr>
+                                <?php } ?>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+
+                        <h3 class="entry-title">Giá quả tươi chè (ngày <?= $date ?>)</h3>
+                        <table class="quotes-table" cellpadding="0" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th class="tt thleft">Tỉnh<br/><span>/huyện (khu vực khảo sát)</span></th>
+                                <th class="gia" style="text-align:left;">Giá thu mua<br/><span>Đơn vị: VNĐ/kg</span>
+                                <th class="gia" style="text-align:left;">Chênh lệch(24h)<br/><span></span>
+                                <th class="gia" style="text-align:left;">Đại diện<br/>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($listPrice2 as $price) {
+                                ?>
+                                <tr style="">
+                                    <td class="province" colspan="4" style="background-color: #4d79ff "><span style="color: white;"><?= $price['province_name'] ?></span></td>
+                                </tr>
+                                <?php foreach ($price['price'] as $item) { ?>
+                                    <tr style="border-bottom:1px solid #eee;">
+                                        <td class="district">&mdash; <?= $item['province_name'] ?>
+                                        </td>
+                                        <td class="district"><?= $item['type_coffee']['name_coffee'] ?></td>
+                                        <td class="district"><?= \common\helpers\CUtils::formatPrice($item['price_average']) ?></td>
+                                        <td class="district"><?= $item['exchange'] ?></td>
+                                        <td class="district"><?= $item['type_coffee']['company'] ?></td>
+                                    </tr>
+                                <?php } ?>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+
+                        <h3 class="entry-title">Giá nhân xô chè (ngày <?= $date ?>)</h3>
+                        <table class="quotes-table" cellpadding="0" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th class="tt thleft">Tỉnh<br/><span>/huyện (khu vực khảo sát)</span></th>
+                                <th class="gia" style="text-align:left;">Giá thu mua<br/><span>Đơn vị: VNĐ/kg</span>
+                                <th class="gia" style="text-align:left;">Chênh lệch(24h)<br/><span></span>
+                                <th class="gia" style="text-align:left;">Đại diện<br/>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($listPrice3 as $price) {
+                                ?>
+                                <tr style="">
+                                    <td class="province" colspan="4" style="background-color: #4d79ff "><span style="color: white;"><?= $price['province_name'] ?></span></td>
+                                </tr>
+                                <?php foreach ($price['price'] as $item) { ?>
+                                    <tr style="border-bottom:1px solid #eee;">
+                                        <td class="district">&mdash; <?= $item['province_name'] ?>
+                                        </td>
+                                        <td class="district"><?= \common\helpers\CUtils::formatPrice($item['price_average']) ?></td>
+                                        <td class="district"><?= $item['exchange'] ?></td>
+                                        <td class="district"><?= $item['type_coffee']['company'] ?></td>
+                                    </tr>
+                                <?php } ?>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+
+                        <h3 class="entry-title">Giá nhân xô vối (ngày <?= $date ?>)</h3>
+                        <table class="quotes-table" cellpadding="0" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th class="tt thleft">Tỉnh<br/><span>/huyện (khu vực khảo sát)</span></th>
+                                <th class="gia" style="text-align:left;">Giá thu mua<br/><span>Đơn vị: VNĐ/kg</span>
+                                <th class="gia" style="text-align:left;">Chênh lệch(24h)<br/><span></span>
+                                <th class="gia" style="text-align:left;">Đại diện<br/>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($listPrice4 as $price) {
+                                ?>
+                                <tr style="">
+                                    <td class="province" colspan="4" style="background-color: #4d79ff "><span style="color: white;"><?= $price['province_name'] ?></span></td>
+                                </tr>
+                                <?php foreach ($price['price'] as $item) { ?>
+                                    <tr style="border-bottom:1px solid #eee;">
+                                        <td class="district">&mdash; <?= $item['province_name'] ?>
+                                        </td>
+                                        <td class="district"><?= \common\helpers\CUtils::formatPrice($item['price_average']) ?></td>
+                                        <td class="district"><?= $item['exchange'] ?></td>
                                         <td class="district"><?= $item['type_coffee']['company'] ?></td>
                                     </tr>
                                 <?php } ?>
