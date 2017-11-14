@@ -138,7 +138,6 @@ use yii\helpers\Url;
                                     <tr style="border-bottom:1px solid #eee;">
                                         <td class="district">&mdash; <?= $item['province_name'] ?>
                                         </td>
-                                        <td class="district"><?= $item['type_coffee']['name_coffee'] ?></td>
                                         <td class="district"><?= \common\helpers\CUtils::formatPrice($item['price_average']) ?></td>
                                         <td class="district"><?= $item['exchange'] ?></td>
                                         <td class="district"><?= $item['type_coffee']['company'] ?></td>
