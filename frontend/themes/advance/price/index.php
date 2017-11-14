@@ -55,7 +55,7 @@ use yii\helpers\Url;
                                 href="#lam-dong">Lâm Đồng</a>, <a href="#dak-lak">Đắk Lắk</a>, <a href="#gia-lai">Gia
                                 Lai</a>, <a href="#dak-nong">Đắk Nông</a>
                         </div>
-                        <h3 class="entry-title">Giá sàn (ngày <?= $date ?>)</h3>
+                        <h3 class="entry-title" style="color: red;padding-top: 20px;">Giá sàn (ngày <?= $date ?>)</h3>
                         <table class="quotes-table" cellpadding="0" cellspacing="0">
                             <thead>
                             <tr>
@@ -87,7 +87,7 @@ use yii\helpers\Url;
                             </tbody>
                         </table>
 
-                        <h3 class="entry-title">Giá quả tươi vối (ngày <?= $date ?>)</h3>
+                        <h3 class="entry-title" style="color: red;padding-top: 20px;">Giá quả tươi vối (ngày <?= $date ?>)</h3>
                         <table class="quotes-table" cellpadding="0" cellspacing="0">
                             <thead>
                             <tr>
@@ -117,7 +117,7 @@ use yii\helpers\Url;
                             </tbody>
                         </table>
 
-                        <h3 class="entry-title">Giá quả tươi chè (ngày <?= $date ?>)</h3>
+                        <h3 class="entry-title" style="color: red;padding-top: 20px;">Giá quả tươi chè (ngày <?= $date ?>)</h3>
                         <table class="quotes-table" cellpadding="0" cellspacing="0">
                             <thead>
                             <tr>
@@ -148,7 +148,7 @@ use yii\helpers\Url;
                             </tbody>
                         </table>
 
-                        <h3 class="entry-title">Giá nhân xô chè (ngày <?= $date ?>)</h3>
+                        <h3 class="entry-title" style="color: red;padding-top: 20px;">Giá nhân xô chè (ngày <?= $date ?>)</h3>
                         <table class="quotes-table" cellpadding="0" cellspacing="0">
                             <thead>
                             <tr>
@@ -178,7 +178,7 @@ use yii\helpers\Url;
                             </tbody>
                         </table>
 
-                        <h3 class="entry-title">Giá nhân xô vối (ngày <?= $date ?>)</h3>
+                        <h3 class="entry-title" style="color: red;padding-top: 20px;">Giá nhân xô vối (ngày <?= $date ?>)</h3>
                         <table class="quotes-table" cellpadding="0" cellspacing="0">
                             <thead>
                             <tr>
