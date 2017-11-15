@@ -43,7 +43,7 @@ class NewsController extends BaseController
             ->orderBy(['news.created_at' => SORT_DESC])->offset(10)->limit(5)->all();
 //            return $this->render('index', ['title' => $title, 'listNews' => $models, 'pages' => $pages, 'listNewRelated' => $listNewRelated]);
         $listCategory = Category::find()->andWhere(['status' => Category::STATUS_ACTIVE])
-            ->orderBy(['order_number' => SORT_ASC])->all();
+            ->orderBy(['order_number' => SORT_DESC])->all();
         return $this->render('index', ['active'=>$active,'title' => $title, 'listCategory' => $listCategory, 'listNewRelated' => $listNewRelated]);
     }
 

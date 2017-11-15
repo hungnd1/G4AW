@@ -43,11 +43,17 @@
     margin-right: 0;
     width: 170px;
   }
+  .infowindow .content1 .left-content1{
+    margin-right: 20px;
+  }
 }
 
 @media(min-width: 800px){
   .hidden-mn{
     display: none;
+  }
+  .infowindow .content1 .left-content1{
+    margin-right: 20px;
   }
 }
 @media(max-width: 769px){
