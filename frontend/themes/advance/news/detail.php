@@ -28,8 +28,8 @@ use yii\helpers\Url;
                     <a href=""><?= $model->title ?></a>
                 </div>
                 <div class="m-content">
-<!--                    <h1>--><?//= $model->title ?><!--</h1>-->
-<!--                    <p class="des-dt">--><?//= $model->short_description ?><!--</p>-->
+<!--                    <h1>--?//= $model->title ?><!--</h1>-->
+<!--                    <p class="des-dt">--?//= $model->short_description ?><!--</p>-->
                     <!--                    --><?php //if($model->type == \common\models\News::TYPE_VIDEO){?>
                     <!--                    <a id="player" onclick="playVideo();"><img-->
                     <!--                            src="--><!--"-->
