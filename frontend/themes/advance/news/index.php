@@ -51,7 +51,7 @@ use yii\helpers\Url;
                                         $listNews = News::find()
                                             ->andWhere(['news.category_id' => $category->id])
                                             ->andWhere(['news.status' => News::STATUS_ACTIVE]);
-                                        $listNews->orderBy(['news.created_at' => SORT_DESC]);
+                                        $listNews->orderBy(['news.order' => SORT_DESC]);
                                         $countQuery = clone $listNews;
                                         $pages = new Pagination(['totalCount' => $countQuery->count()]);
                                         $pageSize = Yii::$app->params['page_size'];
