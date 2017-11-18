@@ -24,6 +24,7 @@ use frontend\helpers\UserHelper;
                 <p>Nguồn thông tin thị trường: Viện chính sách chiến lược phát triển Nông nghiệp nông thôn (IPSARD)</p>
                <p>Nguồn thông tin kỹ thuật canh tác: Tổ chức chứng nhận UTZ</p>
                 Nguồn thông tin thời tiết: Viện Quy hoạch và Dự báo Nông nghiệp (NIAPP)<br>
+                Trung Tâm Phát Triển Cộng Đồng - CDC<br>
 
             </div>
             <div class="social">
