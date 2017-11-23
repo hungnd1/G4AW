@@ -22,8 +22,9 @@ use frontend\helpers\UserHelper;
             <div class="copy-right" style="padding-left: 50px;">
                 <h5><?= UserHelper::multilanguage('THÔNG TIN ĐỐI TÁC','Partner Information') ?></h5>
                 <p>Nguồn thông tin thị trường: Viện chính sách chiến lược phát triển Nông nghiệp nông thôn (IPSARD)</p>
-               <p>Nguồn thông tin kỹ thuật canh tác: Tổ chức chứng nhận UTZ</p>
-                Trung Tâm Phát Triển Cộng Đồng - CDC<br>
+               <p>Nguồn thông tin kỹ thuật canh tác: Tổ chức chứng nhận UTZ <br>
+                   Trung Tâm Phát Triển Cộng Đồng - CDC<br>
+               </p>
                 Nguồn thông tin thời tiết: Viện Quy hoạch và Dự báo Nông nghiệp (NIAPP)<br>
 
             </div>
