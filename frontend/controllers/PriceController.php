@@ -39,11 +39,11 @@ class PriceController extends BaseController
         $listPrice2 = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price?date='.$date.'&coffee=2');
         $listPrice3 = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price?date='.$date.'&coffee=3');
         $listPrice4 = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price?date='.$date.'&coffee=4');
-        $listPrice = $listPrice['data'];
-        $listPrice1 = $listPrice1['data'];
-        $listPrice2 = $listPrice2['data'];
-        $listPrice3 = $listPrice3['data'];
-        $listPrice4 = $listPrice4['data'];
+        $listPrice = isset($listPrice['data']) ? $listPrice['data'] : null ;
+        $listPrice1 = isset($listPrice1['data']) ? $listPrice1['data'] : null ;
+        $listPrice2 = isset($listPrice2['data']) ? $listPrice2['data'] : null ;
+        $listPrice3 = isset($listPrice3['data']) ? $listPrice3['data'] : null ;
+        $listPrice4 = isset($listPrice4['data']) ? $listPrice4['data'] : null ;
         $listNewRelated = News::find()
             ->andWhere(['news.status' => News::STATUS_ACTIVE])
             ->orderBy(['news.created_at' => SORT_DESC])->limit(10)->all();
