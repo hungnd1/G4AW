@@ -68,22 +68,25 @@ use yii\helpers\Url;
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($listPrice as $price) {
-                                ?>
-                                <tr style="">
-                                    <td class="province" colspan="5" style="background-color: #4d79ff "><span style="color: white;"><?= $price['province_name'] ?></span></td>
-                                </tr>
-                                <?php foreach ($price['price'] as $item) { ?>
-                                    <tr style="border-bottom:1px solid #eee;">
-                                        <td class="district"><?= $item['province_name'] ?>
-                                        </td>
-                                        <td class="district"><?= $item['type_coffee']['name_coffee'] ?></td>
-                                        <td class="district"><?= \common\helpers\CUtils::formatPrice($item['price_average']).' '.$item['unit'] ?></td>
-                                        <td class="district"><?= $item['exchange'] ?></td>
-                                        <td class="district"><?= $item['type_coffee']['company'] ?></td>
+                            <?php if($listPrice) {
+                                foreach ($listPrice as $price) {
+                                    ?>
+                                    <tr style="">
+                                        <td class="province" colspan="5" style="background-color: #4d79ff "><span
+                                                style="color: white;"><?= $price['province_name'] ?></span></td>
                                     </tr>
-                                <?php } ?>
-                            <?php } ?>
+                                    <?php foreach ($price['price'] as $item) { ?>
+                                        <tr style="border-bottom:1px solid #eee;">
+                                            <td class="district"><?= $item['province_name'] ?>
+                                            </td>
+                                            <td class="district"><?= $item['type_coffee']['name_coffee'] ?></td>
+                                            <td class="district"><?= \common\helpers\CUtils::formatPrice($item['price_average']) . ' ' . $item['unit'] ?></td>
+                                            <td class="district"><?= $item['exchange'] ?></td>
+                                            <td class="district"><?= $item['type_coffee']['company'] ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                <?php }
+                            } ?>
                             </tbody>
                         </table>
 
@@ -99,7 +102,9 @@ use yii\helpers\Url;
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($listPrice1 as $price) {
+                            <?php
+                            if($listPrice1){
+                            foreach ($listPrice1 as $price) {
                                 ?>
                                 <tr style="">
                                     <td class="province" colspan="4" style="background-color: #4d79ff "><span style="color: white;"><?= $price['province_name'] ?></span></td>
@@ -112,7 +117,7 @@ use yii\helpers\Url;
                                         <td class="district"><?= $item['exchange'] ?></td>
                                         <td class="district"><?= $item['type_coffee']['company'] ?></td>
                                     </tr>
-                                <?php } ?>
+                                <?php }} ?>
                             <?php } ?>
                             </tbody>
                         </table>
@@ -129,7 +134,9 @@ use yii\helpers\Url;
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($listPrice2 as $price) {
+                            <?php
+                            if($listPrice2){
+                            foreach ($listPrice2 as $price) {
                                 ?>
                                 <tr style="">
                                     <td class="province" colspan="4" style="background-color: #4d79ff "><span style="color: white;"><?= $price['province_name'] ?></span></td>
@@ -142,7 +149,7 @@ use yii\helpers\Url;
                                         <td class="district"><?= $item['exchange'] ?></td>
                                         <td class="district"><?= $item['type_coffee']['company'] ?></td>
                                     </tr>
-                                <?php } ?>
+                                <?php } } ?>
                             <?php } ?>
                             </tbody>
                         </table>
@@ -159,7 +166,9 @@ use yii\helpers\Url;
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($listPrice3 as $price) {
+                            <?php
+                            if($listPrice3){
+                            foreach ($listPrice3 as $price) {
                                 ?>
                                 <tr style="">
                                     <td class="province" colspan="4" style="background-color: #4d79ff "><span style="color: white;"><?= $price['province_name'] ?></span></td>
@@ -172,7 +181,7 @@ use yii\helpers\Url;
                                         <td class="district"><?= $item['exchange'] ?></td>
                                         <td class="district"><?= $item['type_coffee']['company'] ?></td>
                                     </tr>
-                                <?php } ?>
+                                <?php }} ?>
                             <?php } ?>
                             </tbody>
                         </table>
@@ -189,7 +198,9 @@ use yii\helpers\Url;
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($listPrice4 as $price) {
+                            <?php
+                            if($listPrice4) {
+                            foreach ($listPrice4 as $price) {
                                 ?>
                                 <tr style="">
                                     <td class="province" colspan="4" style="background-color: #4d79ff "><span style="color: white;"><?= $price['province_name'] ?></span></td>
@@ -202,7 +213,7 @@ use yii\helpers\Url;
                                         <td class="district"><?= $item['exchange'] ?></td>
                                         <td class="district"><?= $item['type_coffee']['company'] ?></td>
                                     </tr>
-                                <?php } ?>
+                                <?php }} ?>
                             <?php } ?>
                             </tbody>
                         </table>
