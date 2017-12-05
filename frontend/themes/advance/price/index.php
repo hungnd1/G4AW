@@ -23,7 +23,7 @@ use yii\helpers\Url;
                 </div>
                 <div class="m-content">
                     <div class="list-news-block">
-                        <h1 class="entry-title">Giá cà phê hôm nay (ngày <?= $date ?>)</h1>
+                        <h1 class="entry-title">Giá tham khảo thị trường trên các tỉnh</h1>
 <!--                        <div id="xem-gia-ca-phe"-->
 <!--                             style="display:block; text-align:center; line-height:25px; margin:8px 0; border:1px solid #FFD8D9; border-radius:2px; background:#FFF6DD; font-size:16px; padding:8px;">-->
 <!--                            Soạn tin nhắn <strong style="color:#0005FF">CAFE</strong> và gửi tới <strong-->
