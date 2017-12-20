@@ -46,7 +46,7 @@ class WeatherDetail extends \yii\db\ActiveRecord
     {
         return [
             [['precipitation', 'tmax', 'tmin', 'wnddir', 'wndspd', 'station_id', 'timestamp', 'created_at', 'updated_at'], 'integer'],
-            [['station_code'], 'string', 'max' => 45],
+            [['station_code','content'], 'string', 'max' => 45],
         ];
     }
 
