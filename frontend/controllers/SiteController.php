@@ -389,7 +389,7 @@ class SiteController extends BaseController
         return $arr_detail;
     }
 
-    public function actionDetail($temp = 0, $pre = 0, $wind = 0)
+    public function actionDetail($temp = 0, $pre = 0, $wind = 0, $station_id = 0)
     {
 
         $url = Yii::$app->params['apiUrl'] . "app/gap-advice?tem=" . $temp . "&pre=" . $pre . "&wind=" . $wind;
@@ -400,7 +400,13 @@ class SiteController extends BaseController
             $content .= '<h3>' . $item['tag'] . '</h3>';
             $content .= $item['content'];
         }
-        return $this->render('detail', ['listAdvice' => $advice, 'content' => $content]);
+        $url = Yii::$app->params['apiUrl'] . "weather/get-weather-detail?station_id=" . $station_id;
+        $response = $this->callCurl($url);
+        $weather = $response['data']['items'];
+
+        return $this->render('detail',
+            ['listAdvice' => $advice, 'content' => $content, 'weather_current' => (object)$weather]
+        );
 
     }
 
