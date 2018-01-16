@@ -28,7 +28,7 @@ class DiseaseController extends BaseController
         $listNews = GapGeneral::find()
             ->andWhere(['status' => GapGeneral::STATUS_ACTIVE])
             ->andWhere(['type' => GapGeneral::GAP_GENERAL]);
-        $listNews->orderBy(['order' => SORT_DESC]);
+        $listNews->orderBy(['order' => SORT_DESC,'created_at' => SORT_DESC]);
         $countQuery = clone $listNews;
         $pages = new Pagination(['totalCount' => $countQuery->count()]);
         $pageSize = Yii::$app->params['page_size'];
@@ -38,7 +38,7 @@ class DiseaseController extends BaseController
         $listNewRelated = GapGeneral::find()
             ->andWhere(['status' => GapGeneral::STATUS_ACTIVE])
             ->andWhere(['type' => GapGeneral::GAP_GENERAL])
-            ->orderBy(['order' => SORT_DESC])->offset($pages->offset + 10)->limit(5)->all();
+            ->orderBy(['order' => SORT_DESC,'created_at' => SORT_DESC])->offset($pages->offset + 10)->limit(5)->all();
         return $this->render('index', ['title' => $title, 'listdisease' => $models, 'pages' => $pages, 'listdiseaseRelated' => $listNewRelated]);
     }
 
