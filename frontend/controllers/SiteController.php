@@ -199,6 +199,7 @@ class SiteController extends BaseController
             UserHelper::setUserId(Yii::$app->user->id);
             return $this->goHome();
         } else {
+            Yii::$app->session->setFlash('error','Tên đăng nhập phải là số điện thoại');
             return $this->render('login', [
                 'model' => $model,
             ]);

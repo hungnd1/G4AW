@@ -75,7 +75,7 @@ class LoginForm extends Model
             if ($phone_number == '') {
                 $phone_number = CUtils::validateMobile($this->username, 2);
                 if ($phone_number == '') {
-                    throw new InvalidValueException(Yii::t('app','Số điện thoại không đúng định dạng'));
+                    return false;
                 }
             }
         }
