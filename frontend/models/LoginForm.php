@@ -7,6 +7,7 @@ use common\models\SubscriberToken;
 use common\models\User;
 use frontend\helpers\UserHelper;
 use Yii;
+use yii\base\InvalidValueException;
 use yii\base\Model;
 
 /**
@@ -68,6 +69,16 @@ class LoginForm extends Model
 //        }
         $subscriber = Subscriber::findOne(['username' => $this->username]);
         $password = CUtils::generateRandomString(8);
+        $phone_number = CUtils::validateMobile($this->username, 0);
+        if ($phone_number == '') {
+            $phone_number = CUtils::validateMobile($this->username, 1);
+            if ($phone_number == '') {
+                $phone_number = CUtils::validateMobile($this->username, 2);
+                if ($phone_number == '') {
+                    throw new InvalidValueException(Yii::t('app','Số điện thoại không đúng định dạng'));
+                }
+            }
+        }
         if (!$subscriber) {
             $subscriber = new Subscriber();
             $subscriber->username = $this->username;
