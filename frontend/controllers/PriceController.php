@@ -34,11 +34,11 @@ class PriceController extends BaseController
             $date = date('d/m/Y', time());
         }
         $model->date = $date;
-        $listPrice = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price?date='.$date);
-        $listPrice1 = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price?date='.$date.'&coffee=1');
-        $listPrice2 = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price?date='.$date.'&coffee=2');
-        $listPrice3 = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price?date='.$date.'&coffee=3');
-        $listPrice4 = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price?date='.$date.'&coffee=4');
+        $listPrice = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price-web?date='.$date);
+        $listPrice1 = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price-web?date='.$date.'&coffee=1');
+        $listPrice2 = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price-web?date='.$date.'&coffee=2');
+        $listPrice3 = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price-web?date='.$date.'&coffee=3');
+        $listPrice4 = $this->callCurl(Yii::$app->params['apiUrl'].'app/get-price-web?date='.$date.'&coffee=4');
         $listPrice = isset($listPrice['data']) ? $listPrice['data'] : null ;
         $listPrice1 = isset($listPrice1['data']) ? $listPrice1['data'] : null ;
         $listPrice2 = isset($listPrice2['data']) ? $listPrice2['data'] : null ;
