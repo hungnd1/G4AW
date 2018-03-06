@@ -15,6 +15,7 @@ use Yii;
  * @property string $location_name
  * @property integer $created_at
  * @property integer $type_coffee_id
+ * @property integer $province_id
  * @property integer $updated_at
  */
 class ExchangeBuy extends \yii\db\ActiveRecord
@@ -34,7 +35,7 @@ class ExchangeBuy extends \yii\db\ActiveRecord
     {
         return [
             [['total_quantity','type_coffee_id','price_buy'],'required'],
-            [['subscriber_id', 'created_at', 'updated_at','type_coffee_id'], 'integer'],
+            [['subscriber_id', 'created_at', 'updated_at','type_coffee_id','province_id'], 'integer'],
             [['price_buy', 'total_quantity','location','location_name'], 'string', 'max' => 255],
         ];
     }
@@ -48,11 +49,13 @@ class ExchangeBuy extends \yii\db\ActiveRecord
             'id' => 'ID',
             'subscriber_id' => 'Subscriber ID',
             'price_buy' => 'Price Buy',
+            'type_coffee_id' => 'Loại coffee',
             'total_quantity' => 'Total Quantity',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'location' => 'Tọa độ',
             'location_name' => 'Địa điểm',
+            'province_id' => 'Tỉnh',
         ];
     }
 }

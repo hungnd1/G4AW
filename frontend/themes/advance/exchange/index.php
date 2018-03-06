@@ -5,6 +5,7 @@
  * Date: 14/03/2016
  * Time: 11:13 PM
  */
+use common\models\Province;
 use common\models\TypeCoffee;
 use kartik\form\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -76,14 +77,17 @@ use yii\helpers\Url;
                                         'enableClientValidation' => true,
                                     ]); ?>
                                     <div class="l-f-1">
-                                        <?= $form->field($model, 'total_quality_id')->textInput(['maxlength' => true,'class' => 'input-circle'])->label('Tổng sản lượng bán (tấn) (*)') ?>
-                                    </div>
-                                    <div class="l-f-1">
-                                        <?= $form->field($model, 'sold_id')->textInput(['maxlength' => true])->label('Sản lượng đã bán (tấn) (*)') ?>
+                                        <?= $form->field($model, 'total_quantity')->textInput(['maxlength' => true,'class' => 'input-circle'])->label('Tổng sản lượng bán (tấn) (*)') ?>
                                     </div>
                                     <div class="l-f-1">
                                         <?php $data = ArrayHelper::map(TypeCoffee::find()->asArray()->all(), 'id', 'name') ?>
                                         <?= $form->field($model, 'type_coffee')->dropDownList(
+                                            $data
+                                        ) ?>
+                                    </div>
+                                    <div class="l-f-1">
+                                        <?php $data = ArrayHelper::map(Province::find()->andWhere(['<>','id',4])->asArray()->all(), 'id', 'province_name') ?>
+                                        <?= $form->field($model, 'province_id')->dropDownList(
                                             $data
                                         ) ?>
                                     </div>
@@ -121,6 +125,12 @@ use yii\helpers\Url;
                                     </div>
                                     <div class="l-f-1">
                                         <?= $form->field($model_exchange, 'price_buy')->textInput(['maxlength' => true])->label('Giá mua (VNĐ/kg) (*)') ?>
+                                    </div>
+                                    <div class="l-f-1">
+                                        <?php $data = ArrayHelper::map(Province::find()->andWhere(['<>','id',4])->asArray()->all(), 'id', 'province_name') ?>
+                                        <?= $form->field($model, 'province_id')->dropDownList(
+                                            $data
+                                        ) ?>
                                     </div>
                                     <div class="l-f-1">
                                         <?= $form->field($model_exchange, 'location_name')->textInput(['maxlength' => true])->label('Địa điểm giao dịch') ?>
