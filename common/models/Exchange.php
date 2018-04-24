@@ -10,7 +10,6 @@ use Yii;
  * @property integer $id
  * @property integer $subscriber_id
  * @property integer $total_quantity
- * @property integer $sold_id
  * @property integer $type_coffee
  * @property string $location
  * @property string $location_name
@@ -35,7 +34,7 @@ class Exchange extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['total_quality_id','sold_id','type_coffee','price'],'required'],
+            [['type_coffee','price'],'required'],
             [['subscriber_id', 'total_quantity','sold_id', 'type_coffee', 'created_at', 'updated_at','province_id'], 'integer'],
             [['location','price','location_name'], 'string', 'max' => 255],
         ];
@@ -50,7 +49,6 @@ class Exchange extends \yii\db\ActiveRecord
             'id' => 'ID',
             'subscriber_id' => 'Subscriber ID',
             'total_quantity' => 'Tổng sản lượng',
-            'sold_id' => 'Sản lượng bán',
             'type_coffee' => 'Loại coffee',
             'price' => 'Giá cafe',
             'location' => 'Vị trí',

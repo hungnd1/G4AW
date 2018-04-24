@@ -21,24 +21,17 @@ if (isset($listExchangeSold) && !empty($listExchangeSold)) {
                 <h5 class=""><?= \common\models\Subscriber::findOne($item->subscriber_id)->username ?>
                 </h5>
                 <p>Tổng sản
-                    lượng: <?php $total = \common\models\TotalQuality::findOne($item->total_quality_id);
-                    /** @var $total \common\models\TotalQuality */
-                    echo $total->min_total_quality . "-" . $total->max_total_quality . " tấn"; ?>
+                    lượng: <?php
+                    echo $item->total_quantity ." tấn"; ?>
                     <br>
-                    Đã
-                    bán: <?php $sold = \common\models\Sold::findOne($item->sold_id);
-                    /** @var $sold \common\models\Sold */
-                    echo $sold->min_sold . "-" . $sold->max_sold . " tấn";
-                    ?><br>
                     Loại cà
                     phê: <?php $typeCoffee = \common\models\TypeCoffee::findOne($item->type_coffee);
                     /** @var $typeCoffee \common\models\TypeCoffee */
                     echo $typeCoffee->name;
                     ?><br>
-                    Giá: <?= $item->price ?> VNĐ<br>
-                    Vị
-                    trí: <?= $item->location_name ? $item->location_name : 'Chưa xác định' ?>
-                    <br>
+                    Giá bán: <?= $item->price ?> VNĐ<br>
+                    Tỉnh: <?= \common\models\Province::findOne($item->province_id)->province_name ?> <br>
+                    Người bán: <?= \common\models\Subscriber::findOne($item->subscriber_id)->full_name ?> <br>
                     Thời gian: <?= date('d/m/Y H:m:s', $item->created_at) ?>
                 </p>
             </div>

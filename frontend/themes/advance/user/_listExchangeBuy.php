@@ -15,8 +15,8 @@ if (isset($listExchangeBuy) && !empty($listExchangeBuy)) {
         ?>
         <div class="comment-box-item">
             <img
-                src="<?= \common\models\Subscriber::findOne($item->subscriber_id)->getImageLink() ? \common\models\Subscriber::findOne($item->subscriber_id)->getImageLink() : Yii::$app->request->baseUrl . '/img/avt_df.png' ?>"
-                style="width: 140px;height: 140px;margin-right: 50px;">
+                    src="<?= \common\models\Subscriber::findOne($item->subscriber_id)->getImageLink() ? \common\models\Subscriber::findOne($item->subscriber_id)->getImageLink() : Yii::$app->request->baseUrl . '/img/avt_df.png' ?>"
+                    style="width: 140px;height: 140px;margin-right: 50px;">
             <div class="left-comment">
                 <h5 class=""><?= \common\models\Subscriber::findOne($item->subscriber_id)->username ?>
                 </h5>
@@ -29,10 +29,9 @@ if (isset($listExchangeBuy) && !empty($listExchangeBuy)) {
                     /** @var $typeCoffee \common\models\TypeCoffee */
                     echo $typeCoffee->name;
                     ?><br>
-                    Giá: <?= $item->price_buy ?> VNĐ<br>
-                    Vị
-                    trí: <?= $item->location_name ? $item->location_name : 'Chưa xác định' ?>
-                    <br>
+                    Giá mua: <?= $item->price_buy ?> VNĐ<br>
+                    Tỉnh: <?= \common\models\Province::findOne($item->province_id)->province_name ?> <br>
+                    Người mua: <?= \common\models\Subscriber::findOne($item->subscriber_id)->full_name ?> <br>
                     Thời gian: <?= date('d/m/Y H:m:s', $item->created_at) ?>
                 </p>
             </div>
