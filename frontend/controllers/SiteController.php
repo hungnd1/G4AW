@@ -567,7 +567,7 @@ class SiteController extends BaseController
 
     public function actionWeatherDetail($station_id)
     {
-        $url = Yii::$app->params['apiUrl'] . "weather/get-weather-detail?station_id=" . $station_id;
+        $url = Yii::$app->params['apiUrl'] . "weather/get-weather-detail-except?station_id=" . $station_id;
         $response = $this->callCurl($url);
         $weather = $response['data'];
         $weather_current = $response['data']['items'];
