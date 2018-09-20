@@ -370,7 +370,7 @@ class SiteController extends BaseController
         if (!$station_id) {
             throw new InvalidValueException('Station ID ');
         }
-        $url = Yii::$app->params['apiUrl'] . "weather/get-weather-detail?station_id=" . $station_id;
+        $url = Yii::$app->params['apiUrl'] . "weather/get-weather-detail-except?station_id=" . $station_id;
         $response = $this->callCurl($url);
         $weather = $response['data']['items'];
         return $this->renderPartial('weatherDetail', ['weather' => (object)$weather]);
