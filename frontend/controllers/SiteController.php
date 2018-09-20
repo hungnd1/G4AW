@@ -401,7 +401,7 @@ class SiteController extends BaseController
             $content .= '<h3>' . $item['tag'] . '</h3>';
             $content .= $item['content'];
         }
-        $url = Yii::$app->params['apiUrl'] . "weather/get-weather-detail?station_id=" . $station_id;
+        $url = Yii::$app->params['apiUrl'] . "weather/get-weather-detail-except?station_id=" . $station_id;
         $response = $this->callCurl($url);
         $weather = $response['data']['items'];
 
