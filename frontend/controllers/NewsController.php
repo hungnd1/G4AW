@@ -8,6 +8,7 @@ use common\models\Category;
 use common\models\Comment;
 use common\models\DonationItem;
 use common\models\DonationRequest;
+use common\models\Fruit;
 use common\models\News;
 use common\models\Subscriber;
 use Yii;
@@ -26,7 +27,7 @@ class NewsController extends BaseController
      * @param integer $id
      * @return mixed
      */
-    public function actionIndex($active = 1)
+    public function actionIndex1($active = 1)
     {
         $title = "GAPs";
 //            $listNews = News::find()
@@ -44,7 +45,47 @@ class NewsController extends BaseController
 //            return $this->render('index', ['title' => $title, 'listNews' => $models, 'pages' => $pages, 'listNewRelated' => $listNewRelated]);
         $listCategory = Category::find()->andWhere(['status' => Category::STATUS_ACTIVE])
             ->orderBy(['order_number' => SORT_DESC])->all();
-        return $this->render('index', ['active'=>$active,'title' => $title, 'listCategory' => $listCategory, 'listNewRelated' => $listNewRelated]);
+        return $this->render('index', [
+            'active' => $active,
+            'title' => $title,
+            'listCategory' => $listCategory,
+            'listNewRelated' => $listNewRelated
+        ]);
+    }
+
+    public function actionIndex($active = 1)
+    {
+        $fruit = Fruit::find()
+            ->andWhere('parent_id is null')
+            ->orderBy(['order' => SORT_ASC])
+            ->all();
+        return $this->render('category', [
+            'active' => $active,
+            'lstFruit' => $fruit
+        ]);
+    }
+
+    public function actionDetailFruit($id)
+    {
+        $lstCategory = Category::find()
+            ->andWhere(['fruit_id' => $id])
+            ->andWhere(['status' => Category::STATUS_ACTIVE])
+            ->orderBy(['order_number' => SORT_DESC])
+            ->all();
+        return $this->render('list-category', [
+            'lstCategory' => $lstCategory
+        ]);
+    }
+
+    public function actionListNew($id)
+    {
+        $lstNews = News::find()
+            ->andWhere(['category_id' => $id])
+            ->andWhere(['status' => News::STATUS_ACTIVE])
+            ->all();
+        return $this->render('list-new', [
+            'lstNews' => $lstNews
+        ]);
     }
 
 
