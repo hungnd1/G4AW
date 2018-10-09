@@ -72,9 +72,19 @@ class NewsController extends BaseController
             ->andWhere(['status' => Category::STATUS_ACTIVE])
             ->orderBy(['order_number' => SORT_DESC])
             ->all();
-        return $this->render('list-category', [
-            'lstCategory' => $lstCategory
-        ]);
+        if (empty($lstCategory)) {
+            $lstNews = News::find()
+                ->andWhere(['fruit_id' => $id])
+                ->andWhere(['status' => News::STATUS_ACTIVE])
+                ->all();
+            return $this->render('list-new', [
+                'lstNews' => $lstNews
+            ]);
+        } else {
+            return $this->render('list-category', [
+                'lstCategory' => $lstCategory
+            ]);
+        }
     }
 
     public function actionListNew($id)
