@@ -84,7 +84,7 @@ if (!Yii::$app->user->isGuest) {
     <div class="partner-block clearfix">
         <div class="container">
             <h2><?= UserHelper::multilanguage('Các đơn vị liên kết', 'Unit Link') ?></h2>
-            <a href=""><img src="../img/green-coffee-vietnam-partners-logo-all.jpg"></a></li>
+            <a href=""><img src="../img/link_contact.PNG"></a></li>
         </div>
     </div>
     <!--end partner-->
