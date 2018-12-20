@@ -393,7 +393,7 @@ class SiteController extends BaseController
     public function actionDetail($temp = 0, $pre = 0, $wind = 0, $station_id = 0)
     {
 
-        $url = Yii::$app->params['apiUrl'] . "app/gap-advice?tem=" . $temp . "&pre=" . $pre . "&wind=" . $wind;
+        $url = Yii::$app->params['apiUrl'] . "app/gap-advice-except?tem=" . $temp . "&pre=" . $pre . "&wind=" . $wind;
         $response = $this->callCurl($url);
         $advice = $response['data']['items'];
         $content = '';
