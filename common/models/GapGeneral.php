@@ -36,6 +36,10 @@ class GapGeneral extends \yii\db\ActiveRecord
 
     const GAP_GENERAL = 1;
     const GAP_DETAIL = 2;
+
+    const CATEGORY_SAUBENH = 1;
+    const CATEGORY_TINTUC = 2;
+    const CATEGORY_SUKIEN = 3;
     /**
      * @inheritdoc
      */

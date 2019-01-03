@@ -24,22 +24,61 @@ class DiseaseController extends BaseController
      */
     public function actionIndex()
     {
-        $title = "Sâu bệnh";
+        $title = "Sâu bệnh, tin tức và sự kiện";
         $listNews = GapGeneral::find()
             ->andWhere(['status' => GapGeneral::STATUS_ACTIVE])
-            ->andWhere(['type' => GapGeneral::GAP_GENERAL]);
-        $listNews->orderBy(['order' => SORT_DESC,'created_at' => SORT_DESC]);
+            ->andWhere(['type' => GapGeneral::GAP_GENERAL])
+            ->andWhere(['category_id' => GapGeneral::CATEGORY_SAUBENH]);
+        $listNews->orderBy(['order' => SORT_DESC, 'created_at' => SORT_DESC]);
         $countQuery = clone $listNews;
         $pages = new Pagination(['totalCount' => $countQuery->count()]);
         $pageSize = Yii::$app->params['page_size'];
         $pages->setPageSize($pageSize);
         $models = $listNews->offset($pages->offset)
             ->limit(10)->all();
+
+        //tin tuc
+        $listNew = GapGeneral::find()
+            ->andWhere(['status' => GapGeneral::STATUS_ACTIVE])
+            ->andWhere(['type' => GapGeneral::GAP_GENERAL])
+            ->andWhere(['category_id' => GapGeneral::CATEGORY_TINTUC]);
+        $listNew->orderBy(['order' => SORT_DESC, 'created_at' => SORT_DESC]);
+        $countQuerys = clone $listNew;
+        $pages1 = new Pagination(['totalCount' => $countQuerys->count()]);
+        $pageSize1 = Yii::$app->params['page_size'];
+        $pages1->setPageSize($pageSize1);
+        $modelsNew = $listNew->offset($pages1->offset)
+            ->limit(10)->all();
+
+        //sự kiện
+        $listNew1 = GapGeneral::find()
+            ->andWhere(['status' => GapGeneral::STATUS_ACTIVE])
+            ->andWhere(['type' => GapGeneral::GAP_GENERAL])
+            ->andWhere(['category_id' => GapGeneral::CATEGORY_SUKIEN]);
+        $listNew1->orderBy(['order' => SORT_DESC, 'created_at' => SORT_DESC]);
+        $countQuery1 = clone $listNew1;
+        $pages2 = new Pagination(['totalCount' => $countQuery1->count()]);
+        $pageSize2 = Yii::$app->params['page_size'];
+        $pages2->setPageSize($pageSize2);
+        $modelsNew1 = $listNew1->offset($pages2->offset)
+            ->limit(10)->all();
+
         $listNewRelated = GapGeneral::find()
             ->andWhere(['status' => GapGeneral::STATUS_ACTIVE])
             ->andWhere(['type' => GapGeneral::GAP_GENERAL])
-            ->orderBy(['order' => SORT_DESC,'created_at' => SORT_DESC])->offset($pages->offset + 10)->limit(5)->all();
-        return $this->render('index', ['title' => $title, 'listdisease' => $models, 'pages' => $pages, 'listdiseaseRelated' => $listNewRelated]);
+            ->orderBy(['order' => SORT_DESC, 'created_at' => SORT_DESC])
+            ->offset($pages->offset + 10)->limit(5)->all();
+        return $this->render('index',
+            [
+                'title' => $title,
+                'listdisease' => $models,
+                'modelsNew' => $modelsNew,
+                'pages' => $pages,
+                'listdiseaseRelated' => $listNewRelated,
+                'pages1' => $pages1,
+                'modelsNew1' => $modelsNew1,
+                'pages2' => $pages2,
+            ]);
     }
 
 
