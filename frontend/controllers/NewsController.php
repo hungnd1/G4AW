@@ -56,7 +56,7 @@ class NewsController extends BaseController
     public function actionIndex($active = 1)
     {
         $fruit = Fruit::find()
-            ->andWhere('parent_id is null')
+            ->andWhere('have_child is null')
             ->orderBy(['order' => SORT_ASC])
             ->all();
         return $this->render('category', [
