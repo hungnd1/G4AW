@@ -9,19 +9,13 @@ use yii\widgets\ActiveForm;
 <div class="top-nav header">
     <div class="container">
         <a class="navbar-brand logo" style="padding: 4px 0px;" href="<?= Url::toRoute(['site/index']) ?>"><img
-                src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/GREENcoffee_LOGO.png" height="70"
-                style="padding-top: 10px;"></a>
+                    src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/GREENcoffee_LOGO.png" height="70"
+                    style="padding-top: 10px;"></a>
         <?php if (!UserHelper::isMobile()) { ?>
             <b class="navbar-brand title-header" style=""
                href="<?= Url::toRoute(['site/index']) ?>"><?= UserHelper::multilanguage('DỊCH VỤ THÔNG TIN GREENCOFFEE', 'Economic Research Institute of Posts and Telecommunications') ?></b>
         <?php } ?>
         <!--        <b style="font-size: 18px;margin: 0 0 0 30px;padding: 40px 0 0 0;">VIỆN KINH TẾ BƯU ĐIỆN</b>-->
-        <?php if (UserHelper::isMobile()) { ?>
-            <a href="<?= Url::toRoute(['site/index', 'lang' => 'vi']) ?>" class="navbar-brand logo"
-               style="margin: 20px 0px 0px 0px;padding: 5px 9px;">VI</a>
-            <a href="<?= Url::toRoute(['site/index', 'lang' => 'en']) ?>" class="navbar-brand logo"
-               style="margin: 20px 0px 0px 0px;padding: 5px 7px;">EN</a>
-        <?php } ?>
         <a class="ic-mn-mb hidden-mn" data-toggle="collapse" href="#collapseExample" aria-expanded="false"
            aria-controls="collapseExample">
             <i class="fa fa-bars" aria-hidden="true"></i>
@@ -32,11 +26,13 @@ use yii\widgets\ActiveForm;
             <a href="<?= Url::toRoute(['site/index', 'lang' => 'en']) ?>" class="sign-up"
                style="margin-left: 10px;    padding: 5px 7px;">EN</a>
             <a href="" class="logo-cp"><img
-                    src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/face.jpg"></a>
+                        src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/face.jpg"></a>
             <a href="" class="logo-cp"><img
-                    src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/google.png"></a>
+                        src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/google.png"></a>
             <a href="" class="logo-cp"><img
-                    src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/twitter.jpg"></a>
+                        src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/twitter.jpg"></a>
+            <a href="https://play.google.com/store/apps/details?id=vn.monkey.icco" style="float: right;margin: 0px 10px 0px 0px;" class="logo-cp"><img style="width: 100px;height: 35px;" src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/google-play.png"></a>
+            <a href="https://apps.apple.com/vn/app/greencoffee/id1254356638" style="float: right;margin: 0px 10px 0px 0px;" class="logo-cp"><img style="width: 100px;height: 35px;" src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/app-store.png"></a>
         </div>
 
     </div>
@@ -66,7 +62,7 @@ use yii\widgets\ActiveForm;
 
             <ul class="menu-web">
                 <li class="active"><a
-                        href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
+                            href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
                 </li>
                 <li>
                     <a href="<?= Url::toRoute(['site/about']) ?>">Giới thiệu</a>
@@ -82,9 +78,9 @@ use yii\widgets\ActiveForm;
                 <li>
                     <a href="<?= Url::toRoute(['news/index']) ?>">Thông tin GAPs</a>
                 </li>
-<!--                <li>-->
-<!--                    <a href="--><?//= Url::toRoute(['news/index']) ?><!--">Hỏi đáp</a>-->
-<!--                </li>-->
+                <!--                <li>-->
+                <!--                    <a href="--><? //= Url::toRoute(['news/index']) ?><!--">Hỏi đáp</a>-->
+                <!--                </li>-->
             </ul>
 
             <?php
@@ -92,8 +88,8 @@ use yii\widgets\ActiveForm;
                 ?>
                 <a href="<?= Url::toRoute(['site/login']) ?>"
                    class="sign-in"><?= UserHelper::multilanguage('Đăng nhập', 'Sign In') ?></a>
-<!--                <a href="--><?//= Url::toRoute(['site/signup']) ?><!--"-->
-<!--                   class="sign-up">--><?//= UserHelper::multilanguage('Đăng ký', 'Sign Up') ?><!--</a>-->
+                <!--                <a href="--><? //= Url::toRoute(['site/signup']) ?><!--"-->
+                <!--                   class="sign-up">--><? //= UserHelper::multilanguage('Đăng ký', 'Sign Up') ?><!--</a>-->
                 <?php
             } else {
                 ?>
@@ -109,9 +105,9 @@ use yii\widgets\ActiveForm;
                             <li>
                                 <a href="<?= Url::toRoute(['user/my-page', 'id' => Yii::$app->user->identity->id]) ?>"><?= UserHelper::multilanguage('Cá nhân', 'Personal') ?></a>
                             </li>
-<!--                            <li>-->
-                               <!-- <a href="<?= Url::toRoute(['user/change-my-password', 'id' => Yii::$app->user->identity->id]) ?>"><?= UserHelper::multilanguage('Đổi mật khẩu', 'Change Password') ?></a> -->
-<!--                            </li>-->
+                            <!--                            <li>-->
+                            <!-- <a href="<?= Url::toRoute(['user/change-my-password', 'id' => Yii::$app->user->identity->id]) ?>"><?= UserHelper::multilanguage('Đổi mật khẩu', 'Change Password') ?></a> -->
+                            <!--                            </li>-->
                             <li><a href="<?= \yii\helpers\Url::to(['site/logout']) ?>"
                                    data-method="post"><?= UserHelper::multilanguage('Đăng xuất', 'Logout') ?></a>
                             </li>
@@ -129,7 +125,7 @@ use yii\widgets\ActiveForm;
     <div class="container" style="width: 1350px;">
         <ul class="menu-web">
             <li class="active"><a
-                    href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
+                        href="<?= Url::toRoute(['site/index']) ?>">Trang chủ</a>
             </li>
             <li>
                 <a href="<?= Url::toRoute(['site/about']) ?>">Giới thiệu</a>
@@ -145,9 +141,9 @@ use yii\widgets\ActiveForm;
             <li>
                 <a href="<?= Url::toRoute(['news/index']) ?>">Thông tin GAPs</a>
             </li>
-<!--            <li>-->
-<!--                <a href="--><?//= Url::toRoute(['news/index']) ?><!--">Hỏi đáp</a>-->
-<!--            </li>-->
+            <!--            <li>-->
+            <!--                <a href="--><? //= Url::toRoute(['news/index']) ?><!--">Hỏi đáp</a>-->
+            <!--            </li>-->
             <div class="right-nav hidden-sm hidden-xs">
 
                 <div class="f-search">
@@ -168,8 +164,8 @@ use yii\widgets\ActiveForm;
                     ?>
                     <a href="<?= Url::toRoute(['site/login']) ?>"
                        class="sign-in"><?= UserHelper::multilanguage('Đăng nhập', 'Sign In') ?></a>
-<!--                    <a href="--><?//= Url::toRoute(['site/signup']) ?><!--"-->
-<!--                       class="sign-up">--><?//= UserHelper::multilanguage('Đăng ký', 'Sign Up') ?><!--</a>-->
+                    <!--                    <a href="--><? //= Url::toRoute(['site/signup']) ?><!--"-->
+                    <!--                       class="sign-up">--><? //= UserHelper::multilanguage('Đăng ký', 'Sign Up') ?><!--</a>-->
                     <?php
                 } else {
                     ?>
@@ -183,9 +179,9 @@ use yii\widgets\ActiveForm;
                             <li>
                                 <a href="<?= Url::toRoute(['user/my-page', 'id' => Yii::$app->user->identity->id]) ?>"><?= UserHelper::multilanguage('Cá nhân', 'Persional') ?></a>
                             </li>
-<!--                            <li>-->
-<!--                                <a href="<?//= Url::toRoute(['user/change-my-password', 'id' => Yii::$app->user->identity->id]) ?><?//= UserHelper::multilanguage('Đổi mật khẩu', 'Change Password') ?></a>-->
-<!--                            </li>-->
+                            <!--                            <li>-->
+                            <!--                                <a href="<?//= Url::toRoute(['user/change-my-password', 'id' => Yii::$app->user->identity->id]) ?><?//= UserHelper::multilanguage('Đổi mật khẩu', 'Change Password') ?></a>-->
+                            <!--                            </li>-->
                             <li><a href="<?= \yii\helpers\Url::to(['site/logout']) ?>"
                                    data-method="post"><?= UserHelper::multilanguage('Đăng xuất', 'Logout') ?></a>
                             </li>

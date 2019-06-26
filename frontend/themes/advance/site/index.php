@@ -14,7 +14,16 @@ if (!Yii::$app->user->isGuest) {
 }
 ?>
 <div class="content">
-
+    <div class="container">
+        <?php if (UserHelper::isMobile()) { ?>
+            <a href="<?= Url::toRoute(['site/index', 'lang' => 'vi']) ?>" class="sign-in"
+               style="float:right;margin: 0px 15px 0px 0px;padding: 5px 9px;">VI</a>
+            <a href="<?= Url::toRoute(['site/index', 'lang' => 'en']) ?>" class="sign-in"
+               style="float:right;margin: 0px 15px 0px 0px;padding: 5px 7px;">EN</a>
+            <a href="https://play.google.com/store/apps/details?id=vn.monkey.icco" style="float: right;margin: 0px 10px 0px 0px;" class="logo-cp"><img style="width: 100px;height: 35px;" src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/google-play.png"></a>
+            <a href="https://apps.apple.com/vn/app/greencoffee/id1254356638" style="float: right;" class="logo-cp"><img style="width: 100px;height: 35px;" src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/img/app-store.png"></a>
+        <?php } ?>
+    </div>
 
     <!-- List NEW block-->
 
